@@ -1,1 +1,1 @@
-web: node node_modules/express/app.js
+web: node app.js

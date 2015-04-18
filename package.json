@@ -1,8 +1,8 @@
 {
-  "name": "Viddy",
+  "name": "Trendeo",
   "version": "1.0.0",
-  "description": "viddy",
-  "main": "index.js",
+  "description": "trendeo",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
