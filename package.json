@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/uenowataru/viddy",
   "dependencies": {
-    "express": "^4.12.3"
+    "express": "^4.12.3",
+    "request": "2.55.0"
   }
 }
