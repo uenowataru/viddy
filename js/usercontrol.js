@@ -19,7 +19,7 @@ $(document).ready(function(){
 });
 
 function setupVC(){
-  if(!ENABLE_VC) return;
+  if(!ENABLE_VC || !annyang) return;
   var r = confirm("Do you want to enable voice commands?");
   if (r == false) return;
 
