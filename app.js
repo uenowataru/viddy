@@ -19,7 +19,6 @@ app.get('/', function (req, res) {
 	res.sendFile('youtube.js');
 	res.sendFile('usercontrol.js');
 	res.sendFile('CacheService.js');
-	res.sendFile('annyang.js');
 	
 	res.sendFile('styles.css');
 	

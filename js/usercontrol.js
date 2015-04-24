@@ -5,6 +5,7 @@ var timebartimeout;
 var cursortimeout;
 var timebarprog = 1;
 var ClickTime = 0;
+var ENABLE_VC = false;
 var DOUBLE_CLICK_THRESHOLD = 300;
 var TOUCH_DRAG_THRESHOLD = 100;
 var isTouchDevice = 'ontouchstart' in document.documentElement;
@@ -18,28 +19,32 @@ $(document).ready(function(){
 });
 
 function setupVC(){
+  if(!ENABLE_VC || !annyang) return;
+  var r = confirm("Do you want to enable voice commands?");
+  if (r == false) return;
+
   if (annyang) {
     annyang.debug();
     var nextCommand = {
-      'show me next': function() {
+      '(*term1) show me next (*term2)': function(term1, term2) { //show me next
         nextVideo();
         animateTitle();
       }
     };
     var prevCommand = {
-      'show me previous': function() {
-        nextVideo();
+      '(*term1) show me previous (*term2)': function(term1, term2) { //show me previous
+        previousVideo();
         animateTitle();
       }
     };
     var playCommand = {
-      'play video': function() {
+      '(*term1) pause video (*term2)': function(term1, term2) { //pause
         togglePlayPause();
         animateTitle();
       }
     };
     var pauseCommand = {
-      'pause video': function() {
+      '(*term1) play video (*term2)': function(term1, term2) { //play
         togglePlayPause();
         animateTitle();
       }
@@ -53,7 +58,7 @@ function setupVC(){
     // Start listening. You can call this here, or attach this call to an event, button, etc.
     annyang.start();
   }else{
-    alert('voice not supported');
+    alert('Voice not supported on your browser :(');
   }
 }
 

@@ -13,7 +13,7 @@ var subreddits = ['videos', 'gifs', 'all', 'youtubehaiku', 'deepintoyoutube', 'S
 	'UnexpectedThugLife', 'space', 'PublicFreakout', 'StreetFights', 'respectporn'];
 var banned = ['leagueoflegends','hearthstone','smashbros','tf2','DotA2','gamegrumps','2007scape', 'wow', 'GrandTheftAutoV_PC','Games',
 	'Minecraft', 'KotakuInAction','witcher','GlobalOffensive','MonsterHunter','osugame', 'PS4', 'pcgaming', 'CLG','funhaus', 'pcmasterrace',
-	'totalwar','starcraft'];
+	'totalwar','starcraft','Planetside','pathofexile','ffxiv','SSBM'];
 var subrednum = 0;
 var last = "null";
 var resourceUrl;
@@ -48,7 +48,7 @@ function getRedditVideos(url) {
 	}, function (error, response, body) {
 		if (!error && response.statusCode === 200) {
 			procRedditVideos(body);
-			if(page == 0){
+			if(queue.length == 0){
 				queue = cleanQueue(tempqueue);
 			}
 			if(++page >= MAX_PAGE){
