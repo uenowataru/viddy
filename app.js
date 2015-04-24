@@ -23,7 +23,7 @@ app.get('/', function (req, res) {
 	res.sendFile('styles.css');
 	
 	res.sendFile('arrowLeft.png');
-	res.sendFile('arrowLeft.png');
+	res.sendFile('arrowRight.png');
 	res.sendFile('favicon.ico');
 	//res.sendFile('white.png');
 	//res.send(data);

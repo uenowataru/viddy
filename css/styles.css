@@ -59,9 +59,9 @@ iframe {
 .arrow {
 	width: 8%;
 	height: 12%;
-	position: absolute;
+	position: fixed;
 	top: 50%;
-	display: inline-block;
+	display: block;
 	-moz-transform: translateY(-50%);
 	-webkit-transform: translateY(-50%);
 	-o-transform: translateY(-50%);
@@ -78,16 +78,8 @@ iframe {
 }
 
 .arrowLeft {
-	background-image: url("arrowRight.png");
+	background-image: url("arrowLeft.png");
 	left: 0px;
-	top: 45%;
-	-moz-transform: scaleX(-1);
-    -o-transform: scaleX(-1);
-    -webkit-transform: scaleX(-1);
-    transform: scaleX(-1);
-    filter: FlipH;
-    -ms-filter: "FlipH";
-
 }
 
 .arrowRight {
@@ -95,7 +87,7 @@ iframe {
 	right: 0px;
 }
 
-#timebar{
+#timebar {
 	opacity: 0.75;
 	position: absolute;
 	background-color: #fff;
