@@ -18,28 +18,31 @@ $(document).ready(function(){
 });
 
 function setupVC(){
+  var r = confirm("Do you want to enable voice commands?");
+  if (r == false) return;
+
   if (annyang) {
     annyang.debug();
     var nextCommand = {
-      'show me next': function() {
+      '(*term1) show me next (*term2)': function(term1, term2) { //show me next
         nextVideo();
         animateTitle();
       }
     };
     var prevCommand = {
-      'show me previous': function() {
-        nextVideo();
+      '(*term1) show me previous (*term2)': function(term1, term2) { //show me previous
+        previousVideo();
         animateTitle();
       }
     };
     var playCommand = {
-      'play video': function() {
+      '(*term1) pause video (*term2)': function(term1, term2) { //pause
         togglePlayPause();
         animateTitle();
       }
     };
     var pauseCommand = {
-      'pause video': function() {
+      '(*term1) play video (*term2)': function(term1, term2) { //play
         togglePlayPause();
         animateTitle();
       }
@@ -53,7 +56,7 @@ function setupVC(){
     // Start listening. You can call this here, or attach this call to an event, button, etc.
     annyang.start();
   }else{
-    alert('voice not supported');
+    alert('Voice not supported on your browser :(');
   }
 }
 
