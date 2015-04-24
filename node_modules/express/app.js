@@ -9,6 +9,7 @@ app.use(express.static(__dirname + '/js'));
 app.use(express.static(__dirname + '/css'));
 app.use(express.static(__dirname + '/res'));
 
+//
 //app.set('view engine', 'jade');
 
 app.get('/', function (req, res) {
