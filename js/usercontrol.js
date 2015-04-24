@@ -5,6 +5,7 @@ var timebartimeout;
 var cursortimeout;
 var timebarprog = 1;
 var ClickTime = 0;
+var ENABLE_VC = false;
 var DOUBLE_CLICK_THRESHOLD = 300;
 var TOUCH_DRAG_THRESHOLD = 100;
 var isTouchDevice = 'ontouchstart' in document.documentElement;
@@ -18,6 +19,7 @@ $(document).ready(function(){
 });
 
 function setupVC(){
+  if(!ENABLE_VC) return;
   var r = confirm("Do you want to enable voice commands?");
   if (r == false) return;
 
