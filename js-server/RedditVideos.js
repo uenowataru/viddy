@@ -48,7 +48,7 @@ function getRedditVideos(url) {
 	}, function (error, response, body) {
 		if (!error && response.statusCode === 200) {
 			procRedditVideos(body);
-			if(page == 0){
+			if(queue.length == 0){
 				queue = cleanQueue(tempqueue);
 			}
 			if(++page >= MAX_PAGE){
