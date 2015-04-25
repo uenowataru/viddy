@@ -33,7 +33,7 @@ app.get('/', function (req, res) {
 app.get('/*', function (req, res) {
 	console.log('\n\n\nGot request....');
 	var resp = js_server.getRedditJSON();
-	console.log(resp);
+	if(resp) console.log(resp.length);
 	res.send(resp);
 	console.log('Response sent..');
 });
