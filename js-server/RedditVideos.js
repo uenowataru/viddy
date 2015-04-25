@@ -19,7 +19,7 @@ var subrednum = 0;
 var last = "null";
 var resourceUrl;
 var page = 0;
-var MAX_PAGE = 20;
+var MAX_PAGE = 3;
 
 
 setInterval(function(){
@@ -49,9 +49,9 @@ function getRedditVideos(url) {
 	}, function (error, response, body) {
 		if (!error && response.statusCode === 200) {
 			procRedditVideos(body);
-			if(queue.length == 0){
-				queue = cleanQueue(tempqueue);
-			}
+			// if(queue.length == 0){
+			// 	queue = cleanQueue(tempqueue);
+			// }
 			if(++page >= MAX_PAGE){
 				queue = cleanQueue(tempqueue);
 				tempqueue = [];
