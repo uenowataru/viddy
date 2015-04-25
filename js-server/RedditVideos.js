@@ -13,7 +13,8 @@ var subreddits = ['videos', 'gifs', 'all', 'youtubehaiku', 'deepintoyoutube', 'S
 	'UnexpectedThugLife', 'space', 'PublicFreakout', 'StreetFights', 'respectporn'];
 var banned = ['leagueoflegends','hearthstone','smashbros','tf2','DotA2','gamegrumps','2007scape', 'wow', 'GrandTheftAutoV_PC','Games',
 	'Minecraft', 'KotakuInAction','witcher','GlobalOffensive','MonsterHunter','osugame', 'PS4', 'pcgaming', 'CLG','funhaus', 'pcmasterrace',
-	'totalwar','starcraft','Planetside','pathofexile','ffxiv','SSBM'];
+	'totalwar','starcraft','Planetside','pathofexile','ffxiv','SSBM','KerbalSpaceProgram','roosterteeth','gaming','mindcrack','MortalKombat',
+	'Yogscast','nerdcubed','Smite','skyrim','Metroid','HaloOnline'];
 var subrednum = 0;
 var last = "null";
 var resourceUrl;
