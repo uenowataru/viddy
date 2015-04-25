@@ -215,7 +215,7 @@ function arrowRightClick(){
 function titleClick(){
   if(!initialized) return;
   pauseVideo();
-  window.open("https://www.youtube.com/watch?v=" + queue[currindex][0]);
+  window.open("https://www.youtube.com/watch?v=" + queue[currindex][0] + "&t=" + Math.floor(getYTCurrentTime(curr)) + "s");
 }
 
 function loadTitle(){
