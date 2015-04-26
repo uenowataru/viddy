@@ -221,7 +221,7 @@ function titleClick(){
 function loadTitle(){
   if(!initialized) return;
   var vidtitle = queue[currindex][1];
-  $( "#title" ).text(vidtitle);
+  $( "#title" ).text(vidtitle.replace('&amp;','&'));
 }
 
 function animateTitle(){
