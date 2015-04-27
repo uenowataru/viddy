@@ -11,7 +11,7 @@ var tempqueue = [];
 var subreddits = ['videos', 'gifs', 'all', 'youtubehaiku', 'deepintoyoutube', 'StandUpComedy', 'fail', 'gopro', 'ContagiousLaughter',
 	'todayilearned', 'LearnUselessTalents','Music', 'listentothis', 'hiphopheads','sports' , 'nba', 'soccer', 'nfl',
 	'UnexpectedThugLife', 'space', 'PublicFreakout', 'StreetFights', 'respectporn'];
-var banned = ['leagueoflegends','hearthstone','smashbros','tf2','DotA2','gamegrumps','2007scape', 'wow', 'GrandTheftAutoV_PC','Games',
+var banned = ['Music', 'hiphopheads','leagueoflegends','hearthstone','smashbros','tf2','DotA2','gamegrumps','2007scape', 'wow', 'GrandTheftAutoV_PC','Games',
 	'Minecraft', 'KotakuInAction','witcher','GlobalOffensive','MonsterHunter','osugame', 'PS4', 'pcgaming', 'CLG','funhaus', 'pcmasterrace',
 	'totalwar','starcraft','Planetside','pathofexile','ffxiv','SSBM','KerbalSpaceProgram','roosterteeth','gaming','mindcrack','MortalKombat',
 	'Yogscast','nerdcubed','Smite','skyrim','Metroid','HaloOnline','speedrun','Guildwars2','heroesofthestorm','runescape','Warthunder','metalgearsolid',
