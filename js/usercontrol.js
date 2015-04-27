@@ -134,12 +134,12 @@ $(document.activeElement).keydown(function(e) {
     animateTitle();
   } // right
   if(e.which== 38){
-    ++HorizontalArrowPressed;
+    if(++HorizontalArrowPressed == 1) return;
     animateTimeBar();
     skipVideoTo(-4);
   } //up  //fastforward
   if(e.which== 40){
-    ++HorizontalArrowPressed;
+    if(++HorizontalArrowPressed == 1) return;
     animateTimeBar();
     skipVideoTo(-3);
   } //down   //downward
