@@ -229,12 +229,18 @@ function skipVideoTo(index){
   var totaltime = getYTDuration(curr);
   var nowtime = getYTCurrentTime(curr);
   if(index == -1){    //rewind
-    index = Math.round(10*nowtime/totaltime - 1) ;
+    index = Math.round(10*nowtime/totaltime - 1) * totaltime / 10;
   }
   if(index == -2){    //fastforward
-    index = Math.round(10*nowtime/totaltime + 1) ;
+    index = Math.round(10*nowtime/totaltime + 1) * totaltime / 10;
   }
-  if(index == -1){
+  if(index == -3){    //rewind little
+    index = getYTCurrentTime(curr) - 1;
+  }
+  if(index == -4){    //fastforward little
+    index = getYTCurrentTime(curr) + 1;
+  }
+  if(index < 0){
     if(currindex == 0){
       seekYT(curr,0);
     }
@@ -247,7 +253,7 @@ function skipVideoTo(index){
     animateTitle();
     return;
   }
-  seekYT(curr,index * totaltime / 10);
+  seekYT(curr,index);
 }
 
 function getYTDuration(ytplayer){

@@ -15,7 +15,7 @@ var banned = ['leagueoflegends','hearthstone','smashbros','tf2','DotA2','gamegru
 	'Minecraft', 'KotakuInAction','witcher','GlobalOffensive','MonsterHunter','osugame', 'PS4', 'pcgaming', 'CLG','funhaus', 'pcmasterrace',
 	'totalwar','starcraft','Planetside','pathofexile','ffxiv','SSBM','KerbalSpaceProgram','roosterteeth','gaming','mindcrack','MortalKombat',
 	'Yogscast','nerdcubed','Smite','skyrim','Metroid','HaloOnline','speedrun','Guildwars2','heroesofthestorm','runescape','Warthunder','metalgearsolid',
-	'ethoslab','Shaboozey','Cynicalbrit','starcitizen'];
+	'ethoslab','Shaboozey','Cynicalbrit','starcitizen', 'killingfloor','bindingofisaac'];
 var subrednum = 0;
 var last = "null";
 var resourceUrl;

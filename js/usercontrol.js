@@ -132,12 +132,14 @@ $(document.activeElement).keydown(function(e) {
     animateTitle();
   } // right
   if(e.which== 38){
+    ++HorizontalArrowPressed;
     animateTimeBar();
-    skipVideoTo(-2);
+    skipVideoTo(-4);
   } //up  //fastforward
   if(e.which== 40){
+    ++HorizontalArrowPressed;
     animateTimeBar();
-    skipVideoTo(-1);
+    skipVideoTo(-3);
   } //down   //downward
   if(e.which >= 48 && e.which <= 57){
     animateTimeBar();
@@ -145,7 +147,22 @@ $(document.activeElement).keydown(function(e) {
   }
 });
 
-  
+var HorizontalArrowPressed = 0;
+$(document.activeElement).keyup(function(e) {
+  if(!initialized) return;
+  if(HorizontalArrowPressed < 2){
+    e.preventDefault(); // prevent the default action (scroll / move caret)
+    if(e.which== 38){
+      animateTimeBar();
+      skipVideoTo(-2);
+    } //up  //fastforward
+    if(e.which== 40){
+      animateTimeBar();
+      skipVideoTo(-1);
+    } //down   //downward
+  }
+  HorizontalArrowPressed = 0;
+});
 
 function animateAll(){
   if(!moved){
