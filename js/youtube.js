@@ -238,10 +238,10 @@ function skipVideoTo(index){
     index = (10*nowtime/totaltime + 1) * totaltime / 10;
   }
   if(index == -3){    //rewind little
-    index = getYTCurrentTime(curr) - 2;
+    index = getYTCurrentTime(curr) - 3.5;
   }
   if(index == -4){    //fastforward little
-    index = getYTCurrentTime(curr) + 1;
+    index = getYTCurrentTime(curr) + 3;
   }
   if(index < 0){
     if(currindex == 0){
@@ -257,6 +257,12 @@ function skipVideoTo(index){
     return;
   }
   seekYT(curr,index);
+}
+
+function skipVideoTime(sec){
+  if(!initialized || curr===undefined) return 0;
+  var nowtime = getYTCurrentTime(curr);
+  seekYT(curr,nowtime+sec);
 }
 
 function getYTDuration(ytplayer){

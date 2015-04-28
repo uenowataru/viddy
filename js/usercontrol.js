@@ -119,31 +119,33 @@ if(isTouchDevice){
 
 $(document.activeElement).keydown(function(e) {
   if(!initialized) return;
-  e.preventDefault(); // prevent the default action (scroll / move caret)
+  //e.preventDefault(); // prevent the default action (scroll / move caret)
   if (e.which == 13) {
     toggleFullScreen();
   } //enter
-  if(e.which== 37){
-    previousVideo();
-    animateTitle();
-  } //left
   if(e.which == 32){
     togglePlayPause();
     animateAll();
   } //space bar
-  if(e.which== 39){
-    nextVideo();
-    animateTitle();
-  } // right
-  if(e.which== 38){
-    if(++HorizontalArrowPressed == 1) return;
-    animateTimeBar();
-    skipVideoTo(-4);
-  } //up  //fastforward
-  if(e.which== 40){
+  if(e.which== 37){
     if(++HorizontalArrowPressed == 1) return;
     animateTimeBar();
     skipVideoTo(-3);
+    //skipVideoTime(-HorizontalArrowPressed/2);
+  } //left
+  if(e.which== 39){
+    if(++HorizontalArrowPressed == 1) return;
+    animateTimeBar();
+    skipVideoTo(-4);
+    //skipVideoTime(HorizontalArrowPressed/2);
+  } // right
+  if(e.which== 38){
+    animateTimeBar();
+    skipVideoTo(-2);
+  } //up  //fastforward
+  if(e.which== 40){
+    animateTimeBar();
+    skipVideoTo(-1);
   } //down   //downward
   if(e.which >= 48 && e.which <= 57){
     animateTimeBar();
@@ -154,18 +156,21 @@ $(document.activeElement).keydown(function(e) {
 
 $(document.activeElement).keyup(function(e) {
   if(!initialized) return;
-  if(HorizontalArrowPressed < 2){
-    e.preventDefault(); // prevent the default action (scroll / move caret)
-    if(e.which== 38){
-      animateTimeBar();
-      skipVideoTo(-2);
-    } //up  //fastforward
-    if(e.which== 40){
-      animateTimeBar();
-      skipVideoTo(-1);
-    } //down   //downward
-  }
-  HorizontalArrowPressed = 0;
+  //e.preventDefault(); // prevent the default action (scroll / move caret)
+  if(e.which== 37){
+    if(HorizontalArrowPressed < 2){
+      previousVideo();
+      animateTitle();
+    }
+    HorizontalArrowPressed = 0;
+  } //left  //rewind
+  if(e.which== 39){
+    if(HorizontalArrowPressed < 2){
+      nextVideo();
+      animateTitle();
+    }
+    HorizontalArrowPressed = 0;
+  } //right   //fastforward
 });
 
 function animateAll(){
