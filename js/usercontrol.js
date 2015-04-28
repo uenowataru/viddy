@@ -215,30 +215,50 @@ function mouseClick(){
 var arrowrholdtimeout = 0;
 var arrowlholdtimeout = 0;
 
-$('#arrowL').mousedown(function() {
+$('#arrowL').mousedown(function(e) {
+  e.stopPropagation();
   arrowLeftMouseDown();
   arrowlholdtimeout = setInterval(arrowLeftMouseDown, 200);
 }).bind('mouseup mouseleave', function() {
     clearInterval(arrowlholdtimeout);
 });
 
-$('#arrowR').mousedown(function() {
+$('#arrowR').mousedown(function(e) {
+  e.stopPropagation();
   arrowRightMouseDown();
   arrowrholdtimeout = setInterval(arrowRightMouseDown, 200);
 }).bind('mouseup mouseleave', function() {
     clearInterval(arrowrholdtimeout);
 });
 
+$('#arrowL').mouseup(function(e) {
+  e.stopPropagation();
+  arrowLeftMouseUp();
+});
+
+$('#arrowR').mouseup(function(e) {
+  e.stopPropagation();
+  arrowRightMouseUp();
+});
+
+$('#arrowL').click(function(e) {
+  e.stopPropagation();
+});
+
+$('#arrowR').click(function(e) {
+  e.stopPropagation();
+});
+
 function arrowLeftMouseDown(){
   if(++ArrowPressedDown == 1) return;
-  animateTimeBar();
+  animateAll();
   skipVideoTo(-3);
    //down   //downward
 }
 
 function arrowRightMouseDown(){
   if(++ArrowPressedDown == 1) return;
-  animateTimeBar();
+  animateAll();
   skipVideoTo(-4);
    //up  //fastforward
 }
