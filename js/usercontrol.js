@@ -5,6 +5,8 @@ var timebartimeout;
 var cursortimeout;
 var timebarprog = 1;
 var ClickTime = 0;
+var HorizontalArrowPressed = 0;
+var ArrowPressedDown = 0;
 var ENABLE_VC = false;
 var DOUBLE_CLICK_THRESHOLD = 300;
 var TOUCH_DRAG_THRESHOLD = 100;
@@ -149,7 +151,7 @@ $(document.activeElement).keydown(function(e) {
   }
 });
 
-var HorizontalArrowPressed = 0;
+
 $(document.activeElement).keyup(function(e) {
   if(!initialized) return;
   if(HorizontalArrowPressed < 2){
@@ -210,17 +212,51 @@ function mouseClick(){
   togglePlayPause();
 }
 
+var arrowrholdtimeout = 0;
+var arrowlholdtimeout = 0;
 
+$('#arrowL').mousedown(function() {
+  arrowLeftMouseDown();
+  arrowlholdtimeout = setInterval(arrowLeftMouseDown, 200);
+}).bind('mouseup mouseleave', function() {
+    clearInterval(arrowlholdtimeout);
+});
 
-function arrowLeftClick(){
-  if(isTouchDevice) return;
-  previousVideo();
-  animateTitle();
+$('#arrowR').mousedown(function() {
+  arrowRightMouseDown();
+  arrowrholdtimeout = setInterval(arrowRightMouseDown, 200);
+}).bind('mouseup mouseleave', function() {
+    clearInterval(arrowrholdtimeout);
+});
+
+function arrowLeftMouseDown(){
+  if(++ArrowPressedDown == 1) return;
+  animateTimeBar();
+  skipVideoTo(-3);
+   //down   //downward
 }
-function arrowRightClick(){
+
+function arrowRightMouseDown(){
+  if(++ArrowPressedDown == 1) return;
+  animateTimeBar();
+  skipVideoTo(-4);
+   //up  //fastforward
+}
+function arrowLeftMouseUp(){
   if(isTouchDevice) return;
-  nextVideo();
-  animateTitle();
+  if(ArrowPressedDown < 2){
+    previousVideo();
+    animateTitle();
+  }
+  ArrowPressedDown = 0;
+}
+function arrowRightMouseUp(){
+  if(isTouchDevice) return;
+  if(ArrowPressedDown <2){
+    nextVideo();
+    animateTitle();
+  }
+  ArrowPressedDown = 0;
 }
 
 function titleClick(){

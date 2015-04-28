@@ -172,7 +172,10 @@ function nextVideo() {
 
 function previousVideo() {
   if(!initialized || curr===undefined) return;
-  if (currindex == 0) return;
+  if (currindex == 0){
+    seekYT(curr,0);
+    return;
+  } 
   pauseYTVideo(curr);
 
   temp = next;
@@ -229,13 +232,13 @@ function skipVideoTo(index){
   var totaltime = getYTDuration(curr);
   var nowtime = getYTCurrentTime(curr);
   if(index == -1){    //rewind
-    index = Math.round(10*nowtime/totaltime - 1) * totaltime / 10;
+    index = (10*nowtime/totaltime - 1) * totaltime / 10;
   }
   if(index == -2){    //fastforward
-    index = Math.round(10*nowtime/totaltime + 1) * totaltime / 10;
+    index = (10*nowtime/totaltime + 1) * totaltime / 10;
   }
   if(index == -3){    //rewind little
-    index = getYTCurrentTime(curr) - 1;
+    index = getYTCurrentTime(curr) - 2;
   }
   if(index == -4){    //fastforward little
     index = getYTCurrentTime(curr) + 1;
