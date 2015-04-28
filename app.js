@@ -30,7 +30,7 @@ app.get('/', function (req, res) {
 	//res.sendFolder('/js');
 });
 
-app.get('/*', function (req, res) {
+app.get('/all', function (req, res) {
 	console.log('\n\n\nGot request....');
 	var resp = js_server.getRedditJSON();
 	if(resp) console.log(resp.length);
@@ -38,6 +38,9 @@ app.get('/*', function (req, res) {
 	console.log('Response sent..');
 });
 
+app.get('/icon.ico', function(req,res){
+	res.sendFile(__dirname + '/res/favicon.ico');
+});
 
 var server = app.listen(port, function () {
   var host = server.address().address;
