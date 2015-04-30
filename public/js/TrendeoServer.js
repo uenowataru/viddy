@@ -4,7 +4,7 @@ var called = 0;
 function loadVideos() {
 	if(called++ > 0) return;
 	
-	var resourceUrl = "trendeo.herokuapp.com/api/all";
+	var resourceUrl = "/api/all";
 	return $.getJSON(resourceUrl, procVideos);
 }
 
