@@ -1,5 +1,5 @@
 
-
+//window.history.pushState("object or string", "Title", "/new-url");
 
 // 2. This code loads the IFrame Player API code asynchronously.
 var tag = document.createElement('script');
@@ -88,8 +88,6 @@ function onPlayerReady(event) {
   if(next == event.target){
     nextready = true;
   }
-  
-
 }
 
 
@@ -115,6 +113,7 @@ function onPlayerStateChange(event) {
   if(!initialized || curr===undefined) return;
   if(event.data == YT.PlayerState.UNSTARTED){
     playYTVideo(event.target);
+    changeURL(queue[currindex][0]);
   }
   if (event.data == YT.PlayerState.PLAYING) {
     pauseYTVideo(prev);
@@ -125,6 +124,7 @@ function onPlayerStateChange(event) {
   if (event.data == YT.PlayerState.ENDED)
     nextVideo();
 }
+
 function stopVideo() {
   player.stopVideo();
 }
@@ -362,7 +362,6 @@ function YTError(ytplayer){
   }
 }
 
-
 function newYTPlayer(tag, videoId){
   return new YT.Player(tag, {
     height: '390',
@@ -396,5 +395,10 @@ function getLastIndex(){
   }
   return 0;
 }
+
+function changeURL(videoId){
+  window.history.replaceState("object", "Trendeo: Trending Videos of Now", "/ch/all/" + videoId);
+}
+
 
 

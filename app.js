@@ -1,36 +1,29 @@
 var express = require('express');
-var js_server = require("./js-server");
+var js_server = require("js-server");
 var app = express();
 
 var port = process.env.PORT || 3000;
 
-app.use(express.static(__dirname + '/views'));
-app.use(express.static(__dirname + '/js'));
-app.use(express.static(__dirname + '/css'));
-app.use(express.static(__dirname + '/res'));
+app.use("/js", express.static(__dirname + '/public/js'));
+app.use("/css", express.static(__dirname + '/public/css'));
+app.use("/res", express.static(__dirname + '/public/res'));
 
-//
-//app.set('view engine', 'jade');
 
+//client side get
 app.get('/', function (req, res) {
-	res.sendFile('index.html');
-
-	res.sendFile('trendeo_server.js');
-	res.sendFile('youtube.js');
-	res.sendFile('usercontrol.js');
-	res.sendFile('CacheService.js');
-	
-	res.sendFile('styles.css');
-	
-	res.sendFile('arrowLeft.png');
-	res.sendFile('arrowRight.png');
-	res.sendFile('favicon.ico');
-	//res.sendFile('white.png');
-	//res.send(data);
-	//res.sendFolder('/js');
+    res.sendfile(__dirname + '/public/index.html');
 });
 
-app.get('/*', function (req, res) {
+app.get('/ch/*/*', function (req, res) {
+	res.sendfile(__dirname + '/public/index.html');
+});
+
+app.get('/ch/*', function (req, res) {
+	res.sendfile(__dirname + '/public/index.html');
+});
+
+//api call
+app.get('/api/*', function (req, res) {
 	console.log('\n\n\nGot request....');
 	var resp = js_server.getRedditJSON();
 	if(resp) console.log(resp.length);
@@ -39,6 +32,7 @@ app.get('/*', function (req, res) {
 });
 
 
+//logging
 var server = app.listen(port, function () {
   var host = server.address().address;
   var port = server.address().port;

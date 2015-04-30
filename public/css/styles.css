@@ -78,12 +78,12 @@ iframe {
 }
 
 .arrowLeft {
-	background-image: url("arrowLeft.png");
+	background-image: url("/res/arrowLeft.png");
 	left: 0px;
 }
 
 .arrowRight {
-	background-image: url("arrowRight.png");
+	background-image: url("/res/arrowRight.png");
 	right: 0px;
 }
 
