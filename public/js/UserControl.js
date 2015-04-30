@@ -131,7 +131,7 @@ function mouseClick(){
 }
 
 $('#arrowL').mousedown(function(e) {
-  e.stopPropagation();
+  //e.stopPropagation();
   arrowLeftMouseDown();
   arrowlholdtimeout = setInterval(arrowLeftMouseDown, 200);
 }).bind('mouseup mouseleave', function() {
@@ -139,7 +139,7 @@ $('#arrowL').mousedown(function(e) {
 });
 
 $('#arrowR').mousedown(function(e) {
-  e.stopPropagation();
+  //e.stopPropagation();
   arrowRightMouseDown();
   arrowrholdtimeout = setInterval(arrowRightMouseDown, 200);
 }).bind('mouseup mouseleave', function() {
@@ -147,12 +147,12 @@ $('#arrowR').mousedown(function(e) {
 });
 
 $('#arrowL').mouseup(function(e) {
-  e.stopPropagation();
+  //e.stopPropagation();
   arrowLeftMouseUp();
 });
 
 $('#arrowR').mouseup(function(e) {
-  e.stopPropagation();
+  //e.stopPropagation();
   arrowRightMouseUp();
 });
 
@@ -197,7 +197,7 @@ function arrowRightMouseUp(){
 function titleClick(){
   if(!initialized) return;
   pauseVideo();
-  window.open("https://www.youtube.com/watch?v=" + queue[currindex][0] + "&t=" + Math.floor(getYTCurrentTime(curr)) + "s");
+  window.open("https://www.youtube.com/watch?v=" + video_list.getCurrVideo()[0] + "&t=" + Math.floor(getYTCurrentTime(curr)) + "s");
 }
 
 $('body').on ('mousewheel', function (e) {
