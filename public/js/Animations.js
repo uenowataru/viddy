@@ -94,7 +94,7 @@ function fadeElementById(ElementID){
 
 function loadTitle(){
   if(!initialized) return;
-  var vidtitle = queue[currindex][1];
+  var vidtitle = video_list.getCurrVideo()[1];
   $( "#title" ).text(vidtitle.replace('&amp;','&'));
 }
 

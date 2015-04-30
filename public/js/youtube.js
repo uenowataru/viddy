@@ -1,16 +1,9 @@
-
-//window.history.pushState("object or string", "Title", "/new-url");
-
-// 2. This code loads the IFrame Player API code asynchronously.
 var tag = document.createElement('script');
 
 tag.src = "https://www.youtube.com/iframe_api";
 var firstScriptTag = document.getElementsByTagName('script')[0];
 firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-// 3. This function creates an <iframe> (and YouTube player)
-//    after the API code downloads.
-var currindex;
 var curr;
 var prev;
 var next;
@@ -23,26 +16,39 @@ var prevready = false;
 var nextready = false;
 var initialized = false;
 var YTCache;
+var video_list;
 var lastPlayTime = 0;
 var lastVisit = 0;
 var MAX_REWIND_INDEX = 50;
 var MAX_TIME_PAST = 60*60;
 var TIME_PAST_PICKUP = 15*60;
 var InitialPlay = true;
+var video_list = new VideoList();
+
 
 function initIFrames(){
+  parseCurrURL();
   loadTitle();
   animateTitle();
-  curr = newYTPlayer('curr', queue[currindex][0]);
-  prev = newYTPlayer('prev', queue[currindex > 0 ? currindex-1 : currindex][0]);
-  next = newYTPlayer('next', queue[currindex < queue.length-1 ? currindex+1 : currindex][0]);
+  curr = newYTPlayer('curr', video_list.getCurrVideo()[0]);
+  prev = newYTPlayer('prev', video_list.getPrevVideo()[0]);
+  next = newYTPlayer('next', video_list.getNextVideo()[0]);
   initialized = true;
 }
 
+function parseCurrURL(){
+  var currurl = window.location.href;
+  if(currurl.indexOf("/ch/all/") > 0){
+    var videoId = currurl.substring(currurl.indexOf("/ch/all/") + 8);
+    if(videoId.length > 0)
+      video_list.setCurrVideo(videoId);
+  }
+}
+
 function onYouTubeIframeAPIReady() {
-  loadVideos().always(function() { //is returned as deffered object
+  var channel = "all";
+  loadVideos(channel).always(function() { //is returned as deffered object
     YTCache = new CacheProvider();
-    currindex = getLastIndex();
     try {
       initIFrames();
     }catch(err) {
@@ -94,13 +100,13 @@ function onPlayerReady(event) {
 function onPlayerError(event) {
   if(!initialized || curr===undefined) return;
   if(event.target == curr){
-    queue.splice(currindex,1);
-    loadYTVideo(curr, queue[currindex][0]);
-    loadYTVideo(next, queue[currindex+1][0]);
+    video_list.removeCurrVideo();
+    loadYTVideo(curr, video_list.getCurrVideo()[0]);
+    loadYTVideo(next, video_list.getNextVideo()[0]);
   }
   if(event.target == next){
-    queue.splice(currindex+1,1);
-    loadYTVideo(next, queue[currindex+1][0]);
+    video_list.removeNextVideo();
+    loadYTVideo(next, video_list.getNextVideo()[0]);
   }
 }
 
@@ -109,13 +115,14 @@ function onPlayerError(event) {
 //    the player should play for six seconds and then stop.
 //
 var done = false;
+
 function onPlayerStateChange(event) {
   if(!initialized || curr===undefined) return;
   if(event.data == YT.PlayerState.UNSTARTED){
     playYTVideo(event.target);
-    changeURL(queue[currindex][0]);
   }
   if (event.data == YT.PlayerState.PLAYING) {
+    changeURL(video_list.getCurrVideo()[0]);
     pauseYTVideo(prev);
     pauseYTVideo(next);
     document.activeElement.blur();
@@ -131,10 +138,9 @@ function stopVideo() {
 
 function nextVideo() {
   if(!initialized || curr===undefined) return;
-  if(currindex == queue.length-1){
-    currindex = 0;
-    loadYTVideo(curr, queue[currindex][0]);
-    loadYTVideo(next, queue[currindex+1][0]);
+  if(video_list.getCurrIndex() == video_list.getListLength()-1){
+    loadYTVideo(curr, video_list.getCurrVideo()[0]);
+    loadYTVideo(next, video_list.getNextVideo()[0]);
     return;
   }
   pauseYTVideo(curr);
@@ -146,9 +152,9 @@ function nextVideo() {
   
   playYTVideo(curr);
 
-  currindex++;
-  if( currindex < queue.length - 1)
-    loadYTVideo(next, queue[currindex+1][0]);
+  video_list.next();
+  if( video_list.getCurrIndex() < video_list.getListLength() - 1)
+    loadYTVideo(next, video_list.getNextVideo()[0]);
 
   seekYT(prev, 0);
   seekYT(next, 0);
@@ -161,18 +167,18 @@ function nextVideo() {
   $( nextdisp ).css( "display", "none" );
   $( prevdisp ).css( "display", "none" );
 
-  if(currindex > queue.length - 15)
-    loadVideos();
+  // if(video_list.getCurrIndex() > video_list.getListLength() - 15)
+  //   loadVideos();
 
   loadTitle();
   animateTimeBar();
-  YTCache.set('lastVideo',queue[currindex][0], true);
+  YTCache.set('lastVideo',video_list.getCurrVideo()[0], true);
   YTCache.set('lastVisit',Math.round(new Date().getTime() / 1000) + '', true);
 }
 
 function previousVideo() {
   if(!initialized || curr===undefined) return;
-  if (currindex == 0){
+  if (video_list.getCurrIndex() == 0){
     seekYT(curr,0);
     return;
   } 
@@ -185,9 +191,9 @@ function previousVideo() {
 
   playYTVideo(curr);
 
-  currindex--;
-  if( currindex > 0)
-    loadYTVideo(prev, queue[currindex-1][0]);
+  video_list.prev();
+  if( video_list.getCurrIndex() > 0)
+    loadYTVideo(prev, video_list.getPrevVideo()[0]);
 
   seekYT(prev,0);
   seekYT(next, 0);
@@ -203,7 +209,7 @@ function previousVideo() {
 
   loadTitle();
   animateTimeBar();
-  YTCache.set('lastVideo',queue[currindex][0], true);
+  YTCache.set('lastVideo', video_list.getCurrVideo()[0], true);
   YTCache.set('lastVisit', Math.round(new Date().getTime() / 1000) + '', true);
 }
 
@@ -244,7 +250,7 @@ function skipVideoTo(index){
     index = getYTCurrentTime(curr) + 3;
   }
   if(index < 0){
-    if(currindex == 0){
+    if(video_list.getCurrIndex() == 0){
       seekYT(curr,0);
     }
     previousVideo();
@@ -330,7 +336,7 @@ function YTError(ytplayer){
   if(ytplayer == curr){
     //alert('error curr');
     tag = currdisp.substring(1);
-    videoId = queue[currindex];
+    videoId = video_list.getCurrVideo()[0];
     if(currready){
       //curr.getIframe().setAttribute("src", "https://www.youtube.com/embed/WsksFbFZeeU");
       curr.destroy();
@@ -343,7 +349,7 @@ function YTError(ytplayer){
   if(ytplayer == next){
     //alert('error next');
     tag = nextdisp.substring(1,nextdisp.length);
-    videoId = queue[currindex+1];
+    videoId = video_list.getNextVideo()[0];
     if(nextready){
       //next.destroy();
       nextready = false;
@@ -353,7 +359,7 @@ function YTError(ytplayer){
   if(ytplayer == prev){
     //alert('error prev');
     tag = prevdisp.substring(1,prevdisp.length);
-    videoId = queue[currindex-1];
+    videoId = video_list.getPrevVideo()[0];
     if(prevready){
       //prev.destroy();
       prevready = false;
@@ -388,12 +394,9 @@ function getLastIndex(){
   lastPlayTime = parseInt(YTCache.get('lastTime',true, false));
   var currtime = new Date().getTime() / 1000;
   if(currtime > lastVisit + MAX_TIME_PAST) return 0;
-  for(var i = 0; i < queue.length && i < MAX_REWIND_INDEX; i++){
-    if(queue[i][0]==videoId){
-      return i;
-    }
-  }
-  return 0;
+  var indexofvideo = video_list.findVideo(videoId,MAX_REWIND_INDEX);
+
+  //add some stuff
 }
 
 function changeURL(videoId){

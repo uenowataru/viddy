@@ -1,31 +1,103 @@
 function VideoList() {
-	this.lists = {};
+	this.vidlists = {};
 	this.channel_index = {};
 	this.channel = "all";
-	this.init = function(){
-		this.channel_index["all"] = 0;
-	};
+	this.channel_index["all"] = 0;
+	this.loading = false;
 }
 
-VideoList.prototype.getCurrVideo = function(){
-	var currindex = this.channel_index[this.channel];
-	return this.lists[this.channel][currindex];
+
+function loadVideos() {
+	var channel = video_list.getCurrChannel();
+	var resourceUrl = "/api/" + channel;
+	return $.getJSON(resourceUrl, function(data){
+		procVideos(data, channel);
+	});
+}
+
+function procVideos(data, channel){
+	var queue = [];
+
+	$.each(data, function(i, item){
+		var vidurl = item[0];
+		var vidtitle = item[1];
+		queue.push([vidurl, vidtitle]);
+	});
+
+	video_list.putList(channel,queue);
+}
+
+VideoList.prototype = {
+	getCurrVideo: function(){
+		var currindex = this.channel_index[this.channel];
+		return this.vidlists[this.channel][currindex];
+	},
+
+	getNextVideo: function(){
+		var currindex = this.channel_index[this.channel];
+		return this.vidlists[this.channel][currindex+1];
+	},
+
+	getPrevVideo: function(){
+		var currindex = this.channel_index[this.channel];
+		return this.vidlists[this.channel][currindex > 0 ? currindex-1 : currindex];
+	},
+
+
+	getCurrIndex: function(){
+		return this.channel_index[this.channel];
+	},
+
+
+	next: function(){
+		this.channel_index[this.channel] = this.channel_index[this.channel]+1;
+	},
+
+	prev: function(){
+		this.channel_index[this.channel] = this.channel_index[this.channel]-1;
+	},
+
+	getListLength: function(){
+		return this.vidlists[this.channel].length;
+	},
+
+	findVideo: function(videoId, maxIndex){
+		for(var i = 0; i < this.vidlists[this.channel].length && i < maxIndex; i++){
+			if(this.vidlists[this.channel][i][0]==videoId){
+				return i;
+			}
+		}
+		return 0;
+	},
+
+	//on curr error remove the video
+	removeCurrVideo: function(){
+
+	},
+
+	//on error remove the video
+	removeNextVideo: function(){
+		
+	},
+
+	setCurrVideo: function(videoId){
+		this.channel_index[this.channel] = this.findVideo(videoId, this.getListLength());
+	},
+
+	putList: function(channel,queue){
+		this.vidlists[channel] = queue;
+	},
+
+	getCurrChannel: function(){
+		return this.channel;
+	}
 };
 
-VideoList.prototype.getNextVideo = function(){
-	var currindex = this.channel_index[this.channel];
-	return this.lists[this.channel][currindex+1];
-};
+//deal with wrapping issues of queue
 
-VideoList.prototype.getPrevVideo = function(){
-	var currindex = this.channel_index[this.channel];
-	return this.lists[this.channel][currindex-1];
-};
 
-VideoList.prototype.changeChannel = function(channel){
-	this.channel = channel;
-};
 
-VideoList.prototype.putList = function(channel,queue){
-	this.lists[channel] = queue;
-};
+
+
+
+
