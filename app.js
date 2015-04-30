@@ -11,15 +11,15 @@ app.use("/res", express.static(__dirname + '/public/res'));
 
 //client side get
 app.get('/', function (req, res) {
-    res.sendfile(__dirname + '/public/index.html');
+    res.sendFile(__dirname + '/public/index.html');
 });
 
 app.get('/ch/*/*', function (req, res) {
-	res.sendfile(__dirname + '/public/index.html');
+	res.sendFile(__dirname + '/public/index.html');
 });
 
 app.get('/ch/*', function (req, res) {
-	res.sendfile(__dirname + '/public/index.html');
+	res.sendFile(__dirname + '/public/index.html');
 });
 
 //api call

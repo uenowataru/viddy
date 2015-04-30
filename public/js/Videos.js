@@ -1,3 +1,5 @@
+
+
 function VideoList() {
 	this.vidlists = {};
 	this.channel_index = {};
@@ -72,12 +74,12 @@ VideoList.prototype = {
 
 	//on curr error remove the video
 	removeCurrVideo: function(){
-
+		this.vidlists[this.channel].splice(this.channel_index[this.channel],1);
 	},
 
 	//on error remove the video
 	removeNextVideo: function(){
-		
+		this.vidlists[this.channel].splice(this.channel_index[this.channel]+1,1);
 	},
 
 	setCurrVideo: function(videoId){

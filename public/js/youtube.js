@@ -63,6 +63,7 @@ function onYouTubeIframeAPIReady() {
         YTCache.set('lastTime', Math.floor(getYTCurrentTime(curr)) + '', true);
         if(getYTDuration(curr) > 0 && getYTDuration(curr) - getYTCurrentTime(curr) < 0.7){
           nextVideo();
+          animateTitle();
         }
       }catch(err){
         console.log(err);
@@ -130,6 +131,7 @@ function onPlayerStateChange(event) {
   }
   if (event.data == YT.PlayerState.ENDED)
     nextVideo();
+    animateTitle();
 }
 
 function stopVideo() {
@@ -257,7 +259,7 @@ function skipVideoTo(index){
     animateTitle();
     return;
   }
-  if(index == 10){
+  if(index >= totaltime){
     nextVideo();
     animateTitle();
     return;
@@ -268,7 +270,12 @@ function skipVideoTo(index){
 function skipVideoTime(sec){
   if(!initialized || curr===undefined) return 0;
   var nowtime = getYTCurrentTime(curr);
-  seekYT(curr,nowtime+sec);
+  if(nowtime+sec < getYTDuration(curr)){
+    seekYT(curr,nowtime+sec);
+  }else{
+    nextVideo();
+    animateTitle();
+  }
 }
 
 function getYTDuration(ytplayer){
