@@ -27,28 +27,73 @@ var video_list = new VideoList();
 
 
 function initIFrames(){
-  parseCurrURL();
-  loadTitle();
-  animateTitle();
+  setVideoFromURL();
   curr = newYTPlayer('curr', video_list.getCurrVideo()[0]);
   prev = newYTPlayer('prev', video_list.getPrevVideo()[0]);
   next = newYTPlayer('next', video_list.getNextVideo()[0]);
+  
   initialized = true;
+  loadTitle();
+  animateTitle();
+  loadChannels();
+  animateChannels();
 }
 
-function parseCurrURL(){
+function parseInfoFromURL(){
   var currurl = window.location.href;
-  if(currurl.indexOf("/ch/all/") > 0){
-    var videoId = currurl.substring(currurl.indexOf("/ch/all/") + 8);
-    if(videoId.length > 0)
-      video_list.setCurrVideo(videoId);
+  if(currurl.indexOf("/ch/") > 0){
+    var churl = currurl.substring(currurl.indexOf("/ch/") + 4);
+    var channel = churl.substring(0, churl.indexOf("/"));
+    var videoId = churl.substring(churl.indexOf("/") + 1);
+    return [channel, videoId];
+  }else{
+    return ["",""];
   }
 }
 
+function setVideoFromURL(){
+  var videoId = parseInfoFromURL()[1];
+  if(videoId.length > 0)
+      video_list.setCurrVideo(videoId);
+}
+
+function setChannelFromURL(){
+  var channel = parseInfoFromURL()[0];
+  if(channel.length > 0)
+    video_list.setCurrChannel(channel);
+  else
+    channel = "all";
+}
+
+function setNewChannel(channel){
+  video_list.setCurrChannel(channel);
+  loadVideos().always(function(){
+    loadYTVideo(curr, video_list.getCurrVideo()[0]);
+    loadYTVideo(prev, video_list.getPrevVideo()[0]);
+    loadYTVideo(next, video_list.getNextVideo()[0]);
+
+    loadTitle();
+    animateTitle();
+    loadChannels();
+    animateChannels();
+  });
+}
+
+function prevChannel(){
+  video_list.prevChannel();
+  setNewChannel(video_list.getCurrChannel());
+}
+
+function nextChannel(){
+  video_list.nextChannel();
+  setNewChannel(video_list.getCurrChannel());
+}
+
 function onYouTubeIframeAPIReady() {
-  var channel = "all";
-  loadVideos(channel).always(function() { //is returned as deffered object
+  setChannelFromURL();
+  loadVideos().always(function() { //is returned as deffered object
     YTCache = new CacheProvider();
+    //initIFrames();
     try {
       initIFrames();
     }catch(err) {
@@ -169,8 +214,8 @@ function nextVideo() {
   $( nextdisp ).css( "display", "none" );
   $( prevdisp ).css( "display", "none" );
 
-  // if(video_list.getCurrIndex() > video_list.getListLength() - 15)
-  //   loadVideos();
+  if(video_list.getCurrIndex() > video_list.getListLength() - 10)
+    loadVideos();
 
   loadTitle();
   animateTimeBar();
@@ -407,7 +452,7 @@ function getLastIndex(){
 }
 
 function changeURL(videoId){
-  window.history.replaceState("object", "Trendeo: Trending Videos of Now", "/ch/all/" + videoId);
+  window.history.replaceState("object", "Trendeo: Trending Videos of Now", "/ch/" + video_list.getCurrChannel() + "/" + videoId);
 }
 
 

@@ -99,6 +99,12 @@ $(document.activeElement).keydown(function(e) {
     animateTimeBar();
     skipVideoTo(e.which - 48);
   }
+  if(e.which == 74){
+    prevChannel();
+  } //j
+  if(e.which == 75){
+    nextChannel();
+  } //k
 });
 
 $(document.activeElement).keyup(function(e) {
@@ -206,20 +212,24 @@ $('body').on ('mousewheel', function (e) {
 
   if (wheeldelta < -scrollThreshold) {
     canScroll = false;
-    nextVideo();
-    animateTitle();
+    nextChannel();
+
+    //nextVideo();
+    //animateTitle();
     setTimeout(function() {
       canScroll = true;
       wheeldelta = 0;
-    }, 500);
+    }, 1000);
   } else if (wheeldelta > scrollThreshold) {    //scrolled down
     canScroll = false;
-    previousVideo();
-    animateTitle();
+    prevChannel();
+
+    //previousVideo();
+    //animateTitle();
     setTimeout(function() {
       canScroll = true;
       wheeldelta = 0;
-    }, 500);
+    }, 1000);
   }
 });
 

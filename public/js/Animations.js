@@ -5,6 +5,7 @@ var arrowtimeout;
 var titletimeout;
 var timebartimeout;
 var cursortimeout;
+var channelstimeout;
 var timebarprog = 1;
 
 $(document).ready(function(){
@@ -20,6 +21,7 @@ function animateAll(){
     animateTitle();
     animateArrow();
     animateTimeBar();
+    animateChannels();
     setTimeout(function(){
       moved = false;
     },ALL_ANIMATION_TIME);
@@ -29,6 +31,7 @@ function animateAll(){
     clearTimeout(titletimeout);
     clearTimeout(timebartimeout);
     clearTimeout(cursortimeout);
+    clearTimeout(channelstimeout);
     arrowtimeout = setTimeout(function(){
       if(isTouchDevice) return;
       fadeElementById("#arrowL");
@@ -39,6 +42,9 @@ function animateAll(){
     }, 2000);
     timebartimeout = setTimeout(function(){
       fadeElementById("#timebar");
+    }, 2000);
+    channelstimeout = setTimeout(function(){
+      fadeElementById("#channels");
     }, 2000);
     cursortimeout = setTimeout(function(){
       document.body.style.cursor = 'none';
@@ -74,6 +80,14 @@ function animateTimeBar(){
   }, 2000);
 }
 
+function animateChannels(){
+  animateElementById("#channels", 0.75);
+  clearTimeout(channelstimeout);
+  channelstimeout = setTimeout(function(){
+    fadeElementById("#channels");
+  }, 2000);
+}
+
 function animateElementById(ElementID, TargetOpacity){
   $( ElementID ).animate({
     opacity: TargetOpacity,
@@ -97,6 +111,13 @@ function loadTitle(){
   var vidtitle = video_list.getCurrVideo()[1];
   $( "#title" ).text(vidtitle.replace('&amp;','&'));
 }
+
+function loadChannels(){
+  if(!initialized) return;
+  var channel = video_list.getCurrChannel();
+  $( "#currchannel" ).text(channel);
+}
+
 
 setInterval(function(){
   try{

@@ -56,6 +56,20 @@ iframe {
 	cursor: pointer;
 }
 
+#channels {
+	position: absolute;
+	display:inline-block;
+	left: 5px;
+	bottom: 5px;
+	color: #fff;
+}
+
+#currchannel {
+    margin: 0 auto;
+    text-align: center;
+    text-shadow: 0 0 5px #000;
+}
+
 .arrow {
 	width: 8%;
 	height: 12%;

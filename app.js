@@ -14,18 +14,25 @@ app.get('/', function (req, res) {
     res.sendFile(__dirname + '/public/index.html');
 });
 
-app.get('/ch/*/*', function (req, res) {
+app.get('/ch/:channel/:videoId', function (req, res) {
+	console.log('ch/' + req.params.channel + "/" + req.params.videoId);
+
+	//get the channel and videoId somehow
 	res.sendFile(__dirname + '/public/index.html');
 });
 
-app.get('/ch/*', function (req, res) {
+app.get('/ch/:channel', function (req, res) {
+	console.log('ch/' + req.params.channel);
+
+	//get the channel and videoId somehow
 	res.sendFile(__dirname + '/public/index.html');
 });
 
 //api call
-app.get('/api/*', function (req, res) {
+app.get('/api/:channel', function (req, res) {
 	console.log('\n\n\nGot request....');
-	var resp = js_server.getRedditJSON();
+	var subr = req.params.channel;
+	var resp = js_server.getRedditJSON(subr);
 	if(resp) console.log(resp.length);
 	res.send(resp);
 	console.log('Response sent..');
