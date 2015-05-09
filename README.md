@@ -20,7 +20,7 @@ Features:
 		-show video thumbnail on facebook (probably need to switch to jade)
 		-iOS / android support
 		-more buttons:
-			toggle comments + (comment on the video?) + search + like (save the video) + share button + user (login/log out/user info) + contact trendeo + filter videos + skip video segments
+			toggle comments + (comment on the video?) + search + like (save the video) + share button + user (login/log out/user info) + contact trendeo + filter videos + skip video segments + home button
 		-show comments as a slider (enable/disable with c)
 		-saving videos the user watched and skipping the videos if he watched fully / skipped
 

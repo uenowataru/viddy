@@ -214,8 +214,8 @@ function nextVideo() {
   $( nextdisp ).css( "display", "none" );
   $( prevdisp ).css( "display", "none" );
 
-  if(video_list.getCurrIndex() > video_list.getListLength() - 10)
-    loadVideos();
+  // if(video_list.getCurrIndex() > video_list.getListLength() - 10)
+  //   loadVideos();
 
   loadTitle();
   animateTimeBar();
