@@ -186,6 +186,7 @@ function stopVideo() {
 function nextVideo() {
   if(!initialized || curr===undefined) return;
   if(video_list.getCurrIndex() == video_list.getListLength()-1){
+    video_list.next();
     loadYTVideo(curr, video_list.getCurrVideo()[0]);
     loadYTVideo(next, video_list.getNextVideo()[0]);
     return;

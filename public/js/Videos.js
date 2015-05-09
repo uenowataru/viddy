@@ -1,7 +1,7 @@
 function VideoList() {
 	this.vidlists = {};
 	this.channel_vidindex = {};
-	this.channels = ['all', 'videos', 'gopro', 'youtubehaiku', 'bloopers', 'funnyvideos', 'fail', 'UnexpectedThugLife',
+	this.channels = ['all', 'gopro', 'youtubehaiku', 'bloopers', 'funnyvideos', 'fail', 'UnexpectedThugLife',
 	'StandUpComedy', 'deepintoyoutube', 'ContagiousLaughter','LearnUselessTalents', 'movietrailers', 'musicvideos',
 	'Music', 'listentothis', 'hiphopheads', 'sports' , 'nba', 'soccer', 'nfl','PublicFreakout', 'StreetFights', 'respectporn',
 	'kidsafevideos'];
@@ -135,6 +135,8 @@ VideoList.prototype = {
 
 	next: function(){
 		this.channel_vidindex[this.channel] = this.channel_vidindex[this.channel]+1;
+		if(this.channel_vidindex[this.channel] >= this.vidlists[this.channel].length)
+			this.channel_vidindex[this.channel] = 0;
 	},
 
 	prev: function(){
