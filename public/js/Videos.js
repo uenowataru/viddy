@@ -1,17 +1,19 @@
 function VideoList() {
 	this.vidlists = {};
 	this.channel_vidindex = {};
-	this.channels = ['all', 'videos', 'youtubehaiku', 'deepintoyoutube', 'StandUpComedy', 'fail', 'gopro', 'ContagiousLaughter',
-	'todayilearned', 'LearnUselessTalents','Music', 'listentothis', 'hiphopheads','sports' , 'nba', 'soccer', 'nfl',
-	'UnexpectedThugLife', 'space', 'PublicFreakout', 'StreetFights', 'respectporn'];
+	this.channels = ['all', 'videos', 'gopro', 'youtubehaiku', 'bloopers', 'funnyvideos', 'fail', 'UnexpectedThugLife',
+	'StandUpComedy', 'deepintoyoutube', 'ContagiousLaughter','LearnUselessTalents', 'movietrailers', 'musicvideos',
+	'Music', 'listentothis', 'hiphopheads', 'sports' , 'nba', 'soccer', 'nfl','PublicFreakout', 'StreetFights', 'respectporn',
+	'kidsafevideos'];
 	this.channel = "all";
 	this.channel_index = 0;
 	this.loading = false;
 }
 
+
+
 function loadVideos() {
 	var channel = video_list.getCurrChannel();
-	//console.log(channel);
 	var resourceUrl = "/api/" + channel;
 	video_list.channel_vidindex[channel] = 0;
 	return $.getJSON(resourceUrl, function(data){
@@ -85,7 +87,7 @@ VideoList.prototype = {
 			this.channel_index = this.channels.length-1;
 		this.setCurrChannel(this.channels[this.channel_index]);
 	},
-	
+
 	//set the curr video to be the videoid
 	setCurrVideo: function(videoId){
 		this.channel_vidindex[this.channel] = this.findVideo(videoId, this.getListLength());
