@@ -2,7 +2,7 @@ function VideoList() {
 	this.vidlists = {};
 	this.channel_vidindex = {};
 	this.channels = ['all', 'gopro', 'youtubehaiku', 'bloopers', 'funnyvideos', 'fail', 'UnexpectedThugLife',
-	'StandUpComedy', 'deepintoyoutube', 'ContagiousLaughter','LearnUselessTalents', 'movietrailers', 'musicvideos',
+	'StandUpComedy', 'deepintoyoutube', 'ContagiousLaughter','LearnUselessTalents', 'trailers', 'musicvideos',
 	'Music', 'listentothis', 'hiphopheads', 'sports' , 'nba', 'soccer', 'nfl','PublicFreakout', 'StreetFights', 'respectporn',
 	'kidsafevideos'];
 	this.channel = "all";
