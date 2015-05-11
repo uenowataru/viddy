@@ -16,9 +16,8 @@ function loadVideos() {
 	var channel = video_list.getCurrChannel();
 	var resourceUrl = "/api/ch/" + channel;
 	video_list.channel_vidindex[channel] = 0;
-	//console.log(resourceUrl);
+	
 	return $.getJSON(resourceUrl, function(data){
-		//console.log(channel);
 		procVideos(data, channel);
 	});
 }
@@ -26,7 +25,8 @@ function loadVideos() {
 function loadVideo(channel, videoId){
 	var url = "/api/vid/" + videoId;
 	return $.getJSON(url, function(data){
-		if(data.length > 1){
+		//console.log(data);
+		if(data.length > 2){
 			//console.log(data[0]);
 			var title = data[1];
 			video_list.insertVideo(channel, 0, [videoId, title]);
@@ -56,17 +56,17 @@ function procVideos(data, channel){
 VideoList.prototype = {
 	getCurrVideo: function(){
 		var currindex = this.channel_vidindex[this.channel];
-		//console.log(Object.keys(this.vidlists));
-		//console.log(this.channel_vidindex[Object.keys(this.channel_vidindex)[0]]);
-		//console.log(this.channel);
-		//console.log(currindex);
-		//console.log(this.vidlists[this.channel]);
+		// //console.log(Object.keys(this.vidlists));
+		// //console.log(this.channel_vidindex[Object.keys(this.channel_vidindex)[0]]);
+		// //console.log(this.channel);
+		// //console.log(currindex);
+		// //console.log(this.vidlists[this.channel]);
 		return this.vidlists[this.channel][currindex];
 	},
 
 	getNextVideo: function(){
 		var currindex = this.channel_vidindex[this.channel];
-		return this.vidlists[this.channel][currindex + 1 < this.vidlists[this.channel].length ? currindex : 0];
+		return this.vidlists[this.channel][currindex + 1]; // < this.vidlists[this.channel].length ? currindex : 0
 	},
 
 	getPrevVideo: function(){
@@ -132,13 +132,16 @@ VideoList.prototype = {
 			}
 		}
 
-		if(videoId > 0){
+		//console.log("vid:" + videoId);
+
+		if(videoId.length > 0){
+			//console.log("loading vid info");
 			loadVideo(this.channel, videoId).always(function(){
+				//console.log("returning 0");
 				return 0;
 			});
-		}else{
-			return 0;
 		}
+		return 0;
 	},
 
 	insertVideo: function(channel, index, vidinfo){

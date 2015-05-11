@@ -44,9 +44,13 @@ function parseInfoFromURL(){
   if(currurl.indexOf("/ch/") > 0){
     var churl = currurl.substring(currurl.indexOf("/ch/") + 4);
     var channel = churl.substring(0, churl.indexOf("/"));
-    if(channel.length == 0)
-      channel = churl;
     var videoId = churl.substring(churl.indexOf("/") + 1);
+    if(channel.length == 0){
+      channel = churl;
+      videoId = "";
+    }
+
+    //console.log(channel + "/" + videoId);
     return [channel, videoId];
   }else{
     return ["",""];
@@ -56,6 +60,7 @@ function parseInfoFromURL(){
 function setVideoFromURL(){
   var videoId = parseInfoFromURL()[1];
   video_list.setCurrVideo(videoId);
+  //console.log(video_list.getCurrVideo());
 }
 
 function setChannelFromURL(){
@@ -69,7 +74,14 @@ function setChannelFromURL(){
 function setNewChannel(channel){
   video_list.setCurrChannel(channel);
   loadVideos().always(function(){
-    initIFrames();
+    loadYTVideo(curr, video_list.getCurrVideo()[0]);
+    loadYTVideo(prev, video_list.getPrevVideo()[0]);
+    loadYTVideo(next, video_list.getNextVideo()[0]);
+
+    loadTitle();
+    animateTitle();
+    loadChannels();
+    animateChannels();
   });
 }
 
@@ -322,7 +334,7 @@ function getYTDuration(ytplayer){
   try{
     return ytplayer.getDuration();
   }catch (err){
-    YTError(ytplayer);
+    YTError(ytplayer, err);
     return 0;
   }
 }
@@ -331,7 +343,7 @@ function getYTCurrentTime(ytplayer){
   try{
     return ytplayer.getCurrentTime();
   }catch (err){
-    YTError(ytplayer);
+    YTError(ytplayer, err);
     return 0;
   }
 }
@@ -340,7 +352,7 @@ function pauseYTVideo(ytplayer){
   try{
     ytplayer.pauseVideo();
   }catch (err){
-    YTError(ytplayer);
+    YTError(ytplayer, err);
   }
 }
 
@@ -348,7 +360,7 @@ function playYTVideo(ytplayer){
   try{
     ytplayer.playVideo();
   }catch (err){
-    YTError(ytplayer);
+    YTError(ytplayer, err);
   }
 }
 
@@ -356,7 +368,7 @@ function getYTPlayerState(ytplayer){
   try{
     return ytplayer.getPlayerState();
   }catch (err){
-    YTError(ytplayer);
+    YTError(ytplayer, err);
     return -1;
   }
 }
@@ -365,7 +377,7 @@ function loadYTVideo(ytplayer, videoId){
   try{
     ytplayer.loadVideoById({'videoId': videoId, 'startSeconds': 0, 'suggestedQuality': 'large'});
   }catch (err){
-    YTError(ytplayer);
+    YTError(ytplayer, err);
   }
 }
 
@@ -373,11 +385,11 @@ function seekYT(ytplayer, position){
   try{
     ytplayer.seekTo(position);
   }catch (err){
-    YTError(ytplayer);
+    YTError(ytplayer, err);
   }
 }
 
-function YTError(ytplayer){
+function YTError(ytplayer, err){
   var tag;
   var videoId;
   if(ytplayer == curr){
