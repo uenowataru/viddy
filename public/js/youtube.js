@@ -55,29 +55,21 @@ function parseInfoFromURL(){
 
 function setVideoFromURL(){
   var videoId = parseInfoFromURL()[1];
-  if(videoId.length > 0)
-      video_list.setCurrVideo(videoId);
+  video_list.setCurrVideo(videoId);
 }
 
 function setChannelFromURL(){
   var channel = parseInfoFromURL()[0];
-  if(channel.length > 0)
+  if(channel.length > 0){
     video_list.setCurrChannel(channel);
-  else
+  }else
     channel = "all";
 }
 
 function setNewChannel(channel){
   video_list.setCurrChannel(channel);
   loadVideos().always(function(){
-    loadYTVideo(curr, video_list.getCurrVideo()[0]);
-    loadYTVideo(prev, video_list.getPrevVideo()[0]);
-    loadYTVideo(next, video_list.getNextVideo()[0]);
-
-    loadTitle();
-    animateTitle();
-    loadChannels();
-    animateChannels();
+    initIFrames();
   });
 }
 
@@ -95,9 +87,9 @@ function onYouTubeIframeAPIReady() {
   setChannelFromURL();
   loadVideos().always(function() { //is returned as deffered object
     YTCache = new CacheProvider();
-    //initIFrames();
+    initIFrames();
     try {
-      initIFrames();
+      //initIFrames();
     }catch(err) {
       alert('Server Error:\n' + err);
     }
