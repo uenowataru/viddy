@@ -44,6 +44,8 @@ function parseInfoFromURL(){
   if(currurl.indexOf("/ch/") > 0){
     var churl = currurl.substring(currurl.indexOf("/ch/") + 4);
     var channel = churl.substring(0, churl.indexOf("/"));
+    if(channel.length == 0)
+      channel = churl;
     var videoId = churl.substring(churl.indexOf("/") + 1);
     return [channel, videoId];
   }else{

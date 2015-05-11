@@ -29,15 +29,30 @@ app.get('/ch/:channel', function (req, res) {
 });
 
 //api call
-app.get('/api/:channel', function (req, res) {
-	console.log('\n\n\nGot request....');
+app.get('/api/ch/:channel', function (req, res) {
+	console.log('\n\n\nGot ch request....');
 	var subr = req.params.channel;
 	var resp = js_server.getRedditJSON(subr);
 	if(resp) console.log(resp.length);
 	res.send(resp);
-	console.log('Response sent..');
+	console.log('Ch response sent..');
 });
 
+app.get('/api/vid/:videoId', function (req, res) {
+	console.log('\n\n\nGot vid request....');
+	var videoId = req.params.videoId;
+	var resp = js_server.getRedditVideoJSON(videoId);
+	if(resp) console.log(resp.length);
+	res.send(resp);
+	console.log('vId response sent..');
+});
+
+app.get('/*', function(req, res){
+	console.log('ch/' + req.params.channel);
+
+	//get the channel and videoId somehow
+	res.sendFile(__dirname + '/public/index.html');
+});
 
 //logging
 var server = app.listen(port, function () {

@@ -2,8 +2,8 @@ function VideoList() {
 	this.vidlists = {};
 	this.channel_vidindex = {};
 	this.channels = ['all', 'gopro', 'youtubehaiku', 'bloopers', 'funnyvideos', 'fail', 'UnexpectedThugLife',
-	'StandUpComedy', 'deepintoyoutube', 'ContagiousLaughter','LearnUselessTalents', 'trailers', 'musicvideos',
-	'Music', 'listentothis', 'hiphopheads', 'sports' , 'nba', 'soccer', 'nfl','PublicFreakout', 'StreetFights', 'respectporn',
+	'StandUpComedy', 'deepintoyoutube', 'ContagiousLaughter','LearnUselessTalents', 'musicvideos',
+	'Music', 'trailers', 'sports' , 'nba', 'soccer', 'nfl','PublicFreakout', 'StreetFights', 'respectporn',
 	'kidsafevideos'];
 	this.channel = "all";
 	this.channel_index = 0;
@@ -14,23 +14,30 @@ function VideoList() {
 
 function loadVideos() {
 	var channel = video_list.getCurrChannel();
-	var resourceUrl = "/api/" + channel;
+	var resourceUrl = "/api/ch/" + channel;
 	video_list.channel_vidindex[channel] = 0;
+	console.log(channel);
 	return $.getJSON(resourceUrl, function(data){
+		console.log(channel);
 		procVideos(data, channel);
 	});
 }
 
 function procVideos(data, channel){
 	var queue = [];
+
+	console.log(channel + ":" + data);
 	
 	$.each(data, function(i, item){
+		console.log(item);
 		if(item==undefined) return;
 		var vidurl = item[0];
 		var vidtitle = item[1];
 		//var subreddit = item[2];
 		queue.push([vidurl, vidtitle]);
 	});
+
+	console.log(channel + ":" + queue.length);
 
 	video_list.putList(channel,queue);
 }
@@ -112,15 +119,14 @@ VideoList.prototype = {
 		}
 
 		//add the video to the beginning of the list 
-		///this.vidlists[this.channel] = videoId;
-
-		// var url = "http://youtube.com/oembed?url=http://www.youtube.com/watch?v=" + videoId + "&format=json";
-		// $.getJSON(url, function(data){
-		// 	console.log(data.title);
-		// 	var title = data.title;
-		// 	this.vidlists[this.channel].unshift([videoId, title]);
-		// });
-
+		var url = "/api/vid/" + videoId;
+		$.getJSON(url, function(data){
+			if(data.length > 1){
+				console.log(data[0]);
+				var title = data[1];
+				this.vidlists[this.channel].unshift([videoId, title]);
+			}
+		});
 		return 0;
 	},
 
