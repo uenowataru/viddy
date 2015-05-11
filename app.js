@@ -48,7 +48,9 @@ app.get('/api/vid/:videoId', function (req, res) {
 });
 
 app.get('/*', function(req, res){
-	console.log("Unknown URL caught");
+	console.log('ch/' + req.params.channel);
+
+	//get the channel and videoId somehow
 	res.sendFile(__dirname + '/public/index.html');
 });
 

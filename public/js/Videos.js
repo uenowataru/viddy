@@ -3,7 +3,7 @@ function VideoList() {
 	this.channel_vidindex = {};
 	this.channels = ['all', 'gopro', 'youtubehaiku', 'bloopers', 'funnyvideos', 'fail', 'UnexpectedThugLife',
 	'StandUpComedy', 'deepintoyoutube', 'ContagiousLaughter','LearnUselessTalents', 'musicvideos',
-	'Music', 'sports' , 'nba', 'soccer', 'nfl','PublicFreakout', 'StreetFights', 'respectporn',
+	'Music', 'trailers', 'sports' , 'nba', 'soccer', 'nfl','PublicFreakout', 'StreetFights', 'respectporn',
 	'kidsafevideos'];
 	this.channel = "all";
 	this.channel_index = 0;
@@ -16,31 +16,20 @@ function loadVideos() {
 	var channel = video_list.getCurrChannel();
 	var resourceUrl = "/api/ch/" + channel;
 	video_list.channel_vidindex[channel] = 0;
-	//console.log(resourceUrl);
+	console.log(channel);
 	return $.getJSON(resourceUrl, function(data){
-		//console.log(channel);
+		console.log(channel);
 		procVideos(data, channel);
-	});
-}
-
-function loadVideo(channel, videoId){
-	var url = "/api/vid/" + videoId;
-	return $.getJSON(url, function(data){
-		if(data.length > 1){
-			//console.log(data[0]);
-			var title = data[1];
-			video_list.insertVideo(channel, 0, [videoId, title]);
-		}
 	});
 }
 
 function procVideos(data, channel){
 	var queue = [];
 
-	//console.log(channel + ":" + data);
+	console.log(channel + ":" + data);
 	
 	$.each(data, function(i, item){
-		//console.log(item);
+		console.log(item);
 		if(item==undefined) return;
 		var vidurl = item[0];
 		var vidtitle = item[1];
@@ -48,7 +37,7 @@ function procVideos(data, channel){
 		queue.push([vidurl, vidtitle]);
 	});
 
-	//console.log(channel + ":" + queue.length);
+	console.log(channel + ":" + queue.length);
 
 	video_list.putList(channel,queue);
 }
@@ -57,16 +46,14 @@ VideoList.prototype = {
 	getCurrVideo: function(){
 		var currindex = this.channel_vidindex[this.channel];
 		//console.log(Object.keys(this.vidlists));
-		//console.log(this.channel_vidindex[Object.keys(this.channel_vidindex)[0]]);
 		//console.log(this.channel);
-		//console.log(currindex);
 		//console.log(this.vidlists[this.channel]);
 		return this.vidlists[this.channel][currindex];
 	},
 
 	getNextVideo: function(){
 		var currindex = this.channel_vidindex[this.channel];
-		return this.vidlists[this.channel][currindex + 1 < this.vidlists[this.channel].length ? currindex : 0];
+		return this.vidlists[this.channel][currindex+1];
 	},
 
 	getPrevVideo: function(){
@@ -92,7 +79,6 @@ VideoList.prototype = {
 	setCurrChannel: function(channel){
 		this.channel = channel;
 		this.channel_vidindex[this.channel] = 0;
-		//console.log(this.channel + " " + this.channel_vidindex[this.channel]);
 	},
 
 	nextChannel: function(){
@@ -132,18 +118,16 @@ VideoList.prototype = {
 			}
 		}
 
-		if(videoId > 0){
-			loadVideo(this.channel, videoId).always(function(){
-				return 0;
-			});
-		}else{
-			return 0;
-		}
-	},
-
-	insertVideo: function(channel, index, vidinfo){
-		//console.log(channel + " " + vidinfo[0] + vidinfo[1]);
-		this.vidlists[channel].unshift(vidinfo);
+		//add the video to the beginning of the list 
+		var url = "/api/vid/" + videoId;
+		$.getJSON(url, function(data){
+			if(data.length > 1){
+				console.log(data[0]);
+				var title = data[1];
+				this.vidlists[this.channel].unshift([videoId, title]);
+			}
+		});
+		return 0;
 	},
 
 	//set the video list for the channels
