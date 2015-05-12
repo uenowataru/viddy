@@ -389,6 +389,10 @@ function seekYT(ytplayer, position){
   }
 }
 
+function replayVideo() {
+  seekYT(curr, 0);
+}
+
 function YTError(ytplayer, err){
   var tag;
   var videoId;

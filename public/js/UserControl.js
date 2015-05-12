@@ -105,6 +105,9 @@ $(document.activeElement).keydown(function(e) {
   if(e.which == 75){
     nextChannel();
   } //k
+  if(e.which == 82){
+    replayVideo();
+  } //r
 });
 
 $(document.activeElement).keyup(function(e) {
