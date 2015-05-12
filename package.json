@@ -18,6 +18,7 @@
   "homepage": "https://github.com/uenowataru/viddy",
   "dependencies": {
     "express": "^4.12.3",
+    "mongodb": "^2.0.31",
     "request": "2.55.0"
   }
 }

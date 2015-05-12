@@ -41,10 +41,11 @@ app.get('/api/ch/:channel', function (req, res) {
 app.get('/api/vid/:videoId', function (req, res) {
 	console.log('\n\n\nGot vid request....');
 	var videoId = req.params.videoId;
-	var resp = js_server.getRedditVideoJSON(videoId);
-	if(resp) console.log(resp.length);
-	res.send(resp);
-	console.log('vId response sent..');
+	var resp = js_server.getRedditVideoJSON(videoId, function(resp){
+		if(resp) console.log(resp.length);
+		res.send(resp);
+		console.log('vId response sent..');
+	});
 });
 
 app.get('/*', function(req, res){
