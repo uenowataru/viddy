@@ -30,6 +30,7 @@ function loadVideo(channel, videoId){
 			//console.log(data[0]);
 			var title = data[1];
 			video_list.insertVideo(channel, 0, [videoId, title]);
+			console.log(videoId + " " + title);
 		}
 	});
 }
@@ -128,6 +129,7 @@ VideoList.prototype = {
 	findVideo: function(videoId, maxIndex){
 		for(var i = 0; i < this.vidlists[this.channel].length && i < maxIndex; i++){
 			if(this.vidlists[this.channel][i][0]==videoId){
+				console.log(i);
 				return i;
 			}
 		}
@@ -137,6 +139,7 @@ VideoList.prototype = {
 		if(videoId.length > 0){
 			//console.log("loading vid info");
 			loadVideo(this.channel, videoId).always(function(){
+
 				//console.log("returning 0");
 				return 0;
 			});
