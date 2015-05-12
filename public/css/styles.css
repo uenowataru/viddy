@@ -58,6 +58,10 @@ iframe {
 
 #info-icon {
 	opacity: 0.75;
+	position: absolute;
+	top: 10px;
+	left: 10px;
+	display: none;
 }
 
 #fbloginbutton {
