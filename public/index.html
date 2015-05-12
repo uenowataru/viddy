@@ -28,9 +28,10 @@
 			<div id="currchannel"></div>
 		</div>
 
-		<fb:login-button id="fbloginbutton" scope="public_profile,email,user_friends" onlogin="checkLoginState();">
-		</fb:login-button>
-
+		<div id="fbdiv">
+			<fb:login-button id="fbloginbutton" scope="public_profile,email,user_friends" onlogin="checkLoginState();"></fb:login-button>
+		</div>
+		
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/jquery-ui.min.js"></script>
 		<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/annyang/1.6.0/annyang.min.js"></script>-->

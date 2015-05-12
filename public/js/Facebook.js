@@ -7,6 +7,8 @@
     // for FB.getLoginStatus().
     if (response.status === 'connected') {
       // Logged into your app and Facebook.
+      $( "#fbloginbutton" ).remove();
+
       testAPI();
     } else if (response.status === 'not_authorized') {
       // The person is logged into Facebook, but not your app.
@@ -78,6 +80,7 @@
     FB.api('/me/picture', function(response) {
       if (response && !response.error) {
         console.log(response);
+        $('#fbdiv').prepend('<img id="fbpropic" src="' + response.data.url + '" />');
       }
     });
   }
