@@ -74,4 +74,10 @@
       console.log(response.picture);
       console.log('Successful login for: ' + response.name);
     });
+
+    FB.api('/me//picture', function(response) {
+      if (response && !response.error) {
+        console.log(response);
+      }
+    });
   }
