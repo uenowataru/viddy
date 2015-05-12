@@ -391,6 +391,7 @@ function seekYT(ytplayer, position){
 
 function replayVideo() {
   seekYT(curr, 0);
+  playYTVideo(curr);
 }
 
 function YTError(ytplayer, err){
