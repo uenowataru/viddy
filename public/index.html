@@ -3,16 +3,20 @@
 	<head>
 		<title>Trendeo: Trending Videos of Now</title>
 		<link rel="shortcut icon" href="/res/favicon.ico"/>
-		<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/themes/smoothness/jquery-ui.css">
-		<link rel="stylesheet" type="text/css" href="/css/styles.css">
-		<link href="http://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css" />
+		<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/themes/smoothness/jquery-ui.css" type="text/css" >
+		<link rel="stylesheet" href="/css/styles.css" type="text/css">
+		<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans" type="text/css"/>
+		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" type="text/css" >
 	</head>
 	<body id="body">
 		<div id="curr"></div>
 		<div id="next"></div>
 		<div id="prev"></div>
 		
-		<div id="glass" onclick="mouseClick()">
+		<div id="glass" onclick="mouseClick()"></div>
+		
+		<i class="fa fa-info-circle fa-inverse" id="info-icon"></i>
+			
 		<div id="titlewrapper" display="block" allign="center"> 
 			<div id="title" onclick="titleClick()"></div>
 		</div>

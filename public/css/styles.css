@@ -56,13 +56,16 @@ iframe {
 	cursor: pointer;
 }
 
-#fbloginbutton{
+#info-icon {
+	opacity: 0.75;
+}
+
+#fbloginbutton {
 	position: absolute;
-	width: 100%;
 	color: #fff;
 	display:inline-block;
 	top: 5px;
-	left: 5px;
+	right: 5px;
 }
 
 #channels {
@@ -97,7 +100,7 @@ iframe {
 
 .arrow:hover {
 	cursor: pointer;
-	opacity: 0.5;
+	opacity: 0.75;
 }
 
 .arrowLeft {
