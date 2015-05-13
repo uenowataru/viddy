@@ -40,7 +40,6 @@ function statusChangeCallback(response) {
    
     $( "#fbloginbutton" ).remove();
     getProfileInfo();
-    getProfilePicture();
   
   } else if (response.status === 'not_authorized') {
     // The person is logged into Facebook, but not your app.
