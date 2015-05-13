@@ -71,7 +71,8 @@ iframe {
 
 #about {
 	width: 400px;
-	height: 300px;
+	height: 320px;
+	text-align: center;
 	background: white;
 	margin: auto;
 	z-index: 10;
@@ -93,7 +94,7 @@ iframe {
 #about-header div {
 	margin: 0;
 	position: absolute;
-	top: 20px; left: 0; bottom: 0; right: 0;
+	top: 22px; left: 0; bottom: 0; right: 0;
 	text-align: center;
 }
 
@@ -117,25 +118,37 @@ iframe {
 	padding: 5px;
 }
 
-#about-info div {
-	padding: 2px;
+.about-control {
+	padding: 0px;
+	margin: 0;
+	clear: both;
+}
+
+.about-label {
+	width: 50%;
+	margin: 0;
+}
+
+#key-label {
 	float: left;
+}
+
+#function-label {
+	float: right;
 }
 
 #fbdiv {
 	position: absolute;
 	color: #fff;
 	display:inline-block;
-<<<<<<< HEAD
 	top: 10px;
 	right: 10px;
 	border-radius: 10px;
-=======
 	top: 5px;
 	right: 5px;
->>>>>>> 8670c69bf5e4b21a5bd58e374a93ddd1e3ab5943
 }
-img{
+
+img {
 	border-radius: 10px;
 }
 
@@ -210,11 +223,6 @@ img{
 #prev {
 	display: none;
 }
-
-
-
-
-
 
 #bowlG{
 	position: absolute;
