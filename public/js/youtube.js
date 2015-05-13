@@ -30,12 +30,6 @@ function initIFrames(){
   curr = newYTPlayer('curr', video_list.getCurrVideo()[0]);
   prev = newYTPlayer('prev', video_list.getPrevVideo()[0]);
   next = newYTPlayer('next', video_list.getNextVideo()[0]);
-  
-  initialized = true;
-  loadTitle();
-  animateTitle();
-  loadChannels();
-  animateChannels();
 }
 
 function initVideos(){
@@ -86,11 +80,6 @@ function setNewChannel(channel){
     loadYTVideo(curr, video_list.getCurrVideo()[0]);
     loadYTVideo(prev, video_list.getPrevVideo()[0]);
     loadYTVideo(next, video_list.getNextVideo()[0]);
-
-    loadTitle();
-    animateTitle();
-    loadChannels();
-    animateChannels();
   });
 }
 
@@ -134,20 +123,19 @@ function onYouTubeIframeAPIReady() {
 
 // 4. The API will call this function when the video player is ready.
 function onPlayerReady(event) {
-  if(!initialized || curr===undefined) return;
   if(curr == event.target){
     currready = true;
     if(InitialPlay){
-    setTimeout(function(){
-      $( currdisp ).css( "display", "block" );
-      seekYT(curr, lastPlayTime);
-      InitialPlay = false;
-      if(isTouchDevice){
-        nextVideo();
-        previousVideo();
-      }
-    }, 1000);
-  }
+      setTimeout(function(){
+        $( currdisp ).css( "display", "block" );
+        seekYT(curr, lastPlayTime);
+        InitialPlay = false;
+        if(isTouchDevice){
+          nextVideo();
+          previousVideo();
+        }
+      }, 1000);
+    }
   }
   if(prev == event.target){
     prevready = true;
@@ -159,7 +147,6 @@ function onPlayerReady(event) {
 
 
 function onPlayerError(event) {
-  if(!initialized || curr===undefined) return;
   if(event.target == curr){
     video_list.removeCurrVideo();
     loadYTVideo(curr, video_list.getCurrVideo()[0]);
@@ -178,16 +165,23 @@ function onPlayerError(event) {
 var done = false;
 
 function onPlayerStateChange(event) {
-  if(!initialized || curr===undefined) return;
+  if(curr===undefined) return;
   if(event.data == YT.PlayerState.UNSTARTED){
     playYTVideo(event.target);
+    if(event.target == curr)
+      initialized = true;
+      $( "#bowlG" ).remove();
   }
   if (event.data == YT.PlayerState.PLAYING) {
     changeURL(video_list.getCurrVideo()[0]);
     pauseYTVideo(prev);
     pauseYTVideo(next);
     document.activeElement.blur();
-    //alert(document.activeElement);
+
+    loadTitle();
+    animateTitle();
+    loadChannels();
+    animateChannels();
   }
   if (event.data == YT.PlayerState.ENDED)
     nextVideo();

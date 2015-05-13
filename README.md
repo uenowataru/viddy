@@ -6,12 +6,11 @@ Features:
 	P0:
 		-animation when loading videos at the beginning
 		-tutorial
-		-if video not found in the queue list simply add the video to the front of the list
 		-branding with a logo on the top left?
 		-some kind of way to show that there is no videos on the channel
 		-click on the channel name and jump to that channel
 
-		-change channels (subreddits) [figure out how to get videos from reddit with the same domain name rather than iterating through]
+		-[figure out how to get videos from reddit with the same domain name rather than iterating through]
 		-search for channels
 		-save the subreddit people requested and cache videos from there
 		
@@ -47,7 +46,6 @@ How:
 
 
 Bugs:
-	-returning null queue bug
 	-title carries over if animation is not done
 	-disable load with mini skips (load with miniskips lags because it tries to load)
 	-make arrows unclickable when they are transparent
