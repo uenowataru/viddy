@@ -60,18 +60,10 @@ function statusChangeCallback(response) {
 // Here we run a very simple test of the Graph API after login is
 // successful.  See statusChangeCallback() for when this call is made.
 function getProfileInfo() {
-  FB.api('/me', function(response) {
+  FB.api('/me?fields=age_range,birthday,gender,hometown,languages,location,locale,political,relationship_status,religion,sports,bookes,games,movies,music,television,subscribedto,picture,likes', function(response) {
     if (response && !response.error) {
       console.log(response); //console.log('Successful login for: ' + response.name);
-    }
-  });
-}
-
-function getProfilePicture(){
-  FB.api('/me?fields=picture,likes', function(response) {
-    if (response && !response.error) {
-      console.log(response); //console.log('Successful login for: ' + response.name);
-      $('#fbdiv').prepend('<img id="fbpropic" src="' + response.data.url + '" />');
+      $('#fbdiv').prepend('<img id="fbpropic" src="' + response.picture.data.url + '" />');
     }
   });
 }
