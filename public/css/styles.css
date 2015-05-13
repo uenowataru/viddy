@@ -126,14 +126,8 @@ iframe {
 	position: absolute;
 	color: #fff;
 	display:inline-block;
-<<<<<<< HEAD
-	top: 10px;
-	right: 10px;
-	border-radius: 10px;
-=======
 	top: 5px;
 	right: 5px;
->>>>>>> 8670c69bf5e4b21a5bd58e374a93ddd1e3ab5943
 }
 img{
 	border-radius: 10px;
