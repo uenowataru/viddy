@@ -76,11 +76,18 @@ function setChannelFromURL(){
 
 function setNewChannel(channel){
   video_list.setCurrChannel(channel);
-  loadVideos().always(function(){
+  var asyncstatus = loadVideos(channel);
+  if(asyncstatus){
+    asyncstatus.always(function(){
+      loadYTVideo(curr, video_list.getCurrVideo()[0]);
+      loadYTVideo(prev, video_list.getPrevVideo()[0]);
+      loadYTVideo(next, video_list.getNextVideo()[0]);
+    });
+  }else{
     loadYTVideo(curr, video_list.getCurrVideo()[0]);
     loadYTVideo(prev, video_list.getPrevVideo()[0]);
     loadYTVideo(next, video_list.getNextVideo()[0]);
-  });
+  }
 }
 
 function prevChannel(){
@@ -95,30 +102,41 @@ function nextChannel(){
 
 function onYouTubeIframeAPIReady() {
   setChannelFromURL();
-  loadVideos().always(function() { //is returned as deffered object
-    YTCache = new CacheProvider();
-    initVideos();
-    try {
-      //initVideos();
-    }catch(err) {
-      alert('Server Error:\n' + err);
-    }
-    var currtime = new Date().getTime() / 1000;
-    if(currtime > lastVisit + TIME_PAST_PICKUP){
-      lastPlayTime = 0;
-    }
-    setInterval(function(){
-      try{
-        YTCache.set('lastTime', Math.floor(getYTCurrentTime(curr)) + '', true);
-        if(getYTDuration(curr) > 0 && getYTDuration(curr) - getYTCurrentTime(curr) < 0.7){
-          nextVideo();
-          animateTitle();
-        }
-      }catch(err){
-        console.log(err);
+  var channel = video_list.getCurrChannel();
+  var asyncstatus = loadVideos(channel);
+  if(asyncstatus){
+    asyncstatus.always(function() { //is returned as deffered object
+      initSetUp();
+    });
+  }else{
+    initSetUp();
+  }
+}
+
+
+function initSetUp(){
+  YTCache = new CacheProvider();
+  initVideos();
+  try {
+    //initVideos();
+  }catch(err) {
+    alert('Server Error:\n' + err);
+  }
+  var currtime = new Date().getTime() / 1000;
+  if(currtime > lastVisit + TIME_PAST_PICKUP){
+    lastPlayTime = 0;
+  }
+  setInterval(function(){
+    try{
+      YTCache.set('lastTime', Math.floor(getYTCurrentTime(curr)) + '', true);
+      if(getYTDuration(curr) > 0 && getYTDuration(curr) - getYTCurrentTime(curr) < 0.7){
+        nextVideo();
+        animateTitle();
       }
-    }, 500);
-  });
+    }catch(err){
+      console.log(err);
+    }
+  }, 500);
 }
 
 // 4. The API will call this function when the video player is ready.

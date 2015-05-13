@@ -12,8 +12,9 @@ function VideoList() {
 
 
 
-function loadVideos() {
-	var channel = video_list.getCurrChannel();
+function loadVideos(channel) {
+	if(video_list.getList(channel)!=undefined)
+		return;
 	var resourceUrl = "/api/ch/" + channel;
 	video_list.channel_vidindex[channel] = 0;
 	
@@ -33,6 +34,13 @@ function loadAPIVideo(channel, videoId){
 			console.log(videoId + " " + title);
 		}
 	});
+}
+
+function loadChannels(){
+	var prevchan_index = this.channel_index - 1 >= 0 ?  this.channel_index - 1 : this.channels.length-1;
+	var nextchan_index = this.channel_index + 1 < this.channels.length ? this.channel_index + 1 : 0;
+	loadVideos(this.channels[prevchan_index]);
+	loadVideos(this.channels[nextchan_index]);
 }
 
 function loadVideo(channel, videoId){
@@ -72,8 +80,6 @@ function loadVideo(channel, videoId){
 
 function procVideos(data, channel){
 	var queue = [];
-
-	//console.log(channel + ":" + data);
 	
 	$.each(data, function(i, item){
 		//console.log(item);
@@ -84,9 +90,8 @@ function procVideos(data, channel){
 		queue.push([vidurl, vidtitle]);
 	});
 
-	//console.log(channel + ":" + queue.length);
-
-	video_list.putList(channel,queue);
+	if(video_list.getList(channel)==undefined)
+		video_list.putList(channel,queue);
 }
 
 VideoList.prototype = {
@@ -128,7 +133,7 @@ VideoList.prototype = {
 	setCurrChannel: function(channel){
 		this.channel = channel;
 		this.channel_vidindex[this.channel] = 0;
-		//console.log(this.channel + " " + this.channel_vidindex[this.channel]);
+		loadChannels();
 	},
 
 	nextChannel: function(){
