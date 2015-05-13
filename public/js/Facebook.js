@@ -70,6 +70,7 @@ function getProfileInfo() {
 function getProfilePicture(){
   FB.api('/me/picture,name', function(response) {
     if (response && !response.error) {
+      console.log(response); //console.log('Successful login for: ' + response.name);
       $('#fbdiv').prepend('<img id="fbpropic" src="' + response.data.url + '" />');
     }
   });
