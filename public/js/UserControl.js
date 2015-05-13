@@ -173,18 +173,6 @@ $('#arrowR').click(function(e) {
   e.stopPropagation();
 });
 
-$('#info-icon').click(function() {
-  $('#glass').animate({backgroundColor: "rgba(0,0,0,0.5)"}, 'fast');
-  $('#about').fadeIn("fast");
-  $('#about').css("display", "block");
-});
-
-$('#about-modal-close').click(function() {
-  $('#glass').animate({backgroundColor: "rgba(0,0,0,0)"}, 'fast');
-  $('#about').fadeOut("fast");
-  $('#about').css("display", "none");
-});
-
 function arrowLeftMouseDown(){
   if(++ArrowPressedDown == 1) return;
   animateAll();

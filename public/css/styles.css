@@ -1,4 +1,5 @@
 
+
 html, body {
 	padding: 0;
 	margin: 0;
@@ -60,82 +61,20 @@ iframe {
 #info-icon {
 	opacity: 0.75;
 	position: absolute;
-	display: inline-block;
 	top: 10px;
 	left: 10px;
-}
-
-#info-icon:hover {
-	cursor: pointer;
-}
-
-#about {
-	width: 400px;
-	height: 300px;
-	background: white;
-	margin: auto;
-	z-index: 10;
- 	position: absolute;
- 	top: 0; left: 0; bottom: 0; right: 0;
- 	-webkit-border-radius: 5px 5px 5px 5px;
-	border-radius: 5px 5px 5px 5px;
 	display: none;
-}
-
-#about-header {
-	width: 100%;
-	height: 20%;
-	background: #E6E6E6;
-	-webkit-border-radius: 5px 5px 0 0;
-	border-radius: 5px 5px 0 0;
-}
-
-#about-header div {
-	margin: 0;
-	position: absolute;
-	top: 20px; left: 0; bottom: 0; right: 0;
-	text-align: center;
-}
-
-#about-header i {
-	float: right;
-	color: #999999;
-	padding-right: 10px;
-	position: relative;
-	top: 50%;
-	-webkit-transform: translateY(-50%);
-	-ms-transform: translateY(-50%);
-	transform: translateY(-50%);
-}
-
-#about-header i:hover {
-	color: #808080;
-	cursor: pointer;
-}
-
-#about-info {
-	padding: 5px;
-}
-
-#about-info div {
-	padding: 2px;
-	float: left;
 }
 
 #fbdiv {
 	position: absolute;
 	color: #fff;
 	display:inline-block;
-<<<<<<< HEAD
-	top: 10px;
-	right: 10px;
-	border-radius: 10px;
-=======
 	top: 5px;
 	right: 5px;
->>>>>>> 8670c69bf5e4b21a5bd58e374a93ddd1e3ab5943
+	border-radius: 10px;
 }
-img{
+#fbpropic{
 	border-radius: 10px;
 }
 

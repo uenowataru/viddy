@@ -63,7 +63,7 @@ function getProfileInfo() {
     if (response && !response.error) {
       console.log(response); //console.log('Successful login for: ' + response.name);
       
-      $('#fbdiv').prepend('<img id="fbpropic" src="' + response.picture.data.url + '" />');
+      $('#fbdiv').prepend('<img id="fbpropic" border-radius="10px" src="' + response.picture.data.url + '" />');
       var id = response['id'];
       getUser(id);
     }
@@ -71,7 +71,7 @@ function getProfileInfo() {
 }
 
 function getUser(id){
-  if(id==undefined) return;
+  if(id!=undefined) return;
   var resourceUrl = "/api/user/" + id;
   return $.getJSON(resourceUrl, function(data){
     procUser(data);
@@ -79,7 +79,7 @@ function getUser(id){
 }
 
 function procUser(data){
-  console.log(data);
+
 }
 
 
