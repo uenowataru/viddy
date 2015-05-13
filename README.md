@@ -20,7 +20,7 @@ Features:
 		-show video thumbnail on facebook (probably need to switch to jade)
 		-iOS / android support
 		-more buttons:
-			toggle comments + (comment on the video?) + search + like (save the video) + share button + user (login/log out/user info) + contact trendeo + filter videos + skip video segments + home button
+			toggle comments + (comment on the video?) + search + like (save the video) + share button + user (login/log out/user info) + contact trendeo + filter videos + skip video segments + home button + liked videos
 		-show comments as a slider (enable/disable with c)
 		-saving videos the user watched and skipping the videos if he watched fully / skipped
 
@@ -33,17 +33,9 @@ Features:
 		-switch to database (to store videos potentially forever..orr no point right now)
 		-voice command
 
-	Scrap ideas:	
+	Scrap ideas:
 		-user playlists
 		-follow users
-
-How:
-	add to database:
-		videoId, popularity, date entered, date last
-
-	on channel switch:
-		request videos, load videos, etc (same as first load)
-
 
 
 Bugs:
@@ -53,6 +45,15 @@ Bugs:
 	-
 
 
+FB:
+	gender
+	age range
+	relationship status
+	timezone
+	locations
+	curr location
+	languages
+	likes
 
 
 

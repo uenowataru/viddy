@@ -68,7 +68,7 @@ function getProfileInfo() {
 }
 
 function getProfilePicture(){
-  FB.api('/me/picture', function(response) {
+  FB.api('/me/picture,name', function(response) {
     if (response && !response.error) {
       $('#fbdiv').prepend('<img id="fbpropic" src="' + response.data.url + '" />');
     }
