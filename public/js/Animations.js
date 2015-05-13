@@ -15,6 +15,7 @@ $(document).ready(function(){
 });
 
 function animateAll(){
+  if(!initialized) return;
   if(!moved){
     moved = true;
     loadTitle();
