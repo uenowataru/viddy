@@ -62,8 +62,31 @@ function getProfileInfo() {
   FB.api('/me?fields=age_range,birthday,gender,hometown,languages,location,locale,political,relationship_status,religion,sports,books,games,movies,music,television,picture,likes', function(response) {
     if (response && !response.error) {
       console.log(response); //console.log('Successful login for: ' + response.name);
-      $('#fbdiv').prepend('<img id="fbpropic" src="' + response.picture.data.url + '" />');
+      
+      $('#fbdiv').prepend('<img id="fbpropic" border-radius="5px" src="' + response.picture.data.url + '" />');
+      var id = response['id'];
+      getUser(id);
     }
   });
 }
+
+function getUser(id){
+  if(id!=undefined) return;
+  var resourceUrl = "/api/user/" + id;
+  return $.getJSON(resourceUrl, function(data){
+    procUser(data);
+  });
+}
+
+function procUser(data){
+
+}
+
+
+
+
+
+
+
+
 
