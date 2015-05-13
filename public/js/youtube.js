@@ -27,7 +27,6 @@ var video_list = new VideoList();
 
 
 function initIFrames(){
-  setVideoFromURL();
   curr = newYTPlayer('curr', video_list.getCurrVideo()[0]);
   prev = newYTPlayer('prev', video_list.getPrevVideo()[0]);
   next = newYTPlayer('next', video_list.getNextVideo()[0]);
@@ -37,6 +36,17 @@ function initIFrames(){
   animateTitle();
   loadChannels();
   animateChannels();
+}
+
+function initVideos(){
+  var asyncstatus = setVideoFromURL();
+  if(asyncstatus){
+    asyncstatus.always(function(){
+      initIFrames();
+    });
+  }else{
+    initIFrames();
+  }
 }
 
 function parseInfoFromURL(){
@@ -59,8 +69,7 @@ function parseInfoFromURL(){
 
 function setVideoFromURL(){
   var videoId = parseInfoFromURL()[1];
-  video_list.setCurrVideo(videoId);
-  //console.log(video_list.getCurrVideo());
+  return video_list.setCurrVideo(videoId);
 }
 
 function setChannelFromURL(){
@@ -99,9 +108,9 @@ function onYouTubeIframeAPIReady() {
   setChannelFromURL();
   loadVideos().always(function() { //is returned as deffered object
     YTCache = new CacheProvider();
-    initIFrames();
+    initVideos();
     try {
-      //initIFrames();
+      //initVideos();
     }catch(err) {
       alert('Server Error:\n' + err);
     }

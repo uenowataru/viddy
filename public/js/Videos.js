@@ -22,15 +22,50 @@ function loadVideos() {
 	});
 }
 
-function loadVideo(channel, videoId){
+function loadAPIVideo(channel, videoId){
 	var url = "/api/vid/" + videoId;
 	return $.getJSON(url, function(data){
-		//console.log(data);
+		console.log(data);
 		if(data.length > 2){
 			//console.log(data[0]);
 			var title = data[1];
 			video_list.insertVideo(channel, 0, [videoId, title]);
 			console.log(videoId + " " + title);
+		}
+	});
+}
+
+function loadVideo(channel, videoId){
+	var url = "http://www.reddit.com/api/info/.json?url=https://www.youtube.com/watch?v=" + videoId;
+	return $.getJSON(url, function(data){
+		try{
+			var maxscore = -1;
+			var video = null;
+			for(var i = 0; i < data.data.children.length; i++){
+				var item = data.data.children[i];
+				var dom = item.data.domain;
+				if(dom == "youtube.com"){
+					var vidurl = item.data.url;
+					if(item.data.secure_media != null && item.data.secure_media != undefined){
+						vidurl = item.data.secure_media.oembed.url;
+					}else if(item.data.media != null && item.data.secure_media != undefined){
+						vidurl = item.data.media.oembed.url;
+					}
+					if(vidurl !== null && vidurl !== undefined){
+						if(item.data.score > maxscore){
+							var vidtitle = item.data.title;
+							var vidSubreddit = item.data.subreddit;
+							var videoId = vidurl.substring(vidurl.indexOf('v=')+2);
+							video = [videoId, vidtitle, vidSubreddit];
+						}
+					}
+				}
+			}
+			if(video!=null)
+				video_list.insertVideo(channel, 0, [video[0], video[1]]);
+				video_list.setCurrVideo(videoId);
+		}catch(err){
+			console.log(err);
 		}
 	});
 }
@@ -57,11 +92,11 @@ function procVideos(data, channel){
 VideoList.prototype = {
 	getCurrVideo: function(){
 		var currindex = this.channel_vidindex[this.channel];
-		// //console.log(Object.keys(this.vidlists));
-		// //console.log(this.channel_vidindex[Object.keys(this.channel_vidindex)[0]]);
-		// //console.log(this.channel);
-		// //console.log(currindex);
-		// //console.log(this.vidlists[this.channel]);
+		// console.log(Object.keys(this.vidlists));
+		// console.log(this.channel_vidindex[Object.keys(this.channel_vidindex)[0]]);
+		// console.log(this.channel);
+		// console.log(currindex);
+		// console.log(this.vidlists[this.channel]);
 		return this.vidlists[this.channel][currindex];
 	},
 
@@ -112,7 +147,13 @@ VideoList.prototype = {
 
 	//set the curr video to be the videoid
 	setCurrVideo: function(videoId){
-		this.channel_vidindex[this.channel] = this.findVideo(videoId, this.getListLength());
+		var index = this.findVideo(videoId, this.getListLength());
+
+		if(index < 0){
+			return loadVideo(this.channel, videoId);
+		}else{
+			this.channel_vidindex[this.channel] = index;
+		}
 	},
 
 	//on curr error remove the video
@@ -133,18 +174,7 @@ VideoList.prototype = {
 				return i;
 			}
 		}
-
-		//console.log("vid:" + videoId);
-
-		if(videoId.length > 0){
-			//console.log("loading vid info");
-			loadVideo(this.channel, videoId).always(function(){
-
-				//console.log("returning 0");
-				return 0;
-			});
-		}
-		return 0;
+		return -1;
 	},
 
 	insertVideo: function(channel, index, vidinfo){
