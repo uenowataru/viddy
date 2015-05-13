@@ -63,7 +63,7 @@ function getProfileInfo() {
     if (response && !response.error) {
       console.log(response); //console.log('Successful login for: ' + response.name);
       
-      $('#fbdiv').prepend('<img id="fbpropic" border-radius="5px" src="' + response.picture.data.url + '" />');
+      $('#fbdiv').prepend('<img id="fbpropic" border-radius="10px" src="' + response.picture.data.url + '" />');
       var id = response['id'];
       getUser(id);
     }

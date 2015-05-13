@@ -72,7 +72,12 @@ iframe {
 	display:inline-block;
 	top: 5px;
 	right: 5px;
+	border-radius: 10px;
 }
+#fbpropic{
+	border-radius: 10px;
+}
+
 
 #channels {
 	position: absolute;
