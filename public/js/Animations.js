@@ -6,6 +6,7 @@ var titletimeout;
 var timebartimeout;
 var cursortimeout;
 var channelstimeout;
+var infoicontimeout;
 var timebarprog = 1;
 
 $(document).ready(function(){
@@ -23,6 +24,7 @@ function animateAll(){
     animateArrow();
     animateTimeBar();
     animateChannels();
+    animateInfoIcon();
     setTimeout(function(){
       moved = false;
     },ALL_ANIMATION_TIME);
@@ -33,6 +35,7 @@ function animateAll(){
     clearTimeout(timebartimeout);
     clearTimeout(cursortimeout);
     clearTimeout(channelstimeout);
+    clearTimeout(infoicontimeout);
     arrowtimeout = setTimeout(function(){
       if(isTouchDevice) return;
       fadeElementById("#arrowL");
@@ -47,10 +50,21 @@ function animateAll(){
     channelstimeout = setTimeout(function(){
       fadeElementById("#channels");
     }, 2000);
+    infoicontimeout = setTimeout(function(){
+      fadeElementById("#info-icon");
+    }, 2000);
     cursortimeout = setTimeout(function(){
       document.body.style.cursor = 'none';
     }, 2500);
   }
+}
+
+function animateInfoIcon(){
+  animateElementById("#info-icon", 1.0);
+  clearTimeout(infoicontimeout);
+  infoicontimeout = setTimeout(function(){
+    fadeElementById("#info-icon");
+  }, 2000);
 }
 
 function animateTitle(){
