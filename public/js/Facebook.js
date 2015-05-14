@@ -44,7 +44,12 @@ function statusChangeCallback(response) {
   } else if (response.status === 'not_authorized') {
     // The person is logged into Facebook, but not your app.
     
-    FB.login();
+    //FB.login();
+    $( "#fbloginbutton" ).remove();
+    getProfileInfo();
+    document.getElementById("fbdiv").addEventListener("click", function(){
+      FB.login();
+    }
   
   } else {
     // The person is not logged into Facebook, so we're not sure if

@@ -86,7 +86,6 @@ function onYouTubeIframeAPIReady() {
   }
 }
 
-
 function initSetUp(){
   YTCache = new CacheProvider();
   initVideos();
