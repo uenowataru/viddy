@@ -1,4 +1,5 @@
 var moved = false;
+var aboutOpen = false;
 
 var ClickTime = 0;
 var HorizontalArrowPressed = 0;
@@ -174,15 +175,25 @@ $('#arrowR').click(function(e) {
 });
 
 $('#info-icon').click(function() {
-  $('#glass').animate({backgroundColor: "rgba(0,0,0,0.5)"}, 'fast');
-  $('#about').fadeIn("fast");
-  $('#about').css("display", "block");
+  if (aboutOpen) {
+    $('#glass').animate({backgroundColor: "rgba(0,0,0,0)"}, 'fast');
+    $('#about').fadeOut('fast');
+    $('#about').css("display", "none");
+    aboutOpen = false;
+  }
+  else {
+    $('#glass').animate({backgroundColor: "rgba(0,0,0,0.5)"}, 'fast');
+    $('#about').fadeIn('fast');
+    $('#about').css("display", "block");
+    aboutOpen = true;
+  }
 });
 
 $('#about-modal-close').click(function() {
   $('#glass').animate({backgroundColor: "rgba(0,0,0,0)"}, 'fast');
-  $('#about').fadeOut("fast");
+  $('#about').fadeOut('fast');
   $('#about').css("display", "none");
+  aboutOpen = false;
 });
 
 function arrowLeftMouseDown(){
