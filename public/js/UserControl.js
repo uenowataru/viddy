@@ -182,7 +182,7 @@ $('#info-icon').click(function() {
     aboutOpen = false;
   }
   else {
-    $('#glass').animate({backgroundColor: "rgba(0,0,0,0.5)"}, 'fast');
+    $('#glass').animate({backgroundColor: "rgba(0,0,0,0.75)"}, 'fast');
     $('#about').fadeIn('fast');
     $('#about').css("display", "block");
     aboutOpen = true;
