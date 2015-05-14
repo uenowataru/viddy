@@ -49,7 +49,7 @@ function statusChangeCallback(response) {
     getProfileInfo();
     document.getElementById("fbdiv").addEventListener("click", function(){
       FB.login();
-    }
+    });
   
   } else {
     // The person is not logged into Facebook, so we're not sure if
