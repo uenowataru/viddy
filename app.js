@@ -34,28 +34,29 @@ app.get('/api/ch/:channel', function (req, res) {
 	var subr = req.params.channel;
 	var resp = js_server.getRedditJSON(subr);
 	if(resp) console.log(resp.length);
-	res.send(resp);
+	res.json(resp);
 	console.log('Ch response sent..');
 });
 
+//get video 
 app.get('/api/vid/:videoId', function (req, res) {
 	console.log('\n\n\nGot vId request....');
 	var videoId = req.params.videoId;
 	var resp = js_server.getRedditVideoJSON(videoId); //, function(resp){});
 	if(resp) console.log(resp.length);
-	res.send(resp);
+	res.json(resp);
 	console.log('vId response sent..');
 });
 
+//get user 
 app.get('/api/user/:userId', function (req, res) {
 	console.log('\n\n\nGot uId request....');
 	var userId = req.params.userId;
 	js_server.getUserJSON(userId, function(resp){
 		if(resp) console.log(resp);
-		res.send(resp);
+		res.json(resp);
 		console.log('uId response sent..');
 	});
-	//res.send("[\"user\"]");
 });
 
 app.get('/*', function(req, res){

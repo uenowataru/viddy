@@ -54,7 +54,6 @@ function parseInfoFromURL(){
       videoId = "";
     }
 
-    //console.log(channel + "/" + videoId);
     return [channel, videoId];
   }else{
     return ["",""];
