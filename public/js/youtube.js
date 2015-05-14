@@ -26,22 +26,6 @@ var InitialPlay = true;
 var video_list = new VideoList();
 
 
-function initIFrames(){
-  curr = newYTPlayer('curr', video_list.getCurrVideo()[0]);
-  prev = newYTPlayer('prev', video_list.getPrevVideo()[0]);
-  next = newYTPlayer('next', video_list.getNextVideo()[0]);
-}
-
-function initVideos(){
-  var asyncstatus = setVideoFromURL();
-  if(asyncstatus){
-    asyncstatus.always(function(){
-      initIFrames();
-    });
-  }else{
-    initIFrames();
-  }
-}
 
 function parseInfoFromURL(){
   var currurl = window.location.href;
@@ -70,7 +54,7 @@ function setChannelFromURL(){
   if(channel.length > 0){
     video_list.setCurrChannel(channel);
   }else
-    channel = "all";
+    video_list.setCurrChannel('all');
 }
 
 function setNewChannel(channel){
@@ -87,16 +71,6 @@ function setNewChannel(channel){
     loadYTVideo(prev, video_list.getPrevVideo()[0]);
     loadYTVideo(next, video_list.getNextVideo()[0]);
   }
-}
-
-function prevChannel(){
-  video_list.prevChannel();
-  setNewChannel(video_list.getCurrChannel());
-}
-
-function nextChannel(){
-  video_list.nextChannel();
-  setNewChannel(video_list.getCurrChannel());
 }
 
 function onYouTubeIframeAPIReady() {
@@ -136,6 +110,23 @@ function initSetUp(){
       console.log(err);
     }
   }, 500);
+}
+
+function initIFrames(){
+  curr = newYTPlayer('curr', video_list.getCurrVideo()[0]);
+  prev = newYTPlayer('prev', video_list.getPrevVideo()[0]);
+  next = newYTPlayer('next', video_list.getNextVideo()[0]);
+}
+
+function initVideos(){
+  var asyncstatus = setVideoFromURL();
+  if(asyncstatus){
+    asyncstatus.always(function(){
+      initIFrames();
+    });
+  }else{
+    initIFrames();
+  }
 }
 
 // 4. The API will call this function when the video player is ready.

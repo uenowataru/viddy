@@ -38,6 +38,16 @@ function loadChannels(){
 	loadVideos(video_list.getPrevChannel());
 }
 
+function prevChannel(){
+  video_list.prevChannel();
+  setNewChannel(video_list.getCurrChannel());
+}
+
+function nextChannel(){
+  video_list.nextChannel();
+  setNewChannel(video_list.getCurrChannel());
+}
+
 function procVideos(data, channel){
 	var queue = [];
 	
