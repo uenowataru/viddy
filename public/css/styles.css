@@ -71,7 +71,7 @@ iframe {
 
 #about {
 	width: 400px;
-	height: 320px;
+	height: 50%;
 	text-align: center;
 	background: white;
 	margin: auto;
@@ -94,7 +94,7 @@ iframe {
 #about-header div {
 	margin: 0;
 	position: absolute;
-	top: 22px; left: 0; bottom: 0; right: 0;
+	top: 27px; left: 0; bottom: 0; right: 0;
 	text-align: center;
 }
 
@@ -115,11 +115,12 @@ iframe {
 }
 
 #about-info {
-	padding: 5px;
+	padding: 0px;
+	height: 80%;
 }
 
 .about-control {
-	padding: 0px;
+	padding: 4px 0 0 0;
 	margin: 0;
 	clear: both;
 }
@@ -127,6 +128,7 @@ iframe {
 .about-label {
 	width: 50%;
 	margin: 0;
+	padding-top: 2px;
 }
 
 #key-label {
