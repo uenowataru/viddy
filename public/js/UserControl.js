@@ -176,7 +176,7 @@ $('#arrowR').click(function(e) {
 
 $('#info-icon').click(function() {
   if (aboutOpen) {
-    $('#glass').animate({backgroundColor: "rgba(0,0,0,0)"}, 'slow');
+    $('#glass').animate({backgroundColor: "rgba(0,0,0,0)"}, 'fast');
     $('#about').fadeOut('fast');
     $('#about').css("display", "none");
     aboutOpen = false;
@@ -190,7 +190,7 @@ $('#info-icon').click(function() {
 });
 
 $('#about-modal-close').click(function() {
-  $('#glass').animate({backgroundColor: "rgba(0,0,0,0)"}, 'slow');
+  $('#glass').animate({backgroundColor: "rgba(0,0,0,0)"}, 'fast');
   $('#about').fadeOut('fast');
   $('#about').css("display", "none");
   aboutOpen = false;
