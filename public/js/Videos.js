@@ -10,84 +10,38 @@ function VideoList() {
 	this.loading = false;
 }
 
-
-
 function loadVideos(channel) {
 	if(video_list.getList(channel)!=undefined){
-		//console.log(channel + " defined");
 		return;
 	}else{
-		//console.log("loading" + channel);
 	}
 	var resourceUrl = "/api/ch/" + channel;
-	video_list.channel_vidindex[channel] = 0;
-	
 	return $.getJSON(resourceUrl, function(data){
 		procVideos(data, channel);
 	});
 }
 
-function loadAPIVideo(channel, videoId){
+function loadVideo(channel, videoId){
 	var url = "/api/vid/" + videoId;
 	return $.getJSON(url, function(data){
-		//console.log(data);
 		if(data.length > 2){
-			//console.log(data[0]);
 			var title = data[1];
-			video_list.insertVideo(channel, 0, [videoId, title]);
-			//console.log(videoId + " " + title);
+			var index = 0;
+			video_list.insertVideo(channel, index, [videoId, title]);
+			video_list.setChannelIndex(channel, index);
 		}
 	});
 }
 
 function loadChannels(){
-	var prevchan_index = this.channel_index > 0 ?  this.channel_index - 1 : this.channels.length-1;
-	var nextchan_index = this.channel_index < this.channels.length - 1 ? this.channel_index + 1 : 0;
-	loadVideos(this.channels[prevchan_index]);
-	loadVideos(this.channels[nextchan_index]);
-}
-
-function loadVideo(channel, videoId){
-	var url = "http://www.reddit.com/api/info/.json?url=https://www.youtube.com/watch?v=" + videoId;
-	return $.getJSON(url, function(data){
-		try{
-			var maxscore = -1;
-			var video = null;
-			for(var i = 0; i < data.data.children.length; i++){
-				var item = data.data.children[i];
-				var dom = item.data.domain;
-				if(dom == "youtube.com"){
-					var vidurl = item.data.url;
-					if(item.data.secure_media != null && item.data.secure_media != undefined){
-						vidurl = item.data.secure_media.oembed.url;
-					}else if(item.data.media != null && item.data.secure_media != undefined){
-						vidurl = item.data.media.oembed.url;
-					}
-					if(vidurl !== null && vidurl !== undefined){
-						if(item.data.score > maxscore){
-							var vidtitle = item.data.title;
-							var vidSubreddit = item.data.subreddit;
-							var videoId = vidurl.substring(vidurl.indexOf('v=')+2);
-							video = [videoId, vidtitle, vidSubreddit];
-						}
-					}
-				}
-			}
-			if(video!=null)
-				video_list.insertVideo(channel, 0, [video[0], video[1]]);
-				video_list.setCurrVideo(videoId);
-		}catch(err){
-			console.log(err);
-		}
-	});
+	loadVideos(video_list.getNextChannel());
+	loadVideos(video_list.getPrevChannel());
 }
 
 function procVideos(data, channel){
-	//console.log(channel + "proccing");
 	var queue = [];
 	
 	$.each(data, function(i, item){
-		//console.log(item);
 		if(item==undefined) return;
 		var vidurl = item[0];
 		var vidtitle = item[1];
@@ -163,6 +117,20 @@ VideoList.prototype = {
 		if(this.channel_index < 0)
 			this.channel_index = this.channels.length-1;
 		this.setCurrChannel(this.channels[this.channel_index]);
+	},
+
+	getNextChannel: function(){
+		var nextchan_index = this.channel_index < this.channels.length - 1 ? this.channel_index + 1 : 0;
+		return this.channels[nextchan_index];
+	},
+
+	getPrevChannel: function(){
+		var prevchan_index = this.channel_index > 0 ?  this.channel_index - 1 : this.channels.length-1;
+		return this.channels[prevchan_index];
+	},
+
+	setChannelIndex: function(channel, index){
+		this.channel_vidindex[channel] = index;
 	},
 
 	//set the curr video to be the videoid
