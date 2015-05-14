@@ -57,16 +57,24 @@ iframe {
 	cursor: pointer;
 }
 
-#info-icon {
+.top-icon {
+	cursor: pointer;
 	opacity: 0.75;
 	position: absolute;
 	display: inline-block;
 	top: 10px;
+}
+
+.top-icon:hover {
+	cursor: pointer;
+}
+
+#home-icon {
 	left: 10px;
 }
 
-#info-icon:hover {
-	cursor: pointer;
+#info-icon {
+	left: 50px;
 }
 
 #about {

@@ -6,7 +6,7 @@ var titletimeout;
 var timebartimeout;
 var cursortimeout;
 var channelstimeout;
-var infoicontimeout;
+var iconstimeout;
 var timebarprog = 1;
 
 $(document).ready(function(){
@@ -24,7 +24,7 @@ function animateAll(){
     animateArrow();
     animateTimeBar();
     animateChannels();
-    animateInfoIcon();
+    animateIcons();
     setTimeout(function(){
       moved = false;
     },ALL_ANIMATION_TIME);
@@ -35,7 +35,7 @@ function animateAll(){
     clearTimeout(timebartimeout);
     clearTimeout(cursortimeout);
     clearTimeout(channelstimeout);
-    clearTimeout(infoicontimeout);
+    clearTimeout(iconstimeout);
     arrowtimeout = setTimeout(function(){
       if(isTouchDevice) return;
       fadeElementById("#arrowL");
@@ -50,8 +50,8 @@ function animateAll(){
     channelstimeout = setTimeout(function(){
       fadeElementById("#channels");
     }, 2000);
-    infoicontimeout = setTimeout(function(){
-      fadeElementById("#info-icon");
+    iconstimeout = setTimeout(function(){
+      fadeElementById(".top-icon");
     }, 2000);
     cursortimeout = setTimeout(function(){
       document.body.style.cursor = 'none';
@@ -59,11 +59,11 @@ function animateAll(){
   }
 }
 
-function animateInfoIcon(){
-  animateElementById("#info-icon", 1.0);
-  clearTimeout(infoicontimeout);
-  infoicontimeout = setTimeout(function(){
-    fadeElementById("#info-icon");
+function animateIcons(){
+  animateElementById(".top-icon", 0.75);
+  clearTimeout(iconstimeout);
+  iconstimeout = setTimeout(function(){
+    fadeElementById(".top-icon");
   }, 2000);
 }
 
@@ -77,8 +77,8 @@ function animateTitle(){
 
 function animateArrow(){
   if(isTouchDevice) return;
-  animateElementById("#arrowL",0.5);
-  animateElementById("#arrowR",0.5);
+  animateElementById("#arrowL",0.75);
+  animateElementById("#arrowR",0.75);
   clearTimeout(arrowtimeout);
   arrowtimeout = setTimeout(function(){
     fadeElementById("#arrowL");

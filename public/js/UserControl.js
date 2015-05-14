@@ -174,6 +174,10 @@ $('#arrowR').click(function(e) {
   e.stopPropagation();
 });
 
+$('#home-icon').click(function() {
+  setNewChannel('all');
+});
+
 $('#info-icon').click(function() {
   if (aboutOpen) {
     $('#glass').animate({backgroundColor: "rgba(0,0,0,0)"}, 'fast');
