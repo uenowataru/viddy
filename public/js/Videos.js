@@ -28,7 +28,7 @@ function loadVideo(channel, videoId){
 			var title = data[1];
 			var index = 0;
 			video_list.insertVideo(channel, index, [videoId, title]);
-			video_list.setChannelIndex(channel, index);
+			video_list.setChannelVidIndex(channel, index);
 		}
 	});
 }
@@ -39,13 +39,13 @@ function loadChannels(){
 }
 
 function prevChannel(){
-  video_list.prevChannel();
-  setNewChannel(video_list.getCurrChannel());
+	video_list.prevChannel();
+	setNewChannel(video_list.getCurrChannel());
 }
 
 function nextChannel(){
-  video_list.nextChannel();
-  setNewChannel(video_list.getCurrChannel());
+	video_list.nextChannel();
+	setNewChannel(video_list.getCurrChannel());
 }
 
 function procVideos(data, channel){
@@ -112,6 +112,7 @@ VideoList.prototype = {
 	setCurrChannel: function(channel){
 		this.channel = channel;
 		this.channel_vidindex[this.channel] = 0;
+		this.channel_index = this.findChannelIndex(channel);
 		loadChannels();
 	},
 
@@ -139,8 +140,12 @@ VideoList.prototype = {
 		return this.channels[prevchan_index];
 	},
 
-	setChannelIndex: function(channel, index){
+	setChannelVidIndex: function(channel, index){
 		this.channel_vidindex[channel] = index;
+	},
+
+	findChannelIndex: function(channel){
+		return this.channels.indexOf(channel);
 	},
 
 	//set the curr video to be the videoid
@@ -176,7 +181,6 @@ VideoList.prototype = {
 	},
 
 	insertVideo: function(channel, index, vidinfo){
-		//console.log(channel + " " + vidinfo[0] + vidinfo[1]);
 		this.vidlists[channel].unshift(vidinfo);
 	},
 
@@ -199,13 +203,6 @@ VideoList.prototype = {
 		this.channel_vidindex[this.channel] = this.channel_vidindex[this.channel]-1;
 	}
 };
-
-//deal with wrapping issues of queue
-
-
-
-
-
 
 
 
