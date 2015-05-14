@@ -71,8 +71,23 @@ function getProfileInfo() {
       $('#fbdiv').prepend('<img id="fbpropic" src="' + response.picture.data.url + '" />');
       var id = response['id'];
       getUser(id);
+    }else{
+      console.log(response);
     }
   });
+  
+  FB.api('/me?fields=picture', function(response) {
+    if (response && !response.error) {
+      console.log(response); //console.log('Successful login for: ' + response.name);
+      
+      $('#fbdiv').prepend('<img id="fbpropic" src="' + response.picture.data.url + '" />');
+      var id = response['id'];
+      getUser(id);
+    }else{
+      console.log(response);
+    }
+  });
+
 }
 
 function getUser(id){
