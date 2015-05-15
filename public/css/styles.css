@@ -101,6 +101,7 @@ iframe {
 	-webkit-transition: all 0.3s ease;
 	-moz-transition: all 0.3s ease;
 	transition: all 0.3s ease;
+	overflow: auto;
 }
 
 #channel-menu h3 {
@@ -109,12 +110,25 @@ iframe {
 	margin: 0;
 	font-weight: 300;
 	background: #E6E6E6;
+	border-bottom: 1px solid #999999;
 }
 
 #channel-menu a {
 	display: block;
-	border-bottom: 1px solid #E6E6E6;
+	border-bottom: 1px solid #999999;
 	padding: 1em;
+	text-decoration: none;
+	color: black;
+}
+
+#channel-menu a:hover {
+	background: #E6E6E6;
+	cursor: pointer;
+}
+
+#channel-menu a:active {
+	color: white;
+	background: #0d77b6;
 }
 
 .channel-menu-vertical {

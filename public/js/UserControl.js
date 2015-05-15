@@ -311,3 +311,10 @@ $('#channel-icon').click(function() {
   $('#channel-menu').toggleClass('channel-menu-open');
 });
 
+$('.channel').click(function() {
+  setNewChannel($(this).attr('channel'));
+});
+
+
+
+
