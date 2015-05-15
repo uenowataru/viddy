@@ -49,7 +49,10 @@ function nextChannel(){
 }
 
 function loadLikedVideos(){
-	
+	var channel = 'liked';
+	if(video_list.getList(channel).length > 0){
+		video_list.setCurrChannel(channel);
+	}
 }
 
 function procVideos(data, channel){
@@ -72,7 +75,7 @@ function procVideos(data, channel){
 
 function likeCurrVideo(){
 	try{
-		likeVideo(video_list.getCurrVideo());
+		user.likeVideo(video_list.getCurrVideo());
 	}catch(err){
 		console.log(err.stack);
 	}
@@ -125,6 +128,10 @@ VideoList.prototype = {
 		this.channel = channel;
 		this.channel_vidindex[this.channel] = 0;
 		this.channel_index = this.findChannelIndex(channel);
+		if(this.channel_index < 0){
+			this.channels.push(channel);
+			this.channel_index = this.findChannelIndex(channel);
+		}
 		loadChannels();
 	},
 

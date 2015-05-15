@@ -60,8 +60,6 @@ function statusChangeCallback(response) {
   }
 }
 
-
-var userId;
 // Here we run a very simple test of the Graph API after login is
 // successful.  See statusChangeCallback() for when this call is made.
 function getProfileInfo() {
@@ -75,8 +73,11 @@ function getProfileInfo() {
         if (response.status === 'connected') {
           //console.log(response.authResponse.accessToken);
           var accessToken = response.authResponse.accessToken;
-          getUser(userId, accessToken);
+          user = new User(userId, accessToken);
         }
+
+        console.log(FB.getCurrentAccessToken());
+
       });
     }else{
       console.log(response);
@@ -98,28 +99,7 @@ function getProfilePic(){
   });
 }
 
-function getUser(id, accessToken){
-  if(id==undefined) return;
-  var resourceUrl = "/api/user/" + id;
-  return $.getJSON(resourceUrl, function(data){
-    procUser(data);
-  });
-}
 
-function procUser(data){
-  console.log(data);
-}
-
-getUser('10152922385272087', '');
-
-function likeVideo(video){
-  var userId = '10152922385272087';
-  var resourceUrl = "/api/user/" + userId;
-  var data = {'updown':'up','video':video};
-  return $.post(resourceUrl, data, function(resp){
-    console.log(resp);
-  }, 'json');
-}
 
 
 
