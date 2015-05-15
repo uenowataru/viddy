@@ -74,6 +74,7 @@ app.get('/api/user/:userId/:updown/:videoId', function (req, res) {
 
 app.get('/*', function(req, res){
 	console.log("Unknown URL caught");
+	console.log(req.params);
 	res.sendFile(__dirname + '/public/index.html');
 });
 
