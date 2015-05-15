@@ -3,11 +3,9 @@ var user;
 function User(userId, accessToken) {
 	this.userId = userId;
 	this.accessToken = accessToken;
-	this.likedVideos;
+	this.likedVideos = [];
 	this.updated = false;
 }
-
-user = new User('10152922385272087', '');
 
 User.prototype = {
 	getUserId: function(){
@@ -28,10 +26,11 @@ User.prototype = {
 
 	loadVideos: function(){
 		if(this.userId==undefined || this.updated) return;
-		var resourceUrl = "/api/user/" + userId;
+		var resourceUrl = "/api/user/" + this.userId;
+		var user = this;
 		return $.getJSON(resourceUrl, function(data){
-			user.likedVideos = data;
-			this.updated = true;
+			user.setLikedVideos(data);
+			user.updated = true;
 		});
 	},
 
@@ -39,19 +38,26 @@ User.prototype = {
 		return this.likedVideos;
 	},
 
+	setLikedVideos: function(videos){
+		this.likedVideos = videos;
+	},
+
 	likeVideo: function(video){
 		var resourceUrl = "/api/user/" + this.userId;
 		var data = {'updown':'up','video':video};
+		var user = this;
 		return $.post(resourceUrl, data, function(resp){
 			console.log(resp);
-			this.updated = false;
+			user.updated = false;
 		}, 'json');
 	}
 };
 
 
 
-
+user = new User('10152922385272087', '');
+user.loadVideos();
+console.log(user.getUserId());
 
 
 

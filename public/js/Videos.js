@@ -4,7 +4,7 @@ function VideoList() {
 	this.channels = ['all', 'gopro', 'youtubehaiku', 'bloopers', 'funnyvideos', 'fail', 'UnexpectedThugLife',
 	'StandUpComedy', 'deepintoyoutube', 'ContagiousLaughter','LearnUselessTalents', 'trailers', 'musicvideos',
 	'Music', 'sports' , 'nba', 'soccer', 'nfl','PublicFreakout', 'StreetFights', 'respectporn',
-	'kidsafevideos'];
+	'kidsafevideos', 'liked'];
 	this.channel = 'all';
 	this.channel_index = 0;
 	this.loading = false;
@@ -46,16 +46,6 @@ function prevChannel(){
 function nextChannel(){
 	video_list.nextChannel();
 	setNewChannel(video_list.getCurrChannel());
-}
-
-function loadLikedVideos(){
-	var channel = 'liked';
-	user.loadVideos().always(function(){
-		video_list.putList(channel, user.getLikedVideos());
-		if(video_list.getList(channel).length > 0){
-			video_list.setCurrChannel(channel);
-		}
-	});
 }
 
 function procVideos(data, channel){

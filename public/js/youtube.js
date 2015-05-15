@@ -26,7 +26,6 @@ var InitialPlay = true;
 var video_list = new VideoList();
 
 
-
 function parseInfoFromURL(){
   var currurl = window.location.href;
   if(currurl.indexOf("/ch/") > 0){
@@ -51,7 +50,9 @@ function setVideoFromURL(){
 
 function setChannelFromURL(){
   var channel = parseInfoFromURL()[0];
-  if(channel.length > 0){
+  if(channel == 'liked'){
+    video_list.setCurrChannel('all');
+  }else if(channel.length > 0){
     video_list.setCurrChannel(channel);
   }else
     video_list.setCurrChannel('all');
@@ -67,6 +68,28 @@ function setNewChannel(channel){
       loadYTVideo(next, video_list.getNextVideo()[0]);
     });
   }else{
+    loadYTVideo(curr, video_list.getCurrVideo()[0]);
+    loadYTVideo(prev, video_list.getPrevVideo()[0]);
+    loadYTVideo(next, video_list.getNextVideo()[0]);
+  }
+}
+
+function loadLikedVideos(){
+  var asyncstatus = user.loadVideos();
+  if(asyncstatus){
+    asyncstatus.always(function(){
+      initLikedVideos();
+    });
+  }else{
+    initLikedVideos();
+  }
+}
+
+function initLikedVideos(){
+  var channel = 'liked';
+  video_list.putList(channel, user.getLikedVideos());
+  if(video_list.getList(channel).length > 0){
+    video_list.setCurrChannel(channel);
     loadYTVideo(curr, video_list.getCurrVideo()[0]);
     loadYTVideo(prev, video_list.getPrevVideo()[0]);
     loadYTVideo(next, video_list.getNextVideo()[0]);

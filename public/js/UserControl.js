@@ -186,10 +186,12 @@ $('#heart-icon').click(function() {
   if (!liked) {
     $('#heart-icon').removeClass("fa-heart-o").addClass("fa-heart");
     liked = true;
+    loadLikedVideos();
   }
   else {
     $('#heart-icon').removeClass("fa-heart").addClass("fa-heart-o");
     liked = false;
+    setNewChannel('all');
   }
 });
 
