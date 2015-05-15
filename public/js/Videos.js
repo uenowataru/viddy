@@ -24,7 +24,7 @@ function loadVideos(channel) {
 function loadVideo(channel, videoId){
 	var url = "/api/vid/" + videoId;
 	return $.getJSON(url, function(data){
-		if(data.length > 2){
+		if(data.length > 1){
 			var title = data[1];
 			var index = 0;
 			video_list.insertVideo(channel, index, [videoId, title]);
