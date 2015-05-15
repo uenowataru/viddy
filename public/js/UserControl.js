@@ -304,4 +304,10 @@ function toggleFullScreen() {
 }
 
 
+// slide out menu
+
+$('#channel-icon').click(function() {
+  $('body').toggleClass('channel-menu-push-toright');
+  $('#channel-menu').toggleClass('channel-menu-open');
+});
 
