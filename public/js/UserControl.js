@@ -107,7 +107,7 @@ $(document.activeElement).keydown(function(e) {
     nextChannel();
   } //k
   if(e.which == 76){
-    likeVideo(video_list.getCurrVideo());
+    likeCurrVideo();
   }
   if(e.which == 82){
     replayVideo();

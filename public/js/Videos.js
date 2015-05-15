@@ -63,8 +63,16 @@ function procVideos(data, channel){
 		video_list.putList(channel,queue);
 	}else{
 		//console.log(channel + ' vids defined');
+	}		
+}
+
+function likeCurrVideos(){
+	try{
+		likeVideo(video_list.getCurrVideo()[0]);
+	}catch(err){
+		console.log(err.stack);
 	}
-		
+	
 }
 
 VideoList.prototype = {
