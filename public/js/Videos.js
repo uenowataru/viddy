@@ -50,9 +50,12 @@ function nextChannel(){
 
 function loadLikedVideos(){
 	var channel = 'liked';
-	if(video_list.getList(channel).length > 0){
-		video_list.setCurrChannel(channel);
-	}
+	user.loadVideos().always(function(){
+		video_list.putList(channel, user.getLikedVideos());
+		if(video_list.getList(channel).length > 0){
+			video_list.setCurrChannel(channel);
+		}
+	});
 }
 
 function procVideos(data, channel){

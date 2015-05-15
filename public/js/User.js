@@ -4,6 +4,7 @@ function User(userId, accessToken) {
 	this.userId = userId;
 	this.accessToken = accessToken;
 	this.likedVideos;
+	this.updated = false;
 }
 
 user = new User('10152922385272087', '');
@@ -26,10 +27,11 @@ User.prototype = {
 	},
 
 	loadVideos: function(){
-		if(this.userId==undefined) return;
+		if(this.userId==undefined || this.updated) return;
 		var resourceUrl = "/api/user/" + userId;
 		return $.getJSON(resourceUrl, function(data){
 			user.likedVideos = data;
+			this.updated = true;
 		});
 	},
 
@@ -42,6 +44,7 @@ User.prototype = {
 		var data = {'updown':'up','video':video};
 		return $.post(resourceUrl, data, function(resp){
 			console.log(resp);
+			this.updated = false;
 		}, 'json');
 	}
 };
