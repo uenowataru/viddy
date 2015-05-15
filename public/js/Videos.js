@@ -66,7 +66,7 @@ function procVideos(data, channel){
 	}		
 }
 
-function likeCurrVideos(){
+function likeCurrVideo(){
 	try{
 		likeVideo(video_list.getCurrVideo()[0]);
 	}catch(err){

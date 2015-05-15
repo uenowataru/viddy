@@ -108,7 +108,7 @@ $(document.activeElement).keydown(function(e) {
   } //k
   if(e.which == 76){
     likeCurrVideo();
-  }
+  } //l
   if(e.which == 82){
     replayVideo();
   } //r
