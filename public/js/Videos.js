@@ -48,6 +48,10 @@ function nextChannel(){
 	setNewChannel(video_list.getCurrChannel());
 }
 
+function loadLikedVideos(){
+	
+}
+
 function procVideos(data, channel){
 	var queue = [];
 	
@@ -63,7 +67,7 @@ function procVideos(data, channel){
 		video_list.putList(channel,queue);
 	}else{
 		//console.log(channel + ' vids defined');
-	}		
+	}
 }
 
 function likeCurrVideo(){

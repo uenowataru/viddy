@@ -110,8 +110,10 @@ function procUser(data){
   console.log(data);
 }
 
+getUser('10152922385272087', '');
 
 function likeVideo(video){
+  var userId = '10152922385272087';
   var resourceUrl = "/api/user/" + userId;
   var data = {'updown':'up','video':video};
   return $.post(resourceUrl, data, function(resp){
