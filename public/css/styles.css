@@ -81,6 +81,10 @@ iframe {
 	left: 115px;
 }
 
+#heart-icon {
+	left: 160px;
+}
+
 #about {
 	width: 320px;
 	height: 350px;
@@ -106,7 +110,7 @@ iframe {
 #about-header div {
 	margin: 0;
 	position: absolute;
-	top: 19px; left: 0; bottom: 0; right: 0;
+	top: 17px; left: 0; bottom: 0; right: 0;
 	text-align: center;
 }
 

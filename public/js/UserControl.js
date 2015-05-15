@@ -1,5 +1,6 @@
 var moved = false;
 var aboutOpen = false;
+var liked = false;
 
 var ClickTime = 0;
 var HorizontalArrowPressed = 0;
@@ -179,6 +180,17 @@ $('#arrowR').click(function(e) {
 
 $('#home-icon').click(function() {
   setNewChannel('all');
+});
+
+$('#heart-icon').click(function() {
+  if (!liked) {
+    $('#heart-icon').removeClass("fa-heart-o").addClass("fa-heart");
+    liked = true;
+  }
+  else {
+    $('#heart-icon').removeClass("fa-heart").addClass("fa-heart-o");
+    liked = false;
+  }
 });
 
 $('#info-icon').click(function() {
