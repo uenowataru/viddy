@@ -60,7 +60,7 @@ function animateAll(){
 }
 
 function animateIcons(){
-  animateElementById(".top-icon", 0.75);
+  animateElementById(".top-icon", 1.0);
   clearTimeout(iconstimeout);
   iconstimeout = setTimeout(function(){
     fadeElementById(".top-icon");

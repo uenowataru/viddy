@@ -8,17 +8,32 @@
 		<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans" type="text/css"/>
 		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" type="text/css" >
 	</head>
-	<body id="body">
+	<body id="body" class="channel-menu-push">
 		<div id="curr"></div>
 		<div id="next"></div>
 		<div id="prev"></div>
 		
 		<div id="glass" onclick="mouseClick()"></div>
 		
-		<i class="fa fa-home fa-inverse fa-2x top-icon" id="home-icon"></i>
-		<i class="fa fa-desktop fa-inverse fa-2x top-icon" id="channel-icon"></i>
-		<i class="fa fa-info-circle fa-inverse fa-2x top-icon" id="info-icon"></i>
-		<i class="fa fa-heart-o fa-inverse fa-2x top-icon" id="heart-icon"></i>
+		<div id="icons">
+			<i class="fa fa-home fa-inverse fa-2x top-icon" id="home-icon"></i>
+			<i class="fa fa-desktop fa-inverse fa-2x top-icon" id="channel-icon"></i>
+			<i class="fa fa-info-circle fa-inverse fa-2x top-icon" id="info-icon"></i>
+			<i class="fa fa-heart-o fa-inverse fa-2x top-icon" id="heart-icon"></i>
+		</div>
+
+		<nav class="channel-menu channel-menu-vertical channel-menu-left" id="channel-menu">
+			<h3>Channels</h3>
+			<a href="#">All</a>
+			<a href="#">All</a>
+			<a href="#">All</a>
+			<a href="#">All</a>
+			<a href="#">All</a>
+			<a href="#">All</a>
+			<a href="#">All</a>
+			<a href="#">All</a>
+			<a href="#">All</a>
+		</nav>
 
 		<div id="about">
 			<div id="about-header">
@@ -73,7 +88,7 @@
 			</div>
 		</div>
 			
-		<div id="titlewrapper" display="block" allign="center"> 
+		<div id="titlewrapper" display="block" align="center"> 
 			<div id="title" onclick="titleClick()"></div>
 		</div>
 

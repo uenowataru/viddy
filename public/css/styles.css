@@ -15,6 +15,7 @@ html, body {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    left: 0;
 }
 
 iframe {
@@ -59,7 +60,7 @@ iframe {
 
 .top-icon {
 	cursor: pointer;
-	opacity: 0.75;
+	opacity: 1;
 	position: absolute;
 	display: inline-block;
 	top: 10px;
@@ -84,6 +85,57 @@ iframe {
 #heart-icon {
 	left: 160px;
 }
+
+
+/* SLIDE OUT MENU */
+
+.channel-menu-push {
+	position: relative;
+	overflow-x: hidden;
+	left: 0;
+}
+
+#channel-menu {
+	background: #47a3da;
+	position: fixed;
+	-webkit-transition: all 0.3s ease;
+	-moz-transition: all 0.3s ease;
+	transition: all 0.3s ease;
+}
+
+#channel-menu a {
+	display: block;
+}
+
+.channel-menu-vertical {
+	width: 150px;
+	height: 100%;
+	top: 0;
+	z-index: 1000;
+}
+
+.channel-menu-left {
+	left: -150px;
+}
+
+.channel-menu-left.channel-menu-open {
+	left: 0px;
+}
+
+.channel-menu-push-toright {
+	left: 150px;
+}
+
+.channel-menu,
+.channel-menu-push {
+	-webkit-transition: all 0.3s ease;
+	-moz-transition: all 0.3s ease;
+	transition: all 0.3s ease;
+}
+
+/* END OF SLIDE OUT MENU */
+
+
 
 #about {
 	width: 320px;
