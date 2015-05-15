@@ -241,7 +241,7 @@ img {
 .arrow {
 	width: 8%;
 	height: 12%;
-	position: fixed;
+	position: absolute;
 	top: 50%;
 	display: block;
 	-moz-transform: translateY(-50%);
