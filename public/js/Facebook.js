@@ -61,6 +61,7 @@ function statusChangeCallback(response) {
 }
 
 
+var userId;
 // Here we run a very simple test of the Graph API after login is
 // successful.  See statusChangeCallback() for when this call is made.
 function getProfileInfo() {
@@ -69,28 +70,35 @@ function getProfileInfo() {
       console.log(response); //console.log('Successful login for: ' + response.name);
       
       $('#fbdiv').prepend('<img id="fbpropic" src="' + response.picture.data.url + '" />');
-      var id = response['id'];
-      getUser(id);
+      userId = response['id'];
+      FB.getLoginStatus(function(response) {
+        if (response.status === 'connected') {
+          //console.log(response.authResponse.accessToken);
+          var accessToken = response.authResponse.accessToken;
+          getUser(userId, accessToken);
+        }
+      });
     }else{
       console.log(response);
     }
   });
-  
+}
+
+function getProfilePic(){
   FB.api('/me?fields=picture', function(response) {
     if (response && !response.error) {
       console.log(response); //console.log('Successful login for: ' + response.name);
       
       $('#fbdiv').prepend('<img id="fbpropic" src="' + response.picture.data.url + '" />');
-      var id = response['id'];
-      getUser(id);
+      //var id = response['id'];
+      //getUser(id);
     }else{
       console.log(response);
     }
   });
-
 }
 
-function getUser(id){
+function getUser(id, accessToken){
   if(id==undefined) return;
   var resourceUrl = "/api/user/" + id;
   return $.getJSON(resourceUrl, function(data){
@@ -103,7 +111,12 @@ function procUser(data){
 }
 
 
-
+function likeVideo(videoId){
+  var resourceUrl = "/api/user/" + userId + "/up/" + videoId;
+  return $.getJSON(resourceUrl, function(data){
+    console.log(data);
+  });
+}
 
 
 

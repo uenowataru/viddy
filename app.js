@@ -60,6 +60,18 @@ app.get('/api/user/:userId', function (req, res) {
 	});
 });
 
+app.get('/api/user/:userId/:updown/:videoId', function (req, res) {
+	console.log('\n\n\nGot uId+vId request....');
+	var userId = req.params.userId;
+	var updown = req.params.updown;
+	var videoId = req.params.videoId;
+	js_server.updateUserLikedVideos(userId, updown, videoId);
+	var resp = ["ok"];
+	if(resp) console.log(resp);
+	res.json(resp);
+	console.log('uId+vId response sent..');
+});
+
 app.get('/*', function(req, res){
 	console.log("Unknown URL caught");
 	res.sendFile(__dirname + '/public/index.html');
