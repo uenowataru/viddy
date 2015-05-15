@@ -96,26 +96,36 @@ iframe {
 }
 
 #channel-menu {
-	background: #47a3da;
+	background: white;
 	position: fixed;
 	-webkit-transition: all 0.3s ease;
 	-moz-transition: all 0.3s ease;
 	transition: all 0.3s ease;
 }
 
+#channel-menu h3 {
+	font-size: 1.5em;
+	padding: 1em;
+	margin: 0;
+	font-weight: 300;
+	background: #E6E6E6;
+}
+
 #channel-menu a {
 	display: block;
+	border-bottom: 1px solid #E6E6E6;
+	padding: 1em;
 }
 
 .channel-menu-vertical {
-	width: 150px;
+	width: 200px;
 	height: 100%;
 	top: 0;
 	z-index: 1000;
 }
 
 .channel-menu-left {
-	left: -150px;
+	left: -200px;
 }
 
 .channel-menu-left.channel-menu-open {
@@ -123,7 +133,7 @@ iframe {
 }
 
 .channel-menu-push-toright {
-	left: 150px;
+	left: 200px;
 }
 
 .channel-menu,
