@@ -68,7 +68,7 @@ function procVideos(data, channel){
 
 function likeCurrVideo(){
 	try{
-		likeVideo(video_list.getCurrVideo()[0]);
+		likeVideo(video_list.getCurrVideo());
 	}catch(err){
 		console.log(err.stack);
 	}

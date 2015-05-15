@@ -1,9 +1,14 @@
 var express = require('express');
 var js_server = require("js-server");
 var app = express();
+var bodyParser = require('body-parser');
 
 var port = process.env.PORT || 3000;
 
+app.use( bodyParser.json() );       // to support JSON-encoded bodies
+app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
+  extended: true
+}));
 app.use("/js", express.static(__dirname + '/public/js'));
 app.use("/css", express.static(__dirname + '/public/css'));
 app.use("/res", express.static(__dirname + '/public/res'));
@@ -60,13 +65,14 @@ app.get('/api/user/:userId', function (req, res) {
 	});
 });
 
-app.get('/api/user/:userId/:updown/:videoId', function (req, res) {
+app.post('/api/user/:userId', function (req, res) {
 	console.log('\n\n\nGot uId+vId request....');
 	var userId = req.params.userId;
-	var updown = req.params.updown;
-	var videoId = req.params.videoId;
-	js_server.updateUserLikedVideos(userId, updown, videoId);
-	var resp = ["ok"];
+	//console.log(req.body);
+	var updown = req.body.updown;
+	var video = req.body.video;
+	js_server.updateUserLikedVideos(userId, updown, video);
+	var resp = ["OK:200"];
 	if(resp) console.log(resp);
 	res.json(resp);
 	console.log('uId+vId response sent..');

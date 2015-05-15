@@ -111,11 +111,12 @@ function procUser(data){
 }
 
 
-function likeVideo(videoId){
-  var resourceUrl = "/api/user/" + userId + "/up/" + videoId;
-  return $.getJSON(resourceUrl, function(data){
-    console.log(data);
-  });
+function likeVideo(video){
+  var resourceUrl = "/api/user/" + userId;
+  var data = {'updown':'up','video':video};
+  return $.post(resourceUrl, data, function(resp){
+    console.log(resp);
+  }, 'json');
 }
 
 
