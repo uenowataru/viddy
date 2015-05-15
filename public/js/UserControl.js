@@ -259,7 +259,7 @@ $('body').on ('mousewheel', function (e) {
 
   if (wheeldelta < -scrollThreshold) {
     canScroll = false;
-    nextChannel();
+    //nextChannel();
 
     //nextVideo();
     //animateTitle();
@@ -269,7 +269,7 @@ $('body').on ('mousewheel', function (e) {
     }, 1000);
   } else if (wheeldelta > scrollThreshold) {    //scrolled down
     canScroll = false;
-    prevChannel();
+    //prevChannel();
 
     //previousVideo();
     //animateTitle();
