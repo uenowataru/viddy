@@ -106,7 +106,10 @@ app.get('/auth/facebook', function(req, res){
 // access was granted, the user will be logged in.  Otherwise,
 // authentication has failed.
 app.get('/auth/facebook/callback', function(req, res){
-	passport.authenticate('facebook', { successRedirect: '/', failureRedirect: '/login' });
+	passport.authenticate('facebook', { 
+		successRedirect: '/',
+		failureRedirect: '/ch/gopro' 
+	});
 });
 
 app.get('/*', function(req, res){
