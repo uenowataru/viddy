@@ -92,7 +92,7 @@ app.post('/api/user/:userId', function (req, res) {
 	console.log('uId+vId response sent..');
 });
 
-app.get('/auth/facebook/*', function(req,res, next) {
+app.get('/auth/facebook/request/*', function(req,res, next) {
 	console.log( 'origin:'+ req.params[0] + "\nparsed:"+ req.params[0].substring(13,req.params[0].length));
   passport.authenticate(
     'facebook',
@@ -113,8 +113,8 @@ app.get('/auth/facebook/callback/*', function(req,res,next) {
 	passport.authenticate(
 		'facebook',
 		{
-			successRedirect:"/", // + req.params[0].substring(22,req.params[0].length)
-			failureRedirect:"/"
+			successRedirect:"/" + req.params[0].substring(22,req.params[0].length),
+			failureRedirect:"/" +  req.params[0].substring(22,req.params[0].length)
 		}
 	)(req,res,next);
  });
