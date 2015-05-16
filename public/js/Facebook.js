@@ -45,11 +45,11 @@ function statusChangeCallback(response) {
     // The person is logged into Facebook, but not your app.
     
     //FB.login();
-    $( "#fbloginbutton" ).remove();
-    getProfileInfo();
-    document.getElementById("fbdiv").addEventListener("click", function(){
-      FB.login();
-    });
+    //$( "#fbloginbutton" ).remove();
+    //getProfileInfo();
+    //document.getElementById("fbdiv").addEventListener("click", function(){
+    FB.login();
+    //});
   
   } else {
     // The person is not logged into Facebook, so we're not sure if

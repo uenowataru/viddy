@@ -5,6 +5,24 @@ var bodyParser = require('body-parser');
 
 var port = process.env.PORT || 3000;
 
+
+var passport = require('passport'),
+	FacebookStrategy = require('passport-facebook').Strategy;
+
+passport.use(new FacebookStrategy({
+    clientID: '1641122906121098',
+    clientSecret: 'ba3410f9c0afca7b95ca58e3e203f7f6',
+    callbackURL: "http://www.test-trendeo.herokuapp.com/auth/facebook/callback"
+  },
+  function(accessToken, refreshToken, profile, done) {
+    User.findOrCreate(accessToken, refreshToken, profile, function(err, user) {
+      if (err) { return done(err); }
+      done(null, user);
+    });
+  }
+));
+
+
 app.use( bodyParser.json() );       // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
   extended: true
@@ -82,6 +100,18 @@ app.get('/*', function(req, res){
 	console.log("Unknown URL caught");
 	console.log(req.params);
 	res.sendFile(__dirname + '/public/index.html');
+});
+
+app.get('/auth/facebook', function(req, res){
+	passport.authenticate('facebook');
+});
+
+// Facebook will redirect the user to this URL after approval.  Finish the
+// authentication process by attempting to obtain an access token.  If
+// access was granted, the user will be logged in.  Otherwise,
+// authentication has failed.
+app.get('/auth/facebook/callback', function(req, res){
+	passport.authenticate('facebook', { successRedirect: '/', failureRedirect: '/login' });
 });
 
 //logging
