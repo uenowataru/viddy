@@ -115,9 +115,10 @@ app.get('/auth/facebook/*', function(req,res, next) {
 	console.log( 'origin:'+ req.params[0] + "\nparsed:"+ req.params[0].substring(13,req.params[0].length));
   passport.authenticate(
     'facebook',
-     {callbackURL: '/auth/facebook/callback/'}
+     {callbackURL: '/auth/facebook/callback/' + req.params[0].substring(13,req.params[0].length)}
   )(req,res, next);
 });
+
 
 app.get('/*', function(req, res){
 	console.log("Unknown URL caught");
