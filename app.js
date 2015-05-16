@@ -140,6 +140,10 @@ app.get('/auth/facebook/*', function(req,res, next) {
 	)(req,res, next);
 });
 
+app.get('/privacypolicy', function(req, res){
+	res.sendFile(__dirname + '/public/privacypolicy.htm');
+});
+
 app.get('/*', function(req, res){
 	console.log("Unknown URL caught");
 	console.log(req.params);
