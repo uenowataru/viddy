@@ -97,12 +97,6 @@ app.post('/api/user/:userId', function (req, res) {
 	console.log('uId+vId response sent..');
 });
 
-app.get('/*', function(req, res){
-	console.log("Unknown URL caught");
-	console.log(req.params);
-	res.sendFile(__dirname + '/public/index.html');
-});
-
 app.get('/auth/facebook', function(req, res){
 	passport.authenticate('facebook');
 });
@@ -113,6 +107,12 @@ app.get('/auth/facebook', function(req, res){
 // authentication has failed.
 app.get('/auth/facebook/callback', function(req, res){
 	passport.authenticate('facebook', { successRedirect: '/', failureRedirect: '/login' });
+});
+
+app.get('/*', function(req, res){
+	console.log("Unknown URL caught");
+	console.log(req.params);
+	res.sendFile(__dirname + '/public/index.html');
 });
 
 //logging
