@@ -108,7 +108,7 @@ app.get('/auth/facebook/callback/*', function(req,res,next) {
 		'facebook',
 		{
 			successRedirect:"/" + req.params[0].substring(22,req.params[0].length),
-			failureRedirect:"/" + req.params[0].substring(22,req.params[0].length);
+			failureRedirect:"/" + req.params[0].substring(22,req.params[0].length)
 		}
 	) (req,res,next);
  });
