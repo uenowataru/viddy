@@ -12,7 +12,7 @@ var passport = require('passport'),
 passport.use(new FacebookStrategy({
     clientID: '1641122906121098',
     clientSecret: 'ba3410f9c0afca7b95ca58e3e203f7f6',
-    callbackURL: "http://www.test-trendeo.herokuapp.com/auth/facebook/callback"
+    callbackURL: "http://test-trendeo.herokuapp.com/auth/facebook/callback"
   },
   function(accessToken, refreshToken, profile, done) {
 	console.log(profile);
@@ -99,6 +99,7 @@ app.post('/api/user/:userId', function (req, res) {
 
 app.get('/auth/facebook', function(req, res){
 	passport.authenticate('facebook');
+	console.log('Got auth req');
 });
 
 // Facebook will redirect the user to this URL after approval.  Finish the
