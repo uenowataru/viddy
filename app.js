@@ -116,10 +116,6 @@ app.post('/api/user/:userId', function (req, res) {
 // authentication process by attempting to obtain an access token.  If
 // access was granted, the user will be logged in.  Otherwise,
 // authentication has failed.
-
-
-
-
 app.get('/auth/facebook/callback/*', function(req,res,next) {
 	var originurl = req.params['0'];
 	console.log('called back ' + originurl);

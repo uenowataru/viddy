@@ -73,6 +73,7 @@ function getProfileInfo() {
         if (response.status === 'connected') {
           //console.log(response.authResponse.accessToken);
           var accessToken = FB.getAuthResponse()['accessToken'];
+          console.log(accessToken);
           user = new User(userId, accessToken);
           user.loadVideos();
         }

@@ -43,7 +43,7 @@ User.prototype = {
 	},
 
 	likeVideo: function(video){
-		var resourceUrl = "/api/user/" + this.userId;
+		var resourceUrl = "/api/user/" + this.accessToken;
 		var data = {'updown':'up','video':video};
 		var user = this;
 		return $.post(resourceUrl, data, function(resp){
