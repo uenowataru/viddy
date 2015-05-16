@@ -15,10 +15,11 @@ passport.use(new FacebookStrategy({
     callbackURL: "http://www.test-trendeo.herokuapp.com/auth/facebook/callback"
   },
   function(accessToken, refreshToken, profile, done) {
-    User.findOrCreate(accessToken, refreshToken, profile, function(err, user) {
-      if (err) { return done(err); }
-      done(null, user);
-    });
+	console.log(profile);
+    // User.findOrCreate(accessToken, refreshToken, profile, function(err, user) {
+    //   if (err) { return done(err); }
+    //   done(null, user);
+    // });
   }
 ));
 
