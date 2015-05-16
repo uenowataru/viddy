@@ -93,7 +93,7 @@ app.post('/api/user/:userId', function (req, res) {
 });
 
 app.get('/auth/facebook/request/*', function(req,res, next) {
-	console.log( 'origin:'+ req.params[0] + "\nparsed:"+ req.params[0].substring(13,req.params[0].length));
+	console.log( 'origin:'+ req.params[0] + "\nparsed:"+ req.params[0].substring(21,req.params[0].length));
   passport.authenticate(
     'facebook',
      {callbackURL: '/auth/facebook/callback/'}
