@@ -12,7 +12,7 @@ var passport = require('passport'),
 passport.use(new FacebookStrategy({
     clientID: '1641122906121098',
     clientSecret: 'ba3410f9c0afca7b95ca58e3e203f7f6',
-    callbackURL: "http://test-trendeo.herokuapp.com/auth/facebook/callback/feaf"
+    callbackURL: "http://test-trendeo.herokuapp.com/auth/facebook/callback/"
   },
   function(accessToken, refreshToken, profile, done) {
 	console.log(profile['id']);
