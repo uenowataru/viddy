@@ -93,6 +93,7 @@ app.post('/api/user/:userId', function (req, res) {
 });
 
 app.get('/auth/facebook/*', function(req,res, next) {
+	console.log(req.params[0].substring(13,req.params[0].length));
   passport.authenticate(
     'facebook',
      {callbackURL: '/auth/facebook/callback/'+req.params[0].substring(13,req.params[0].length)}
@@ -104,6 +105,7 @@ app.get('/auth/facebook/*', function(req,res, next) {
 // access was granted, the user will be logged in.  Otherwise,
 // authentication has failed.
 app.get('/auth/facebook/callback/*', function(req,res,next) {
+	console.log(req.params[0].substring(22,req.params[0].length));
 	passport.authenticate(
 		'facebook',
 		{
