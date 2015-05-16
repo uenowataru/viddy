@@ -25,8 +25,8 @@ User.prototype = {
 	},
 
 	loadVideos: function(){
-		if(this.userId==undefined || this.updated) return;
-		var resourceUrl = "/api/user/" + this.userId;
+		if(this.accessToken==undefined || this.updated) return;
+		var resourceUrl = "/api/user/" + this.accessToken;
 		var user = this;
 		return $.getJSON(resourceUrl, function(data){
 			user.setLikedVideos(data);
