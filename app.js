@@ -96,26 +96,20 @@ app.post('/api/user/:userId', function (req, res) {
 // authentication process by attempting to obtain an access token.  If
 // access was granted, the user will be logged in.  Otherwise,
 // authentication has failed.
-app.get('/auth/facebook/callback/*', function(req,res,next) {
-	try{
-		console.log('corigin:'+ req.params[0] + "\ncparsed:"+ req.params[0].substring(22,req.params[0].length));
-	}catch(err){
-		console.log(err);
-	}
+app.get('/auth/facebook/callback/', function(req,res,next) {
 	passport.authenticate(
 		'facebook',
 		{
-			successRedirect:"/" + req.params[0].substring(22,req.params[0].length),
-			failureRedirect:"/" +  req.params[0].substring(22,req.params[0].length)
+			successRedirect:"/ch/gopro" ,
+			failureRedirect:"/ch/sports"
 		}
 	)(req,res,next);
  });
 
-app.get('/auth/facebook/*', function(req,res, next) {
-	console.log( 'origin:'+ req.params[0] + "\nparsed:"+ req.params[0].substring(13,req.params[0].length));
+app.get('/auth/facebook/', function(req,res, next) {
   passport.authenticate(
     'facebook',
-     {callbackURL: '/auth/facebook/callback/' + req.params[0].substring(13,req.params[0].length)}
+     {callbackURL: '/auth/facebook/callback/'}
   )(req,res, next);
 });
 
