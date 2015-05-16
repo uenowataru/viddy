@@ -55,9 +55,6 @@ User.prototype = {
 
 
 
-user = new User('10152922385272087', '');
-user.loadVideos();
-console.log(user.getUserId());
 
 
 

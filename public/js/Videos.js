@@ -4,7 +4,7 @@ function VideoList() {
 	this.channels = ['all', 'gopro', 'youtubehaiku', 'bloopers', 'funnyvideos', 'fail', 'UnexpectedThugLife',
 	'StandUpComedy', 'deepintoyoutube', 'ContagiousLaughter','LearnUselessTalents', 'trailers', 'musicvideos',
 	'Music', 'sports' , 'nba', 'soccer', 'nfl','PublicFreakout', 'StreetFights', 'respectporn',
-	'kidsafevideos', 'liked'];
+	'kidsafevideos'];
 	this.channel = 'all';
 	this.channel_index = 0;
 	this.loading = false;
@@ -68,6 +68,7 @@ function procVideos(data, channel){
 
 function likeCurrVideo(){
 	try{
+		if(user==undefined) return;
 		user.likeVideo(video_list.getCurrVideo());
 	}catch(err){
 		console.log(err.stack);

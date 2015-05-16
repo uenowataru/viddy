@@ -44,6 +44,11 @@ function parseInfoFromURL(){
 }
 
 function setVideoFromURL(){
+  if (window.location.hash == '#_=_') {
+    window.location.hash = ''; // for older browsers, leaves a # behind
+    history.replaceState('', document.title, window.location.pathname); // nice and clean
+    //e.preventDefault(); // no page reload
+  }
   var videoId = parseInfoFromURL()[1];
   return video_list.setCurrVideo(videoId);
 }
@@ -75,6 +80,7 @@ function setNewChannel(channel){
 }
 
 function loadLikedVideos(){
+  if(user==undefined) return;
   var asyncstatus = user.loadVideos();
   if(asyncstatus){
     asyncstatus.always(function(){
@@ -87,9 +93,10 @@ function loadLikedVideos(){
 
 function initLikedVideos(){
   var channel = 'liked';
-  video_list.putList(channel, user.getLikedVideos());
-  if(video_list.getList(channel).length > 0){
+  var likedvideos = user.getLikedVideos();
+  if(likedvideos.length > 0){
     video_list.setCurrChannel(channel);
+    video_list.putList(channel, likedvideos);
     loadYTVideo(curr, video_list.getCurrVideo()[0]);
     loadYTVideo(prev, video_list.getPrevVideo()[0]);
     loadYTVideo(next, video_list.getNextVideo()[0]);

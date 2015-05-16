@@ -72,12 +72,10 @@ function getProfileInfo() {
       FB.getLoginStatus(function(response) {
         if (response.status === 'connected') {
           //console.log(response.authResponse.accessToken);
-          var accessToken = response.authResponse.accessToken;
+          var accessToken = FB.getAuthResponse()['accessToken'];
           user = new User(userId, accessToken);
+          user.loadVideos();
         }
-
-        console.log(FB.getCurrentAccessToken());
-
       });
     }else{
       console.log(response);
