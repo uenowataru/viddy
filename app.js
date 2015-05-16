@@ -16,9 +16,7 @@ passport.use(new FacebookStrategy({
   },
   function(accessToken, refreshToken, profile, done) {
 	console.log(profile);
-    if (err) { return done(err); }
-      done(null, user);
-  }
+    
 ));
 
 
@@ -29,7 +27,6 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
 app.use("/js", express.static(__dirname + '/public/js'));
 app.use("/css", express.static(__dirname + '/public/css'));
 app.use("/res", express.static(__dirname + '/public/res'));
-
 
 //client side get
 app.get('/', function (req, res) {
@@ -95,16 +92,26 @@ app.post('/api/user/:userId', function (req, res) {
 	console.log('uId+vId response sent..');
 });
 
-app.get('/auth/facebook', passport.authenticate('facebook'));
+app.get('/auth/facebook/:originurl', function(req,res, next) {
+  passport.authenticate(
+    'facebook',
+     {callbackURL: '/auth/facebook/callback/'+req.params.originurl}
+  )(req,res, next);
+});
 
 // Facebook will redirect the user to this URL after approval.  Finish the
 // authentication process by attempting to obtain an access token.  If
 // access was granted, the user will be logged in.  Otherwise,
 // authentication has failed.
-app.get('/auth/facebook/callback', passport.authenticate('facebook', {
-	successRedirect: '/',
-	failureRedirect: '/ch/gopro'
-}));
+app.get('/auth/facebook/callback/:originurl', function(req,res,next) {
+	passport.authenticate(
+		'facebook',
+		{
+			successRedirect:"/" + req.params.originurl,
+			failureRedirect:"/" + req.params.originurl
+		}
+	) (req,res,next);
+ });
 
 
 app.get('/*', function(req, res){
