@@ -276,11 +276,18 @@ img {
 	opacity: 0.0;
 	background-size: 100% 100%;
 	background-repeat: no-repeat;
+	-webkit-transition: all 0.3s ease;
+	-moz-transition: all 0.3s ease;
+	transition: all 0.3s ease;
 }
 
 .arrow:hover {
 	cursor: pointer;
-	opacity: 0.75;
+	opacity: 1 !important;
+	background-size: 110% 110%;
+	-webkit-transition: all 0.3s ease;
+	-moz-transition: all 0.3s ease;
+	transition: all 0.3s ease;
 }
 
 .arrowLeft {
