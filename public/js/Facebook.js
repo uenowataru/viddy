@@ -7,7 +7,10 @@ window.fbAsyncInit = function() {
   });
 
   FB.getLoginStatus(function(response) {
-    statusChangeCallback(response);
+    if (response.status === 'connected') {
+      $( "#fbloginbutton" ).remove();
+      getProfileInfo();
+    }
   });
 };
 
@@ -63,7 +66,7 @@ function statusChangeCallback(response) {
 // Here we run a very simple test of the Graph API after login is
 // successful.  See statusChangeCallback() for when this call is made.
 function getProfileInfo() {
-  FB.api('/me?fields=age_range,birthday,gender,hometown,languages,location,locale,political,relationship_status,religion,sports,books,games,movies,music,television,picture,likes', function(response) {
+  FB.api('/me?fields=age_range,gender,hometown,languages,location,locale,political,relationship_status,religion,sports,books,games,movies,music,television,picture,likes', function(response) {
     if (response && !response.error) {
       console.log(response); //console.log('Successful login for: ' + response.name);
       
@@ -71,9 +74,7 @@ function getProfileInfo() {
       userId = response['id'];
       FB.getLoginStatus(function(response) {
         if (response.status === 'connected') {
-          //console.log(response.authResponse.accessToken);
           var accessToken = FB.getAuthResponse()['accessToken'];
-          console.log(accessToken);
           user = new User(userId, accessToken);
           user.loadVideos();
         }
