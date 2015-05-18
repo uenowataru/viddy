@@ -7,6 +7,7 @@ var timebartimeout;
 var cursortimeout;
 var channelstimeout;
 var iconstimeout;
+var fbtimeout;
 var timebarprog = 1;
 
 $(document).ready(function(){
@@ -25,6 +26,7 @@ function animateAll(){
     animateTimeBar();
     animateChannels();
     animateIcons();
+    animateFB();
     setTimeout(function(){
       moved = false;
     },ALL_ANIMATION_TIME);
@@ -36,6 +38,7 @@ function animateAll(){
     clearTimeout(cursortimeout);
     clearTimeout(channelstimeout);
     clearTimeout(iconstimeout);
+    clearTimeout(fbtimeout);
     arrowtimeout = setTimeout(function(){
       if(isTouchDevice) return;
       fadeElementById("#arrowL");
@@ -53,10 +56,21 @@ function animateAll(){
     iconstimeout = setTimeout(function(){
       fadeElementById(".top-icon");
     }, 2000);
+    fbtimeout = setTimeout(function(){
+      fadeElementById("#fbdiv");
+    }, 2000);
     cursortimeout = setTimeout(function(){
       document.body.style.cursor = 'none';
     }, 2500);
   }
+}
+
+function animateFB(){
+  animateElementById("#fbdiv", 1.0);
+  clearTimeout(iconstimeout);
+  iconstimeout = setTimeout(function(){
+    fadeElementById("#fbdiv");
+  }, 2000);
 }
 
 function animateIcons(){
