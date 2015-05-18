@@ -1,6 +1,5 @@
 var moved = false;
 var aboutOpen = false;
-var liked = false;
 
 var ClickTime = 0;
 var HorizontalArrowPressed = 0;
@@ -183,16 +182,7 @@ $('#home-icon').click(function() {
 });
 
 $('#heart-icon').click(function() {
-  if (!liked) {
-    $('#heart-icon').removeClass("fa-heart-o").addClass("fa-heart");
-    liked = true;
-    loadLikedVideos();
-  }
-  else {
-    $('#heart-icon').removeClass("fa-heart").addClass("fa-heart-o");
-    liked = false;
-    setNewChannel('all');
-  }
+  loadLikedVideos();
 });
 
 $('#info-icon').click(function() {
