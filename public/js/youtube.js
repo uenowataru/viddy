@@ -216,6 +216,9 @@ function onPlayerStateChange(event) {
     animateTitle();
     loadChannels();
     animateChannels();
+    if(isMobile){
+      $('#glass').show();
+    }
   }
   if (event.data == YT.PlayerState.ENDED)
     nextVideo();
@@ -402,19 +405,6 @@ function playYTVideo(ytplayer){
     if(isMobile){
       console.log("Mobile:" + isMobile);
       $('#glass').hide();
-      playerReadyInterval = window.setInterval(function(){
-        ytplayer.playVideo();
-      }, 1000);
-      
-      disablePlayerReadyInterval = window.setInterval(function(){
-        if (ytplayer.getCurrentTime() < 1.0) {
-          return;
-        }
-        // Video started...
-        $('#glass').show();
-        window.clearInterval(playerReadyInterval);
-        window.clearInterval(disablePlayerReadyInterval);
-      }, 1000);
     }
 
   }catch (err){
