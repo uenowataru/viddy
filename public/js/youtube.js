@@ -158,6 +158,9 @@ function initVideos(){
   }
 }
 
+var playerReadyInterval;
+var disablePlayerReadyInterval;
+
 // 4. The API will call this function when the video player is ready.
 function onPlayerReady(event) {
   if(curr == event.target){
@@ -167,9 +170,21 @@ function onPlayerReady(event) {
         $( currdisp ).css( "display", "block" );
         seekYT(curr, lastPlayTime);
         InitialPlay = false;
-        if(isTouchDevice){
-          nextVideo();
-          previousVideo();
+        if(isMobile){
+          console.log("Mobile:" + isMobile);
+          playerReadyInterval = window.setInterval(function(){
+            player.playVideo();
+          }, 1000);
+          
+          disablePlayerReadyInterval = window.setInterval(function(){
+            if (player.getCurrentTime() < 1.0) {
+              return;
+            }
+            // Video started...
+            window.clearInterval(playerReadyInterval);
+            window.clearInterval(disablePlayerReadyInterval);
+          }, 1000);
+
         }
       }, 1000);
     }
