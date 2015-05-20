@@ -401,6 +401,7 @@ function playYTVideo(ytplayer){
     ytplayer.playVideo();
     if(isMobile){
       console.log("Mobile:" + isMobile);
+      $('#glass').hide();
       playerReadyInterval = window.setInterval(function(){
         ytplayer.playVideo();
       }, 1000);
@@ -410,6 +411,7 @@ function playYTVideo(ytplayer){
           return;
         }
         // Video started...
+        $('#glass').show();
         window.clearInterval(playerReadyInterval);
         window.clearInterval(disablePlayerReadyInterval);
       }, 1000);
