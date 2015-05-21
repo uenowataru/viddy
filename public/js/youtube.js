@@ -217,7 +217,8 @@ function onPlayerStateChange(event) {
     loadChannels();
     animateChannels();
     if(isMobile){
-      $('#glass').show();
+      
+      //$('#glass').show();
     }
   }
   if (event.data == YT.PlayerState.ENDED)
@@ -404,7 +405,7 @@ function playYTVideo(ytplayer){
     ytplayer.playVideo();
     if(isMobile){
       console.log("Mobile:" + isMobile);
-      $('#glass').hide();
+      //$('#glass').hide();
     }
 
   }catch (err){

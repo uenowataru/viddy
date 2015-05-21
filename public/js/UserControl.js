@@ -20,6 +20,8 @@ if (isMobile) {
   alert('This site is not mobile friendly yet. Mobile apps are on its way!');
 }
 
+var iOS = /(iPad|iPhone|iPod)/g.test( navigator.userAgent );
+
 //when we lose focus
 $(window).blur(function() {
   moved = false;
@@ -135,6 +137,10 @@ $(document.activeElement).keyup(function(e) {
 });
 
 function mouseClick(){
+  if(iOS && initialized){
+    window.open("https://www.youtube.com/watch?v=" + video_list.getCurrVideo()[0] + "&t=" + Math.floor(getYTCurrentTime(curr)) + "s");
+    return;
+  }
   if(isTouchDevice) return;
   var currtime = new Date().getTime();
   if(currtime < ClickTime + DOUBLE_CLICK_THRESHOLD){
