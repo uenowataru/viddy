@@ -4,11 +4,9 @@ viddy
 
 Features:
 	P0:
-		-animation when loading videos at the beginning
 		-tutorial
 		-branding with a logo on the top left?
 		-some kind of way to show that there is no videos on the channel
-		-click on the channel name and jump to that channel
 		-add button to switch between hot, top, and controversial
 
 		-[figure out how to get videos from reddit with the same domain name rather than iterating through]
