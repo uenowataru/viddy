@@ -10,73 +10,74 @@ function VideoList() {
 	this.loading = false;
 }
 
-function loadVideos(channel) {
-	if(video_list.getList(channel)!=undefined){
-		return;
-	}else{
-	}
-	var resourceUrl = "/api/ch/" + channel;
-	return $.getJSON(resourceUrl, function(data){
-		procVideos(data, channel);
-	});
-}
-
-function loadVideo(channel, videoId){
-	var url = "/api/vid/" + videoId;
-	return $.getJSON(url, function(data){
-		if(data.length > 1){
-			var title = data[1];
-			var index = 0;
-			video_list.insertVideo(channel, index, [videoId, title]);
-			video_list.setChannelVidIndex(channel, index);
-		}
-	});
-}
-
-function loadChannels(){
-	loadVideos(video_list.getNextChannel());
-	loadVideos(video_list.getPrevChannel());
-}
-
-function prevChannel(){
-	video_list.prevChannel();
-	setNewChannel(video_list.getCurrChannel());
-}
-
-function nextChannel(){
-	video_list.nextChannel();
-	setNewChannel(video_list.getCurrChannel());
-}
-
-function procVideos(data, channel){
-	var queue = [];
-	
-	$.each(data, function(i, item){
-		if(item==undefined) return;
-		var vidurl = item[0];
-		var vidtitle = item[1];
-		//var subreddit = item[2];
-		queue.push([vidurl, vidtitle]);
-	});
-
-	if(video_list.getList(channel)==undefined){
-		video_list.putList(channel,queue);
-	}else{
-		//console.log(channel + ' vids defined');
-	}
-}
-
-function likeCurrVideo(){
-	try{
-		if(user==undefined) return;
-		user.likeVideo(video_list.getCurrVideo());
-	}catch(err){
-		console.log(err.stack);
-	}
-	
-}
-
 VideoList.prototype = {
+	loadVideos: function(channel) {
+		if(video_list.getList(channel)!=undefined){
+			return;
+		}else{
+			//what was the purpose of this lol
+		}
+		var resourceUrl = "/api/ch/" + channel;
+		return $.getJSON(resourceUrl, function(data){
+			video_list.procVideos(data, channel);
+		});
+	},
+
+	loadVideo: function(channel, videoId){
+		var url = "/api/vid/" + videoId;
+		return $.getJSON(url, function(data){
+			if(data.length > 1){
+				var title = data[1];
+				var index = 0;
+				video_list.insertVideo(channel, index, [videoId, title]);
+				video_list.setChannelVidIndex(channel, index);
+			}
+		});
+	},
+
+	loadChannels: function(){
+		this.loadVideos(video_list.getNextChannel());
+		this.loadVideos(video_list.getPrevChannel());
+	},
+
+	prevChannel: function(){
+		video_list.prevChannel();
+		ythandler.setNewChannel(video_list.getCurrChannel());
+	},
+
+	nextChannel: function(){
+		video_list.nextChannel();
+		ythandler.setNewChannel(video_list.getCurrChannel());
+	},
+
+	procVideos: function(data, channel){
+		var queue = [];
+		
+		$.each(data, function(i, item){
+			if(item==undefined) return;
+			var vidurl = item[0];
+			var vidtitle = item[1];
+			//var subreddit = item[2];
+			queue.push([vidurl, vidtitle]);
+		});
+
+		if(video_list.getList(channel)==undefined){
+			video_list.putList(channel,queue);
+		}else{
+			//console.log(channel + ' vids defined');
+		}
+	},
+
+	likeCurrVideo: function(){
+		try{
+			if(user==undefined) return;
+			user.likeVideo(video_list.getCurrVideo());
+		}catch(err){
+			console.log(err.stack);
+		}
+		
+	},
+
 	getCurrVideo: function(){
 		var currindex = this.channel_vidindex[this.channel];
 		// console.log(Object.keys(this.vidlists));
@@ -126,7 +127,7 @@ VideoList.prototype = {
 			this.channels.push(channel);
 			this.channel_index = this.findChannelIndex(channel);
 		}
-		loadChannels();
+		this.loadChannels();
 	},
 
 	nextChannel: function(){
@@ -166,7 +167,7 @@ VideoList.prototype = {
 		var index = this.findVideo(videoId, this.getListLength());
 
 		if(index < 0){
-			return loadVideo(this.channel, videoId);
+			return this.loadVideo(this.channel, videoId);
 		}else{
 			this.channel_vidindex[this.channel] = index;
 		}

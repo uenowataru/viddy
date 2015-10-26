@@ -1,4 +1,3 @@
-var user;
 
 function User(userId, accessToken) {
 	this.userId = userId;
@@ -52,7 +51,6 @@ User.prototype = {
 		}, 'json');
 	}
 };
-
 
 
 

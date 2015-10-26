@@ -1,157 +1,165 @@
-var ALL_ANIMATION_TIME = 500;
-var ALL_FADE_TIME = 1000;
+function AnimationHandler(){
+  this.ALL_ANIMATION_TIME = 500;
+  this.ALL_FADE_TIME = 1000;
+  this.arrowtimeout;
+  this.titletimeout;
+  this.timebartimeout;
+  this.cursortimeout;
+  this.channelstimeout;
+  this.iconstimeout;
+  this.fbtimeout;
+  this.timebarprog = 1;
+  this.moved = false;
+}
 
-var arrowtimeout;
-var titletimeout;
-var timebartimeout;
-var cursortimeout;
-var channelstimeout;
-var iconstimeout;
-var fbtimeout;
-var timebarprog = 1;
+AnimationHandler.prototype = {
+  setup: function(){
+    window.onmousemove = function(e){
+      animation.animateAll();
+    };
 
-$(document).ready(function(){
-  window.onmousemove = function(e){
-    animateAll();
-  };
-});
+    setInterval(function(){
+      try{
+        $( "#timebar").width(ythandler.getVideoProgress() + '%');
+      }catch(err){
+        //some error handling
+      }
+    },50);
+  },
 
-function animateAll(){
-  if(!initialized) return;
-  if(!moved){
-    moved = true;
-    loadTitle();
-    animateTitle();
-    animateArrow();
-    animateTimeBar();
-    animateChannels();
-    animateIcons();
-    animateFB();
-    setTimeout(function(){
-      moved = false;
-    },ALL_ANIMATION_TIME);
-    document.body.style.cursor = 'default';
-  }else{
-    clearTimeout(arrowtimeout);
-    clearTimeout(titletimeout);
-    clearTimeout(timebartimeout);
-    clearTimeout(cursortimeout);
-    clearTimeout(channelstimeout);
-    clearTimeout(iconstimeout);
-    clearTimeout(fbtimeout);
-    arrowtimeout = setTimeout(function(){
-      if(isTouchDevice) return;
-      fadeElementById("#arrowL");
-      fadeElementById("#arrowR");
+  animateAll: function(){
+    if(!ythandler.initialized) return;
+    if(!this.moved){
+      this.moved = true;
+      this.loadTitle();
+      this.animateTitle();
+      this.animateArrow();
+      this.animateTimeBar();
+      this.animateChannels();
+      this.animateIcons();
+      this.animateFB();
+      setTimeout(function(){
+        animation.moved = false;
+      }, this.ALL_ANIMATION_TIME);
+      document.body.style.cursor = 'default';
+    }else{
+      clearTimeout(this.arrowtimeout);
+      clearTimeout(this.titletimeout);
+      clearTimeout(this.timebartimeout);
+      clearTimeout(this.cursortimeout);
+      clearTimeout(this.channelstimeout);
+      clearTimeout(this.iconstimeout);
+      clearTimeout(this.fbtimeout);
+      this.arrowtimeout = setTimeout(function(){
+        if(animation.isTouchDevice) return;
+        animation.fadeElementById("#arrowL");
+        animation.fadeElementById("#arrowR");
+      }, 2000);
+      this.titletimeout = setTimeout(function(){
+        animation.fadeElementById("#title");
+      }, 2000);
+      this.timebartimeout = setTimeout(function(){
+        animation.fadeElementById("#timebar");
+      }, 2000);
+      this.channelstimeout = setTimeout(function(){
+        animation.fadeElementById("#channels");
+      }, 2000);
+      this.iconstimeout = setTimeout(function(){
+        animation.fadeElementById(".top-icon");
+      }, 2000);
+      this.fbtimeout = setTimeout(function(){
+        animation.fadeElementById("#fbdiv");
+      }, 2000);
+      this.cursortimeout = setTimeout(function(){
+        document.body.style.cursor = 'none';
+      }, 2500);
+    }
+  },
+
+  animateFB: function(){
+    this.animateElementById("#fbdiv", 1.0);
+    clearTimeout(this.iconstimeout);
+    this.iconstimeout = setTimeout(function(){
+      animation.fadeElementById("#fbdiv");
     }, 2000);
-    titletimeout = setTimeout(function(){
-      fadeElementById("#title");
+  },
+
+  animateIcons: function(){
+    this.animateElementById(".top-icon", 1.0);
+    clearTimeout(this.iconstimeout);
+    this.iconstimeout = setTimeout(function(){
+      animation.fadeElementById(".top-icon");
     }, 2000);
-    timebartimeout = setTimeout(function(){
-      fadeElementById("#timebar");
+  },
+
+  animateTitle: function(){
+    this.animateElementById("#title", 1.0);
+    clearTimeout(this.titletimeout);
+    this.titletimeout = setTimeout(function(){
+      animation.fadeElementById("#title");
     }, 2000);
-    channelstimeout = setTimeout(function(){
-      fadeElementById("#channels");
+  },
+
+  animateArrow: function(){
+    if(animation.isTouchDevice) return;
+    this.animateElementById("#arrowL",0.75);
+    this.animateElementById("#arrowR",0.75);
+    clearTimeout(this.arrowtimeout);
+    this.arrowtimeout = setTimeout(function(){
+      animation.fadeElementById("#arrowL");
+      animation.fadeElementById("#arrowR");
     }, 2000);
-    iconstimeout = setTimeout(function(){
-      fadeElementById(".top-icon");
+  },
+
+
+  animateTimeBar: function(){
+    this.animateElementById("#timebar", 0.75);
+    clearTimeout(this.timebartimeout);
+    this.timebartimeout = setTimeout(function(){
+      animation.fadeElementById("#timebar");
     }, 2000);
-    fbtimeout = setTimeout(function(){
-      fadeElementById("#fbdiv");
+  },
+
+  animateChannels: function(){
+    this.animateElementById("#channels", 0.75);
+    clearTimeout(this.channelstimeout);
+    this.channelstimeout = setTimeout(function(){
+      animation.fadeElementById("#channels");
     }, 2000);
-    cursortimeout = setTimeout(function(){
-      document.body.style.cursor = 'none';
-    }, 2500);
+  },
+
+  animateElementById: function(ElementID, TargetOpacity){
+    $( ElementID ).animate({
+      opacity: TargetOpacity,
+    }, {
+      queue: false,
+      duration: this.ALL_ANIMATION_TIME
+    });
+  },
+
+  fadeElementById: function(ElementID){
+    $( ElementID ).animate({
+      opacity: 0,
+    }, {
+      queue: false,
+      duration: this.ALL_FADE_TIME
+    });
+  },
+
+  loadTitle: function(){
+    if(!ythandler.initialized) return;
+    var vidtitle = video_list.getCurrVideo()[1];
+    $( "#title" ).text(vidtitle.replace('&amp;','&'));
+  },
+
+  loadChannels: function(){
+    if(!ythandler.initialized) return;
+    var channel = video_list.getCurrChannel();
+    $( "#currchannel" ).text(channel);
   }
 }
 
-function animateFB(){
-  animateElementById("#fbdiv", 1.0);
-  clearTimeout(iconstimeout);
-  iconstimeout = setTimeout(function(){
-    fadeElementById("#fbdiv");
-  }, 2000);
-}
-
-function animateIcons(){
-  animateElementById(".top-icon", 1.0);
-  clearTimeout(iconstimeout);
-  iconstimeout = setTimeout(function(){
-    fadeElementById(".top-icon");
-  }, 2000);
-}
-
-function animateTitle(){
-  animateElementById("#title", 1.0);
-  clearTimeout(titletimeout);
-  titletimeout = setTimeout(function(){
-    fadeElementById("#title");
-  }, 2000);
-}
-
-function animateArrow(){
-  if(isTouchDevice) return;
-  animateElementById("#arrowL",0.75);
-  animateElementById("#arrowR",0.75);
-  clearTimeout(arrowtimeout);
-  arrowtimeout = setTimeout(function(){
-    fadeElementById("#arrowL");
-    fadeElementById("#arrowR");
-  }, 2000);
-}
 
 
-function animateTimeBar(){
-  animateElementById("#timebar", 0.75);
-  clearTimeout(timebartimeout);
-  timebartimeout = setTimeout(function(){
-    fadeElementById("#timebar");
-  }, 2000);
-}
-
-function animateChannels(){
-  animateElementById("#channels", 0.75);
-  clearTimeout(channelstimeout);
-  channelstimeout = setTimeout(function(){
-    fadeElementById("#channels");
-  }, 2000);
-}
-
-function animateElementById(ElementID, TargetOpacity){
-  $( ElementID ).animate({
-    opacity: TargetOpacity,
-  }, {
-    queue: false,
-    duration: ALL_ANIMATION_TIME
-  });
-}
-
-function fadeElementById(ElementID){
-  $( ElementID ).animate({
-    opacity: 0,
-  }, {
-    queue: false,
-    duration: ALL_FADE_TIME
-  });
-}
-
-function loadTitle(){
-  if(!initialized) return;
-  var vidtitle = video_list.getCurrVideo()[1];
-  $( "#title" ).text(vidtitle.replace('&amp;','&'));
-}
-
-function loadChannels(){
-  if(!initialized) return;
-  var channel = video_list.getCurrChannel();
-  $( "#currchannel" ).text(channel);
-}
 
 
-setInterval(function(){
-  try{
-    $( "#timebar").width(getVideoProgress() + '%');
-  }catch(err){
-    //
-  }
-},50);

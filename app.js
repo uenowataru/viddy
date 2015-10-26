@@ -19,31 +19,31 @@ app.use("/res", express.static(__dirname + '/public/res'));
 app.use(passport.initialize());
 app.use(passport.session());
 
-passport.serializeUser(function(user, done) {
-	//console.log(user);
-	done(null, user['_id']);
-});
+// passport.serializeUser(function(user, done) {
+// 	//console.log(user);
+// 	done(null, user['_id']);
+// });
 
-passport.deserializeUser(function(id, done) {
-	js_server.getUserById(id, function(user){
-		//console.log(user);
-		return done(null, user);
-	});
-});
+// passport.deserializeUser(function(id, done) {
+// 	js_server.getUserById(id, function(user){
+// 		//console.log(user);
+// 		return done(null, user);
+// 	});
+// });
 
-passport.use(new FacebookStrategy({
-    clientID: '1641122906121098',
-    clientSecret: 'ba3410f9c0afca7b95ca58e3e203f7f6',
-    callbackURL: "http://localhost:3000/auth/facebook/callback/"
-  },
-  function(accessToken, refreshToken, profile, done) {
-	//console.log(profile['id']);
-	js_server.getUserById(profile['id'], function(user){
-		//console.log(user);
-		return done(null, user);
-	});
-  }
-));
+// passport.use(new FacebookStrategy({
+//     clientID: '1641122906121098',
+//     clientSecret: 'ba3410f9c0afca7b95ca58e3e203f7f6',
+//     callbackURL: "http://localhost:3000/auth/facebook/callback/"
+//   },
+//   function(accessToken, refreshToken, profile, done) {
+// 	//console.log(profile['id']);
+// 	js_server.getUserById(profile['id'], function(user){
+// 		//console.log(user);
+// 		return done(null, user);
+// 	});
+//   }
+// ));
 
 
 
