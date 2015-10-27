@@ -3,6 +3,7 @@ var video_list;
 var ythandler;
 var usercontrol;
 var fb;
+var search;
 
 // $( document ).ready(function()
 //   {
@@ -17,6 +18,7 @@ function setup(){
   ythandler = new YTHandler();
   usercontrol = new UserControl();
   fbhandler = new FacebookHandler();
+  search = new Search();
 
   ythandler.setup();
   animation.setup();

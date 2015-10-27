@@ -470,6 +470,8 @@ YTHandler.prototype = {
     var channel = this.parseInfoFromURL()[0];
     if(channel == 'liked'){
       video_list.setCurrChannel('all');
+    }else if(channel == 'searched'){
+      video_list.setCurrChannel('all');
     }else if(channel.length > 0){
       video_list.setCurrChannel(channel);
     }else
@@ -482,8 +484,6 @@ YTHandler.prototype = {
     this.loadYTVideo(this.next, next);
   },
 
-  
-
   initLikedVideos: function(){
     var channel = 'liked';
     var likedvideos = fbhandler.getUser().getLikedVideos();
@@ -492,6 +492,7 @@ YTHandler.prototype = {
       video_list.putList(channel, likedvideos);
       this.setNewVideos(video_list.getCurrVideo()[0], video_list.getPrevVideo()[0], video_list.getNextVideo()[0]);
     }
+
   },
 
   changeURL: function(videoId){
@@ -533,6 +534,28 @@ YTHandler.prototype = {
     }else{
       ythandler.initLikedVideos();
     }
+  },
+
+  loadSearchedVideos: function(){
+    var asyncstatus = search.loadVideos(search.search_str);
+    if(asyncstatus){
+      asyncstatus.always(function(){
+        ythandler.initSearchedVideos();
+      });
+    }else{
+      ythandler.initSearchedVideos();
+    }
+  },
+
+  initSearchedVideos: function(){
+    var channel = 'searched';
+    var searchedvideos = search.getSearchedVideos();
+    if(searchedvideos.length > 0){
+      video_list.setCurrChannel(channel);
+      video_list.putList(channel, searchedvideos);
+      this.setNewVideos(video_list.getCurrVideo()[0], video_list.getPrevVideo()[0], video_list.getNextVideo()[0]);
+    }
+
   }
 }
 

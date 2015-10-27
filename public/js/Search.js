@@ -1,117 +1,89 @@
-//TODO: change the cancell logic. since new data could be matching but not 
-
-var emp_list = new Array();
-
-var icTO = null;
-var changing = 0;
-
-function inputChanged(e){
-	if(icTO == null){
-		// console.log("set timer");
-		clearTimeout(icTO);
-		icTO = window.setTimeout(function(){
-			icTO = null;
-			updateList(e);
-		}, 200);
-	}else{
-		// console.log("about to update..");
-	}
+function Search(){
+	this.search_str = "";
+	this.searchedVideos = [];
+	this.searched = null;
 }
 
-function updateList(e){
-	var text = document.getElementById('company_name').getAttribute("name");
-
-	updateInfo(text);
-
-	if(isOption(text)){
-		return;
-	}
-
-	if(changing == 1){
-		inputChanged(e);
-		return;
-	}else{
-		changing = 1;
-	}
-
-	$.ajax({
-	    url: "/search",
-	    data: {"q": text},
-	    success: function(response) {
-	    	if(response["employers"].length > 0){
-				//console.log(response);
-				//var compname = response["employers"][0]["name"];
-				var emp_list = response["employers"];
-				// console.log(resplist[0]["name"]);
-				for (var index = 0; index < emp_list.length; index++){
-					emp_set.add(emp_list[index]);
-					var emp_name = emp_list[index]["name"];
-					var emp_logo = emp_list[index]["squareLogo"];
-					//console.log(emp_logo);
-					if(!isOption(emp_name)){
-						$('#company_list').append('<option value="' + emp_logo + '">' + emp_name + '</option>');
-						//$('#company_list').append('<option id="'+ emp_logo +'">' + emp_logo + '</option>');
-					}
-				}
-	    	}else{
-	    		//console.log(response);
-	    	}
-	    	changing = 0;
-	    	// console.log("changed");
-	    },
-	    error: function(xhr) {
-	        //Do Something to handle error
-	        changing = 0;
-	    }
-	});	
-}
-
-function updateInfo(text){
-	var matchString = text.toLowerCase();
-	
-	for (comp of emp_set){
-		var comp_name = comp["name"];
-		var index = comp_name.toLowerCase().indexOf(matchString);
-		if(index == 0 && comp_name.length == matchString.length){
-			console.log(comp["squareLogo"]);
-			document.getElementById('company_logo_img').src = comp["squareLogo"];
-			document.getElementById('company_logo').value = comp["squareLogo"];
-			document.getElementById('company_location').value = comp["featuredReview"]["location"];
-			document.getElementById('company_website').value = comp["website"];
-			document.getElementById('company_user_id').value = 1;
+Search.prototype = {
+	loadVideos: function(query){
+		var res = query.split(" ");
+		var resourceUrl = "http://www.reddit.com/r/videos/search.json?q=";
+		for( s of res){
+			resourceUrl += s + ",";
 		}
-	}
-}
+		resourceUrl += "&sort=top&restrict_sr=on";
 
+		return $.getJSON(resourceUrl, function(data){
+			search.searchedVideos = [];
+			for(child of data["data"]["children"]){
+				var title = child["data"]["title"];
+				var videoId = search.getURLFromItem(child);
 
-function isOption(text1){
-	matchString = text1.toLowerCase();
+				console.log(videoId);
 
-	var found = false;
-	$( "option" ).each(function( index ) {
+				search.searchedVideos.push([videoId, title]);
 
-		var index = $( this ).text().toLowerCase().indexOf(matchString);
-		if(index == 0){
-			// console.log( "yup:" + index + " " + $( this ).text().toLowerCase() + "," + matchString);
-			found = true;
-		}else{
-			//console.log( "nope:" + index + " " + $( this ).text().toLowerCase() + " " + matchString);
+				// while( index >= 0 ){
+				// 	var count = 24;
+				// 	var inp = jsonstr.charAt(index + count);
+				// 	while (/[a-zA-Z0-9-_ ]/.test(inp)){
+				// 		count++;
+				// 		inp = jsonstr.charAt(index + count);
+				// 	}
+				// 	if(index >= jsonstr.length-1) break;
+				// 	if(count > 24){
+				// 		search.searchedVideos.push([jsonstr.substring(index + 24, index + count), title]);
+				// 		//console.log(jsonstr.substring(index + 24, index + count) + " " + jsonstr.substring(index , index + count));
+				// 		break;
+				// 	}else{
+				// 		//console.log(jsonstr.substring(index + 24, index + count) + " " + jsonstr.substring(index , index + count));
+				// 	}
+
+				// 	index = jsonstr.indexOf("www.youtube.com/watch?v=", index+count);
+				// }
+			}
+
+			search.searched = query;
+			search.search_str = "";
+		});
+	},
+
+	getSearchedVideos: function(){
+		return this.searchedVideos;
+	},
+
+	getURLFromItem: function(item){
+		var vidurl = "";
+
+		if(item.data.domain == "youtube.com" || item.data.domain == "youtu.be"){
+			if(item.data.secure_media != null && item.data.secure_media != undefined){
+				vidurl = item.data.secure_media.oembed.url;
+			}else if(item.data.media != null && item.data.secure_media != undefined){
+				vidurl = item.data.media.oembed.url;
+			}else if(item.data.url != null && item.data.url != undefined){
+				vidurl = item.data.url;
+			}
+
+			console.log(item.data);
+
+			var videoId = "";
+			var count = 0;
+
+			if(item.data.domain =="youtube.com"){
+				count = vidurl.indexOf("v=") + 2;
+			}else{
+				count = vidurl.indexOf("youtu.be/") + 9;
+			}
+			
+			var inp = vidurl.charAt(count);
+
+			while (/[a-zA-Z0-9-_ ]/.test(inp)){
+				videoId += inp;
+				inp = vidurl.charAt(++count);
+			}
+
+			return videoId;
 		}
-	});
-
-	return found;
-}
-
-
-
-function addCompanies(companies){
-	for (company of companies){
-		console.log(company);
-		emp_list[id] = company;
+		return "";
 	}
-}
-
-for (var key in emp_list) {
-    if (key === 'length' || !widthRange.hasOwnProperty(key)) continue;
-    var value = widthRange[key];
-}
+};

@@ -149,6 +149,12 @@ AnimationHandler.prototype = {
   loadTitle: function(){
     if(!ythandler.initialized) return;
     var vidtitle = video_list.getCurrVideo()[1];
+    if(video_list.getCurrChannel() == "searched"){
+      vidtitle = "[" + search.searched + "]: " + ythandler.getCurrVideo()[1];
+    }
+    if(search.search_str.length > 0){
+        vidtitle = "SEARCH: [ " + search.search_str + " ]"; 
+    }
     $( "#title" ).text(vidtitle.replace('&amp;','&'));
   },
 
