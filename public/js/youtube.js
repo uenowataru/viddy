@@ -210,6 +210,13 @@ YTHandler.prototype = {
     animation.animateTimeBar();
     this.YTCache.set('lastVideo',video_list.getCurrVideo()[0], true);
     this.YTCache.set('lastVisit',Math.round(new Date().getTime() / 1000) + '', true);
+
+    if(usercontrol.mouseOnR == true){
+      usercontrol.setThumbnailImageR();
+    }
+    if(usercontrol.mouseOnL == true){
+      usercontrol.setThumbnailImageL();
+    }
   },
 
   previousVideo: function() {
@@ -247,6 +254,13 @@ YTHandler.prototype = {
     animation.animateTimeBar();
     this.YTCache.set('lastVideo', video_list.getCurrVideo()[0], true);
     this.YTCache.set('lastVisit', Math.round(new Date().getTime() / 1000) + '', true);
+
+    if(usercontrol.mouseOnR == true){
+      usercontrol.setThumbnailImageR();
+    }
+    if(usercontrol.mouseOnL == true){
+      usercontrol.setThumbnailImageL();
+    }
   },
 
   togglePlayPause: function(){

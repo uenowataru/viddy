@@ -291,14 +291,48 @@ img {
 }
 
 .arrowLeft {
-	background-image: url("/res/arrowLeft.png");
-	left: 0px;
+	left: 5px;
 }
 
 .arrowRight {
-	background-image: url("/res/arrowRight.png");
+	right: 5px;
+}
+
+/*.image {
+	width: 8%;
+	height: 12%;
+	position: absolute;
+	top: 50%;
+	display: block;
+	-moz-transform: translateY(-50%);
+	-webkit-transform: translateY(-50%);
+	-o-transform: translateY(-50%);
+	-ms-transform: translateY(-50%);
+	transform: translateY(-50%);
+	opacity: 0.0;
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
+	-webkit-transition: all 0.3s ease;
+	-moz-transition: all 0.3s ease;
+	transition: all 0.3s ease;
+}
+
+.imageLeft {
+	left: 0px;
+}
+
+.imageRight {
 	right: 0px;
 }
+
+.image:hover {
+	cursor: pointer;
+	opacity: 1.0;
+	background-size: 110% 110%;
+	-webkit-transition: all 0.3s ease;
+	-moz-transition: all 0.3s ease;
+	transition: all 0.3s ease;
+}*/
 
 #timebar {
 	opacity: 0.75;
@@ -399,46 +433,49 @@ img {
 }
 
 @-moz-keyframes ball_moveG{
-0%{
--moz-transform:rotate(0deg)}
-
-100%{
--moz-transform:rotate(360deg)}
-
+	0%{
+		-moz-transform:rotate(0deg)
+	}
+	100%{
+		-moz-transform:rotate(360deg)
+	}
 }
 
 @-webkit-keyframes ball_moveG{
-0%{
--webkit-transform:rotate(0deg)}
+	0%{
+		-webkit-transform:rotate(0deg)
+	}
 
-100%{
--webkit-transform:rotate(360deg)}
+	100%{
+		-webkit-transform:rotate(360deg)
+	}
 
 }
 
 @-ms-keyframes ball_moveG{
-0%{
--ms-transform:rotate(0deg)}
-
-100%{
--ms-transform:rotate(360deg)}
-
+	0%{
+		-ms-transform:rotate(0deg)
+	}
+	100%{
+		-ms-transform:rotate(360deg)
+	}
 }
 
 @-o-keyframes ball_moveG{
-0%{
--o-transform:rotate(0deg)}
-
-100%{
--o-transform:rotate(360deg)}
-
+	0%{
+		-o-transform:rotate(0deg)
+	}
+	100%{
+		-o-transform:rotate(360deg)
+	}
 }
 
 @keyframes ball_moveG{
-0%{
-transform:rotate(0deg)}
+	0%{
+		transform:rotate(0deg)
+	}
 
-100%{
-transform:rotate(360deg)}
-
+	100%{
+		transform:rotate(360deg)
+	}
 }

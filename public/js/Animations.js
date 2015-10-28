@@ -8,6 +8,7 @@ function AnimationHandler(){
   this.channelstimeout;
   this.iconstimeout;
   this.fbtimeout;
+  this.imagetimeout;
   this.timebarprog = 1;
   this.moved = false;
 }
@@ -163,6 +164,24 @@ AnimationHandler.prototype = {
     var channel = video_list.getCurrChannel();
     $( "#currchannel" ).text(channel);
   }
+  //,
+
+  // animateImageL: function(){
+  //   this.animateElementById("#imgL",1.0);
+  //   clearTimeout(this.imagetimeout);
+  //   this.imagetimeout = setTimeout(function(){
+  //     animation.fadeElementById("#imgL");
+  //   }, 2000);
+  // },
+
+  // animateImageR: function(){
+  //   this.animateElementById("#imgR",1.0);
+  //   clearTimeout(this.imagetimeout);
+  //   this.imagetimeout = setTimeout(function(){
+  //     animation.fadeElementById("#imgR");
+  //   }, 2000);
+  // }
+
 }
 
 
