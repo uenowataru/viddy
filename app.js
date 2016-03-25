@@ -150,6 +150,7 @@ app.get('/*', function(req, res){
 	res.sendFile(__dirname + '/public/index.html');
 });
 
+
 //logging
 var server = app.listen(port, function () {
   var host = server.address().address;

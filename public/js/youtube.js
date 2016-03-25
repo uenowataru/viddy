@@ -543,6 +543,7 @@ YTHandler.prototype = {
     var asyncstatus = fbhandler.getUser().loadVideos();
     if(asyncstatus){
       asyncstatus.always(function(){
+        console.log("got videos");
         ythandler.initLikedVideos();
       });
     }else{

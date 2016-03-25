@@ -120,14 +120,18 @@ UserControl.prototype = {
           //animation.animateAll();
         }
       }
+      //backspace or delete
       if(e.which == 8 || e.which == 127){
         search.search_str = "";
         animation.animateAll();
         e.preventDefault();
       }
+      //return/enter
       if(e.which == 13){
         if(search.search_str.length != 0){
           ythandler.loadSearchedVideos();
+          search.search_str = "";
+          animation.animateAll();
         }
       }
     });
@@ -330,7 +334,7 @@ UserControl.prototype = {
    titleClick: function(){
     if(!ythandler.initialized) return;
     ythandler.pauseVideo();
-    window.open("https://www.youtube.com/watch?v=" + ythandler.getCurrVideo()[0] + "&t=" + Math.floor(ythandler.getYTCurrentTime(curr)) + "s");
+    window.open("https://www.youtube.com/watch?v=" + ythandler.getCurrVideo()[0] + "&t=" + Math.floor(ythandler.getYTCurrentTime(ythandler.curr)) + "s");
   },
 
    toggleFullScreen: function() {
